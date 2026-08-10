@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Michroma&display=swap');
+/* Decorative faces used only by the rotating labels around the hero sphere. */
+@import url('https://fonts.googleapis.com/css2?family=Lexend&family=Chewy&family=Sniglet&family=Fuzzy+Bubbles&family=Elsie&family=Passero+One&family=Delius+Unicase&family=Edu+SA+Beginner&family=Asimovian&family=MuseoModerno&family=Crafty+Girls&family=Schoolbell&family=Sansita+Swashed&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --theme-bg: #000000;
+  --theme-bg-rgb: 0, 0, 0;
+  --nav-text: #ffffff;
+
+  --font-display: "Michroma", Arial, sans-serif;
+  --font-body: "Michroma", Arial, sans-serif;
+
+  /* Modular type scale — Major Third (1.25), base 15px to match this site's
+     compact UI density while staying above the 14px legibility floor. */
+  --scale-ratio: 1.25;
+  --size-sm: 0.75rem;    /* ~11px — captions/meta */
+  --size-base: 0.9375rem; /* ~15px — body copy */
+  --size-md: 1.171875rem; /* ~19px */
+  --size-lg: 1.46rem;     /* ~23px */
+  --size-xl: 1.83rem;     /* ~29px */
+
+  /* Measure — comfortable line length for body prose */
+  --measure: 60ch;
+}
+
+[data-theme="dark"] {
+  --theme-bg: #000000;
+  --theme-bg-rgb: 0, 0, 0;
+  --nav-text: #ffffff;
+}
+
+[data-theme="warm"] {
+  /* Three-stop palette per spec: darkest as the flat background (what every
+     rgba(--theme-bg-rgb) glow/fade actually reads), then mid and bright as a
+     subtle depth gradient layered on top so the extra stops aren't wasted. */
+  --theme-bg: #4D1E02;
+  --theme-bg-rgb: 77, 30, 2;
+  --theme-bg-mid: #782F00;
+  --theme-bg-bright: #E35900;
+  --nav-text: #ffffff;
+}
+
+[data-theme="bright"] {
+  --theme-bg: #BFB681;
+  --theme-bg-rgb: 191, 182, 129;
+  --theme-bg-mid: #DBD094;
+  --theme-bg-bright: #F7EBA7;
+  --nav-text: #111111;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scrollbar-color: #d3d3d3 transparent;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: var(--size-base);
+  line-height: 1.6;
+  font-kerning: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--theme-bg);
+  background-image: radial-gradient(
+    ellipse at 50% 0%,
+    var(--theme-bg-bright, var(--theme-bg)) 0%,
+    var(--theme-bg-mid, var(--theme-bg)) 35%,
+    var(--theme-bg) 75%
+  );
+  background-attachment: fixed;
+  color: var(--nav-text);
+  transition: background-color 0.6s ease, color 0.6s ease, background-image 0.6s ease;
+}
+[data-theme="dark"] body {
+  /* Dark theme is a single flat black per spec — no gradient stops defined
+     for it, so fall back to the flat colour rather than radial-gradient(black
+     -> black) which is harmless but wasteful. */
+  background-image: none;
+}
+
+/* Michroma stays scoped to display/UI moments — nav wordmark, headlines,
+   eyebrows, buttons — never running body prose, where its all-caps
+   geometric letterforms hurt legibility. */
+.font-display {
+  font-family: var(--font-display);
+}
+
+/* Constrains body copy to a comfortable reading measure (45-75 characters). */
+.prose {
+  max-width: var(--measure);
+  line-height: 1.6;
+}
+
+.page-margin {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+/* Clears the fixed nav's wordmark block (57px top padding + the two text
+   lines) with a 12px gap, so the breadcrumb and page header on About/Projects
+   sit right below "Ai Designer & Database Engineer" instead of at an
+   arbitrary offset unrelated to the nav's real height. */
+.page-top {
+  padding-top: 108px;
+}
+
+/* DS band — the preloaded dots-and-stars strip at the very top of the hero.
+   Global, not scoped: the canvas is rendered by TopStarBand while the hero's
+   styled-jsx block belongs to HeroSection, so a scoped rule never matches. */
+.ds-band {
+  opacity: 0;
+  animation: ds-fade-in 2.6s ease-out 0.2s forwards;
+}
+
+@keyframes ds-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ds-band {
+    animation: none;
+    opacity: 1;
+  }
+}
+
+.section-spacing {
+  margin-bottom: 50px;
+}
+
+/* Reduced motion / hidden-motion accessibility mode */
+[data-motion="hidden"] .motion-el {
+  animation: none !important;
+  transition: none !important;
+  transform: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .motion-el {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #d3d3d3;
+  border-radius: 4px;
+}
+
+/* ---------------------------------------------------------------------- */
+/* Cinematic layer: vignette, grain, ambient glow, fluid display type      */
+/* ---------------------------------------------------------------------- */
+
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 5;
+  background:
+    radial-gradient(ellipse at center, transparent 35%, rgba(0, 0, 0, 0.55) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, transparent 18%, transparent 82%, rgba(0, 0, 0, 0.85) 100%);
+}
+
+.film-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.ambient-glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.35;
+}
+
+.text-display {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 7vw, 6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.text-eyebrow {
+  font-family: var(--font-display);
+  font-size: var(--size-sm);
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+

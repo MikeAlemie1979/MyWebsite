@@ -1,0 +1,322 @@
+{
+  ".claude/launch.json": {
+    "mtime": 1785813724.574339,
+    "ast_hash": "b059aa5ebfe93e55112ce2a99080ec5f",
+    "semantic_hash": ""
+  },
+  ".claude/settings.local.json": {
+    "mtime": 1785808436.606683,
+    "ast_hash": "ba44594af332c3a3cc3efce2dc0455b1",
+    "semantic_hash": ""
+  },
+  "Deployment/app/next-env.d.ts": {
+    "mtime": 1785791237.2346797,
+    "ast_hash": "187b4b5b507c358a018aeeadd81abe57",
+    "semantic_hash": ""
+  },
+  "Deployment/app/next.config.js": {
+    "mtime": 1785791096.6742508,
+    "ast_hash": "9482fae2cacd274a4c18a6c98115121e",
+    "semantic_hash": ""
+  },
+  "Deployment/app/package.json": {
+    "mtime": 1785813721.5608222,
+    "ast_hash": "f2b72ee2a62c1c205fc8b05c445b1345",
+    "semantic_hash": ""
+  },
+  "Deployment/app/postcss.config.js": {
+    "mtime": 1785812622.5802128,
+    "ast_hash": "8640f9b2e6475cc3f5b1ff4548925765",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/about/page.tsx": {
+    "mtime": 1785814378.6827312,
+    "ast_hash": "b86e734e64d8885a89b5701d825cf53c",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/admin/(protected)/layout.tsx": {
+    "mtime": 1785814410.082068,
+    "ast_hash": "d3a61a91ac4872208094e12ebc3e339d",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/admin/(protected)/page.tsx": {
+    "mtime": 1785814412.580453,
+    "ast_hash": "108b333d8a9ab0323dfc4c2e69b68a19",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/admin/login/page.tsx": {
+    "mtime": 1785814429.9517908,
+    "ast_hash": "ffa5f288a6ac64a5f67405d00052c68a",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/about-content/route.ts": {
+    "mtime": 1785814307.7240262,
+    "ast_hash": "94275fc25da77ffbda8557e03e34d50d",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/about-content/upload/route.ts": {
+    "mtime": 1785814312.8005855,
+    "ast_hash": "1355de6691dc209b81afccfbba73ffd6",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/cards/route.ts": {
+    "mtime": 1785814288.0717852,
+    "ast_hash": "b73da520b654613f6f87f5796b958806",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/cards/upload/route.ts": {
+    "mtime": 1785814293.062459,
+    "ast_hash": "9ecc7e9087b14b14521972e70d4750f7",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/home-text/route.ts": {
+    "mtime": 1785814274.1147802,
+    "ast_hash": "72c3fba54604976e8bc672e1509a1607",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/login/route.ts": {
+    "mtime": 1785814371.3351119,
+    "ast_hash": "a36d9c9af758ad2acf9ff69b87b725d1",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/logout/route.ts": {
+    "mtime": 1785814375.9654565,
+    "ast_hash": "f9a52744e96e9f336eadf7056d9ff590",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/projects/route.ts": {
+    "mtime": 1785814305.8776364,
+    "ast_hash": "0cf4c4944cda6f1546a68789b1ff74e4",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/projects/upload/route.ts": {
+    "mtime": 1785814311.7453785,
+    "ast_hash": "9130861e2d6a46385d0fbd77a452f54a",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/smtp-config/route.ts": {
+    "mtime": 1785791543.4083045,
+    "ast_hash": "bc01cd8477c6b2f683ebcf1a2586fc35",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/social-config/route.ts": {
+    "mtime": 1785814321.6310773,
+    "ast_hash": "311809203e4c08046193c918a1f49cba",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/admin/social-post/route.ts": {
+    "mtime": 1785814331.8341765,
+    "ast_hash": "6d98bf170eae70e1e3fe6ece344f27f8",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/api/contact/route.ts": {
+    "mtime": 1785812815.3713205,
+    "ast_hash": "85944da3c673e130831c77b9219549b6",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/layout.tsx": {
+    "mtime": 1785812682.888381,
+    "ast_hash": "63071d790b7291c8bb8fee4be2088b7a",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/page.tsx": {
+    "mtime": 1785812872.387884,
+    "ast_hash": "100cdf3334184259b0fda6c9423ade2b",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/app/projects/page.tsx": {
+    "mtime": 1785814356.8142123,
+    "ast_hash": "41c97ee01a96af73b2f305353e525a54",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/about/about-body.tsx": {
+    "mtime": 1785814356.6790316,
+    "ast_hash": "53c4706f75024ff0dbbedd4ecb1e53e3",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/about/about-headline.tsx": {
+    "mtime": 1785814353.8146298,
+    "ast_hash": "29176d733f49c5419fc8ce92d15a9797",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/about/flashcards.tsx": {
+    "mtime": 1785814367.5949433,
+    "ast_hash": "c65b3a0dba10b36f4b10f732f8338e1e",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/about-manager.tsx": {
+    "mtime": 1785814345.9038126,
+    "ast_hash": "df7adcb62999a577374569fd236ec934",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/admin-dashboard.tsx": {
+    "mtime": 1785814496.354342,
+    "ast_hash": "e949dbe3e3e6fdeea61ea8841512da31",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/cards-manager.tsx": {
+    "mtime": 1785814312.1677575,
+    "ast_hash": "77a09bee96753b4a10e4ada3cc5a3372",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/home-text-manager.tsx": {
+    "mtime": 1785814292.0596118,
+    "ast_hash": "2745a6b2cc2fc89e0f0aafd6ff8a7a78",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/projects-manager.tsx": {
+    "mtime": 1785814335.5817325,
+    "ast_hash": "deb9b4012c7d94262c3165925e4994d7",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/smtp-settings-panel.tsx": {
+    "mtime": 1785791557.0288675,
+    "ast_hash": "577931b99bcd13939750ce7e68f56ea3",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/admin/social-media-panel.tsx": {
+    "mtime": 1785814365.0041194,
+    "ast_hash": "cb5cc53fd639333c72df7dc716ae9afc",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/ash-text-section.tsx": {
+    "mtime": 1785814523.8378115,
+    "ast_hash": "ec1bf3739a41b92bea809a168f4d27e5",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/cards-section.tsx": {
+    "mtime": 1785814324.2850182,
+    "ast_hash": "9bdab70999eee9e20fcd469ac41fbda9",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/contact-form.tsx": {
+    "mtime": 1785812835.8939624,
+    "ast_hash": "b999b35a7192836383499a14c75040ae",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/content-section.tsx": {
+    "mtime": 1785812775.901541,
+    "ast_hash": "6b1c082491d4746118f8ce826a1c3fd6",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/footer.tsx": {
+    "mtime": 1785812852.2441237,
+    "ast_hash": "7a3b8787833f9c98b2967b938c55c37c",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/hero-sphere.tsx": {
+    "mtime": 1785812714.7726147,
+    "ast_hash": "aa36be1b31dc55e0da33a37a24e533bf",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/navigation.tsx": {
+    "mtime": 1785812694.8894193,
+    "ast_hash": "c2cc67a97d4d57a5b40d08550c4ac32d",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/landing/theme-control.tsx": {
+    "mtime": 1785812865.7189806,
+    "ast_hash": "38616a66bfae8d514fc8006523ae84d5",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/components/projects/sliding-cards.tsx": {
+    "mtime": 1785814352.0158708,
+    "ast_hash": "b545e3c55e8992b4298ad0a9536c2141",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/context/theme-context.tsx": {
+    "mtime": 1785812678.8783083,
+    "ast_hash": "3fea92f7ba778a3bd4905ffb1b6c8032",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/lib/admin-auth.ts": {
+    "mtime": 1785814360.968562,
+    "ast_hash": "d642823f36a323b458f7e834944d7993",
+    "semantic_hash": ""
+  },
+  "Deployment/app/src/lib/phone-validation.ts": {
+    "mtime": 1785812807.3579328,
+    "ast_hash": "08c43ca79385ff688a2d0cdc181c4830",
+    "semantic_hash": ""
+  },
+  "Deployment/app/tailwind.config.js": {
+    "mtime": 1785812620.1559825,
+    "ast_hash": "507d96012a4cf42e751c0d0c4d5259bb",
+    "semantic_hash": ""
+  },
+  "Deployment/app/tsconfig.json": {
+    "mtime": 1785812615.7502792,
+    "ast_hash": "492fe1df794fccc27c69bfa6dc017b80",
+    "semantic_hash": ""
+  },
+  "Development/CLAUDE.md": {
+    "mtime": 1785814246.8129199,
+    "ast_hash": "7d468e330d3926e7ce767c2b0d0e1265",
+    "semantic_hash": ""
+  },
+  "Development/Implementation/Roadmap.md": {
+    "mtime": 1785814240.1134353,
+    "ast_hash": "e6be2ec8b3ad8116a226858df4e8de98",
+    "semantic_hash": ""
+  },
+  "Instructions/Epic/AppStory.md": {
+    "mtime": 1785805931.4945526,
+    "ast_hash": "0566f52014a6da9c2ffec28f87767f48",
+    "semantic_hash": ""
+  },
+  "Instructions/Gen Architecture/SysArch.md": {
+    "mtime": 1785802751.735596,
+    "ast_hash": "6b8b02652391e02a209cc5e1e38b8ddc",
+    "semantic_hash": ""
+  },
+  "Instructions/Gen UI/UIUX.md": {
+    "mtime": 1785802783.4517004,
+    "ast_hash": "ff0418e32455301f0283d712b65b0f34",
+    "semantic_hash": ""
+  },
+  "Deployment/app/public/images/pristinenoire-logo.png": {
+    "mtime": 1785812658.0631561,
+    "ast_hash": "fb1f145592e39afceb51b713f7f25187",
+    "semantic_hash": ""
+  },
+  "Deployment/app/public/images/qr-code.png": {
+    "mtime": 1785812657.9968393,
+    "ast_hash": "f630a54a3dc3133edb09b944aca86c39",
+    "semantic_hash": ""
+  },
+  "Deployment/app/public/images/sphere-warm.jpg": {
+    "mtime": 1785812658.1359022,
+    "ast_hash": "091f427baab155abead25189fffb9bd7",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/Pristinenoire Ecosystem.png": {
+    "mtime": 1785631033.443324,
+    "ast_hash": "f50cfddf9b22324921471e1e02cf33d1",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/Pristinenoire LLC.png": {
+    "mtime": 1785811742.124399,
+    "ast_hash": "fb1f145592e39afceb51b713f7f25187",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/QR Code.png": {
+    "mtime": 1785632814.9474118,
+    "ast_hash": "f630a54a3dc3133edb09b944aca86c39",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/Sphere 1.webp": {
+    "mtime": 1785795014.2457027,
+    "ast_hash": "576cf36603ecfca55022f641127d0c44",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/Sphere 2.webp": {
+    "mtime": 1785794934.1751685,
+    "ast_hash": "19d3b5d8ecfd0c711e73f40b3c2706a2",
+    "semantic_hash": ""
+  },
+  "Sprints/Website/Sphere Warm.jpg": {
+    "mtime": 1785794953.2120476,
+    "ast_hash": "091f427baab155abead25189fffb9bd7",
+    "semantic_hash": ""
+  }
+}

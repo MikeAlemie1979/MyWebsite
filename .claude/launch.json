@@ -1,0 +1,12 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mike-alemie-dev",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev", "--prefix", "Deployment/app"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}

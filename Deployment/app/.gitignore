@@ -1,0 +1,3 @@
+# Admin auth secrets - never commit
+.env.admin-auth.json
+.env.admin-sessions.json
