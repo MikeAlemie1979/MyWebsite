@@ -1,0 +1,467 @@
+{
+  "communities": {
+    "0": [
+      "app_about_page",
+      "app_about_page_aboutcontent",
+      "app_about_page_aboutpage",
+      "app_about_page_default_content",
+      "app_page",
+      "app_page_landingpage",
+      "app_projects_page",
+      "app_projects_page_projectspage",
+      "components_about_about_body",
+      "components_about_about_body_aboutbody",
+      "components_about_about_body_aboutbodyprops",
+      "components_about_about_headline",
+      "components_about_about_headline_aboutheadline",
+      "components_about_about_headline_aboutheadlineprops",
+      "components_about_flashcards",
+      "components_about_flashcards_flashcarditem",
+      "components_about_flashcards_flashcards",
+      "components_common_breadcrumbs",
+      "components_common_breadcrumbs_breadcrumbs",
+      "components_common_breadcrumbs_crumb",
+      "components_landing_cards_section",
+      "components_landing_cards_section_carditem",
+      "components_landing_cards_section_cardssection",
+      "components_landing_cards_section_horizontalcard",
+      "components_landing_cards_section_placeholder_cards",
+      "components_landing_footer",
+      "components_landing_footer_facebookicon",
+      "components_landing_footer_footer",
+      "components_landing_footer_img_style",
+      "components_landing_footer_instagramicon",
+      "components_landing_navigation",
+      "components_landing_navigation_brand_letters",
+      "components_landing_navigation_fluorescent_colors",
+      "components_landing_navigation_nav_links",
+      "components_landing_navigation_navigation",
+      "components_landing_theme_control",
+      "components_landing_theme_control_theme_options",
+      "components_landing_theme_control_themecontrol",
+      "components_projects_sliding_cards",
+      "components_projects_sliding_cards_placeholder_projects",
+      "components_projects_sliding_cards_projectcard",
+      "components_projects_sliding_cards_projectitem",
+      "components_projects_sliding_cards_slidingcards"
+    ],
+    "1": [
+      "app_admin_protected_page",
+      "app_admin_protected_page_adminpage",
+      "components_admin_about_manager",
+      "components_admin_about_manager_aboutcontent",
+      "components_admin_about_manager_aboutmanager",
+      "components_admin_about_manager_default_content",
+      "components_admin_about_manager_flashcard",
+      "components_admin_about_manager_font_families",
+      "components_admin_about_manager_makeid",
+      "components_admin_admin_dashboard",
+      "components_admin_admin_dashboard_admindashboard",
+      "components_admin_admin_dashboard_leafitem",
+      "components_admin_admin_dashboard_nav_groups",
+      "components_admin_admin_dashboard_navbutton",
+      "components_admin_admin_dashboard_navgroup",
+      "components_admin_admin_dashboard_pageicon",
+      "components_admin_admin_dashboard_section",
+      "components_admin_admin_dashboard_sectionicon",
+      "components_admin_admin_dashboard_systemicon",
+      "components_admin_cards_manager",
+      "components_admin_cards_manager_carditem",
+      "components_admin_cards_manager_cardsmanager",
+      "components_admin_cards_manager_generateid",
+      "components_admin_projects_manager",
+      "components_admin_projects_manager_empty_projects",
+      "components_admin_projects_manager_projectitem",
+      "components_admin_projects_manager_projectsmanager",
+      "components_admin_smtp_settings_panel",
+      "components_admin_smtp_settings_panel_smtpconfig",
+      "components_admin_smtp_settings_panel_smtpsettingspanel",
+      "components_admin_social_media_panel",
+      "components_admin_social_media_panel_default_config",
+      "components_admin_social_media_panel_facebookconfig",
+      "components_admin_social_media_panel_instagramconfig",
+      "components_admin_social_media_panel_platform",
+      "components_admin_social_media_panel_postresult",
+      "components_admin_social_media_panel_socialconfig",
+      "components_admin_social_media_panel_socialmediapanel",
+      "components_common_toggle",
+      "components_common_toggle_toggle",
+      "components_common_toggle_toggleprops"
+    ],
+    "2": [
+      "app_admin_protected_layout",
+      "app_admin_protected_layout_adminprotectedlayout",
+      "app_admin_protected_layout_rationale_13",
+      "app_api_admin_login_route",
+      "app_api_admin_login_route_clearfailedattempts",
+      "app_api_admin_login_route_failedattempts",
+      "app_api_admin_login_route_getclientip",
+      "app_api_admin_login_route_islockedout",
+      "app_api_admin_login_route_post",
+      "app_api_admin_login_route_ratelimitentry",
+      "app_api_admin_login_route_recordfailedattempt",
+      "app_api_admin_logout_route",
+      "app_api_admin_logout_route_post",
+      "lib_admin_auth",
+      "lib_admin_auth_admin_session_ttl_ms",
+      "lib_admin_auth_admincredentials",
+      "lib_admin_auth_adminsession",
+      "lib_admin_auth_createsession",
+      "lib_admin_auth_createsessiontoken",
+      "lib_admin_auth_creds_file",
+      "lib_admin_auth_defaultcredentials",
+      "lib_admin_auth_destroysession",
+      "lib_admin_auth_hashpassword",
+      "lib_admin_auth_issessionvalid",
+      "lib_admin_auth_loadorseedcredentials",
+      "lib_admin_auth_pruneexpiredsessions",
+      "lib_admin_auth_readsessions",
+      "lib_admin_auth_sessions_file",
+      "lib_admin_auth_verifypassword",
+      "lib_admin_auth_writesessions"
+    ],
+    "3": [
+      "components_about_flashcards_flashcard",
+      "components_landing_hero_sphere",
+      "components_landing_hero_sphere_drawsparkle",
+      "components_landing_hero_sphere_drift_directions",
+      "components_landing_hero_sphere_herosection",
+      "components_landing_hero_sphere_neon_star_colors",
+      "components_landing_hero_sphere_neonstar",
+      "components_landing_hero_sphere_rand",
+      "components_landing_hero_sphere_topstarband",
+      "components_landing_neon_sphere",
+      "components_landing_neon_sphere_neonsphere",
+      "components_landing_neon_sphere_shade",
+      "components_landing_neon_sphere_spherepalette",
+      "components_landing_neon_sphere_theme_palettes",
+      "components_landing_sphere_typography",
+      "components_landing_sphere_typography_flashtexts",
+      "components_landing_sphere_typography_fonts",
+      "components_landing_sphere_typography_label",
+      "components_landing_sphere_typography_pct",
+      "components_landing_sphere_typography_phrases",
+      "context_theme_context_usetheme"
+    ],
+    "4": [
+      "app_layout",
+      "app_layout_metadata",
+      "app_layout_person_json_ld",
+      "app_layout_rootlayout",
+      "components_common_pointer_zone",
+      "components_common_pointer_zone_getpointerzone",
+      "components_common_pointer_zone_pointerzone",
+      "components_common_target_cursor",
+      "components_common_target_cursor_dot",
+      "components_common_target_cursor_targetcursor",
+      "components_landing_hero_mouse_trail",
+      "components_landing_hero_mouse_trail_drawstar",
+      "components_landing_hero_mouse_trail_heromousetrail",
+      "components_landing_hero_mouse_trail_particle",
+      "components_landing_hero_mouse_trail_trail_colors",
+      "context_theme_context",
+      "context_theme_context_themecontext",
+      "context_theme_context_themecontextvalue",
+      "context_theme_context_themename",
+      "context_theme_context_themeprovider"
+    ],
+    "5": [
+      "components_landing_ash_text_section",
+      "components_landing_ash_text_section_ash_colors",
+      "components_landing_ash_text_section_ashtextsection",
+      "components_landing_ash_text_section_buildparticles",
+      "components_landing_ash_text_section_default_sentences",
+      "components_landing_ash_text_section_hometextconfig",
+      "components_landing_ash_text_section_particle",
+      "components_landing_cube_reveal",
+      "components_landing_cube_reveal_clamp01",
+      "components_landing_cube_reveal_cubereveal",
+      "components_landing_cube_reveal_cuberevealhandle",
+      "components_landing_cube_reveal_cubespec",
+      "components_landing_cube_reveal_easeout",
+      "components_landing_cube_reveal_rand"
+    ],
+    "6": [
+      "app_api_admin_social_post_route",
+      "app_api_admin_social_post_route_appendtolog",
+      "app_api_admin_social_post_route_get",
+      "app_api_admin_social_post_route_log_file",
+      "app_api_admin_social_post_route_platform",
+      "app_api_admin_social_post_route_post",
+      "app_api_admin_social_post_route_posttofacebook",
+      "app_api_admin_social_post_route_posttoinstagram",
+      "app_api_admin_social_post_route_rationale_47",
+      "app_api_admin_social_post_route_rationale_64",
+      "app_api_admin_social_post_route_readlog",
+      "app_api_admin_social_post_route_socialpostrequest",
+      "app_api_admin_social_post_route_socialpostresult"
+    ],
+    "7": [
+      "app_api_contact_route",
+      "app_api_contact_route_contactpayload",
+      "app_api_contact_route_post",
+      "app_api_contact_route_rationale_52",
+      "components_landing_contact_form",
+      "components_landing_contact_form_contactform",
+      "components_landing_contact_form_field",
+      "components_landing_contact_form_formstate",
+      "components_landing_contact_form_initial_state",
+      "lib_phone_validation",
+      "lib_phone_validation_phonevalidationresult",
+      "lib_phone_validation_validatephonenumber"
+    ],
+    "8": [
+      "app_api_admin_social_config_route",
+      "app_api_admin_social_config_route_config_file",
+      "app_api_admin_social_config_route_default_config",
+      "app_api_admin_social_config_route_facebookconfig",
+      "app_api_admin_social_config_route_get",
+      "app_api_admin_social_config_route_instagramconfig",
+      "app_api_admin_social_config_route_maskconfig",
+      "app_api_admin_social_config_route_masktoken",
+      "app_api_admin_social_config_route_post",
+      "app_api_admin_social_config_route_socialconfig"
+    ],
+    "9": [
+      "app_api_admin_about_content_route",
+      "app_api_admin_about_content_route_aboutcontent",
+      "app_api_admin_about_content_route_config_file",
+      "app_api_admin_about_content_route_default_content",
+      "app_api_admin_about_content_route_flashcard",
+      "app_api_admin_about_content_route_get",
+      "app_api_admin_about_content_route_post"
+    ],
+    "10": [
+      "app_api_admin_cards_route",
+      "app_api_admin_cards_route_carditem",
+      "app_api_admin_cards_route_cardsconfig",
+      "app_api_admin_cards_route_config_file",
+      "app_api_admin_cards_route_default_cards",
+      "app_api_admin_cards_route_get",
+      "app_api_admin_cards_route_post"
+    ],
+    "11": [
+      "app_api_admin_home_text_route",
+      "app_api_admin_home_text_route_config_file",
+      "app_api_admin_home_text_route_default_config",
+      "app_api_admin_home_text_route_get",
+      "app_api_admin_home_text_route_hometextconfig",
+      "app_api_admin_home_text_route_hometextsentence",
+      "app_api_admin_home_text_route_post"
+    ],
+    "12": [
+      "app_api_admin_projects_route",
+      "app_api_admin_projects_route_config_file",
+      "app_api_admin_projects_route_default_projects",
+      "app_api_admin_projects_route_get",
+      "app_api_admin_projects_route_post",
+      "app_api_admin_projects_route_projectitem",
+      "app_api_admin_projects_route_projectsconfig"
+    ],
+    "13": [
+      "app_api_visitor_count_route",
+      "app_api_visitor_count_route_count_file",
+      "app_api_visitor_count_route_get",
+      "app_api_visitor_count_route_post",
+      "app_api_visitor_count_route_readstore",
+      "app_api_visitor_count_route_visitorcountstore",
+      "app_api_visitor_count_route_writestore"
+    ],
+    "14": [
+      "components_admin_home_text_manager",
+      "components_admin_home_text_manager_default_config",
+      "components_admin_home_text_manager_font_options",
+      "components_admin_home_text_manager_generateid",
+      "components_admin_home_text_manager_hometextconfig",
+      "components_admin_home_text_manager_hometextmanager",
+      "components_admin_home_text_manager_hometextsentence"
+    ],
+    "15": [
+      "components_landing_content_section",
+      "components_landing_content_section_contentsection",
+      "components_landing_content_section_default_timings",
+      "components_landing_content_section_heading_words",
+      "components_landing_content_section_rand",
+      "components_landing_content_section_wave_colors",
+      "components_landing_content_section_wordtiming"
+    ],
+    "16": [
+      "app_api_admin_about_content_upload_route",
+      "app_api_admin_about_content_upload_route_allowed_types",
+      "app_api_admin_about_content_upload_route_post",
+      "app_api_admin_about_content_upload_route_sanitizefilename",
+      "app_api_admin_about_content_upload_route_upload_dir"
+    ],
+    "17": [
+      "app_api_admin_cards_upload_route",
+      "app_api_admin_cards_upload_route_allowed_types",
+      "app_api_admin_cards_upload_route_post",
+      "app_api_admin_cards_upload_route_sanitizefilename",
+      "app_api_admin_cards_upload_route_upload_dir"
+    ],
+    "18": [
+      "app_api_admin_projects_upload_route",
+      "app_api_admin_projects_upload_route_allowed_types",
+      "app_api_admin_projects_upload_route_post",
+      "app_api_admin_projects_upload_route_sanitizefilename",
+      "app_api_admin_projects_upload_route_upload_dir"
+    ],
+    "19": [
+      "app_api_admin_smtp_config_route",
+      "app_api_admin_smtp_config_route_config_file",
+      "app_api_admin_smtp_config_route_get",
+      "app_api_admin_smtp_config_route_post",
+      "app_api_admin_smtp_config_route_smtpconfig"
+    ],
+    "20": [
+      "app_admin_login_page",
+      "app_admin_login_page_adminloginpage"
+    ],
+    "21": [
+      "app_robots",
+      "app_robots_robots"
+    ],
+    "22": [
+      "app_sitemap",
+      "app_sitemap_sitemap"
+    ]
+  },
+  "cohesion": {
+    "0": 0.07419712070874862,
+    "1": 0.06219512195121951,
+    "2": 0.12643678160919541,
+    "3": 0.13333333333333333,
+    "4": 0.15263157894736842,
+    "5": 0.18681318681318682,
+    "6": 0.21794871794871795,
+    "7": 0.22727272727272727,
+    "8": 0.26666666666666666,
+    "9": 0.2857142857142857,
+    "10": 0.2857142857142857,
+    "11": 0.2857142857142857,
+    "12": 0.2857142857142857,
+    "13": 0.42857142857142855,
+    "14": 0.3333333333333333,
+    "15": 0.3333333333333333,
+    "16": 0.5,
+    "17": 0.5,
+    "18": 0.5,
+    "19": 0.4,
+    "20": 1.0,
+    "21": 1.0,
+    "22": 1.0
+  },
+  "gods": [
+    {
+      "id": "context_theme_context_usetheme",
+      "label": "useTheme()",
+      "degree": 17
+    },
+    {
+      "id": "app_api_admin_login_route_post",
+      "label": "POST()",
+      "degree": 8
+    },
+    {
+      "id": "lib_admin_auth_createsession",
+      "label": "createSession()",
+      "degree": 7
+    },
+    {
+      "id": "lib_admin_auth_destroysession",
+      "label": "destroySession()",
+      "degree": 6
+    },
+    {
+      "id": "components_common_breadcrumbs_breadcrumbs",
+      "label": "Breadcrumbs()",
+      "degree": 5
+    },
+    {
+      "id": "components_common_pointer_zone_getpointerzone",
+      "label": "getPointerZone()",
+      "degree": 5
+    },
+    {
+      "id": "components_common_toggle_toggle",
+      "label": "Toggle()",
+      "degree": 5
+    },
+    {
+      "id": "components_landing_ash_text_section_ashtextsection",
+      "label": "AshTextSection()",
+      "degree": 5
+    },
+    {
+      "id": "components_landing_hero_mouse_trail_heromousetrail",
+      "label": "HeroMouseTrail()",
+      "degree": 5
+    },
+    {
+      "id": "components_landing_theme_control_themecontrol",
+      "label": "ThemeControl()",
+      "degree": 5
+    }
+  ],
+  "surprises": [
+    {
+      "source": "AdminProtectedLayout()",
+      "target": "isSessionValid()",
+      "source_files": [
+        "app/admin/(protected)/layout.tsx",
+        "lib/admin-auth.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `AdminProtectedLayout()` unexpectedly reaches hub `isSessionValid()`"
+    },
+    {
+      "source": "POST()",
+      "target": "destroySession()",
+      "source_files": [
+        "app/api/admin/logout/route.ts",
+        "lib/admin-auth.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `POST()` unexpectedly reaches hub `destroySession()`"
+    },
+    {
+      "source": "POST()",
+      "target": "validatePhoneNumber()",
+      "source_files": [
+        "app/api/contact/route.ts",
+        "lib/phone-validation.ts"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `POST()` unexpectedly reaches hub `validatePhoneNumber()`"
+    },
+    {
+      "source": "FlashCard()",
+      "target": "useTheme()",
+      "source_files": [
+        "components/about/flashcards.tsx",
+        "context/theme-context.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; peripheral node `FlashCard()` unexpectedly reaches hub `useTheme()`"
+    },
+    {
+      "source": "AshTextSection()",
+      "target": "useTheme()",
+      "source_files": [
+        "components/landing/ash-text-section.tsx",
+        "context/theme-context.tsx"
+      ],
+      "confidence": "EXTRACTED",
+      "relation": "calls",
+      "why": "connects across different repos/directories; bridges separate communities"
+    }
+  ],
+  "tokens": {
+    "input": 0,
+    "output": 0
+  }
+}

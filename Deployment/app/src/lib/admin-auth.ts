@@ -11,6 +11,9 @@ const SCRYPT_KEYLEN = 64;
 export interface AdminCredentials {
   username: string;
   passwordHash: string;
+  // Second-factor PIN required alongside username/password. Hashed with the
+  // same scrypt scheme as the password rather than stored in plaintext.
+  codeHash: string;
 }
 
 export interface AdminSession {
@@ -53,39 +56,57 @@ export function createSessionToken(): string {
   return crypto.randomBytes(32).toString("hex");
 }
 
+function defaultCredentials(): AdminCredentials {
+  return {
+    username: "Admin",
+    passwordHash: hashPassword("App@dmin0123"),
+    codeHash: hashPassword("2085"),
+  };
+}
+
 /**
- * Load admin credentials from the on-disk store, seeding a default
- * admin/ChangeMe123! credential on first run if the file does not exist.
+ * Load admin credentials from the on-disk store, seeding default credentials
+ * on first run if the file does not exist.
  */
 export function loadOrSeedCredentials(): AdminCredentials {
   if (!fs.existsSync(CREDS_FILE)) {
-    const defaultCreds: AdminCredentials = {
-      username: "admin",
-      passwordHash: hashPassword("ChangeMe123!"),
-    };
+    const defaultCreds = defaultCredentials();
     fs.writeFileSync(CREDS_FILE, JSON.stringify(defaultCreds, null, 2), "utf-8");
     // eslint-disable-next-line no-console
     console.warn(
-      "[admin-auth] No admin credentials file found. Seeded default credentials " +
-        "(username: admin, password: ChangeMe123!). " +
-        "Please change this password via the admin settings as soon as possible."
+      "[admin-auth] No admin credentials file found. Seeded default credentials. " +
+        "Please change the password via the admin settings as soon as possible."
     );
     return defaultCreds;
   }
 
   try {
     const raw = fs.readFileSync(CREDS_FILE, "utf-8");
-    return JSON.parse(raw) as AdminCredentials;
+    const parsed = JSON.parse(raw) as Partial<AdminCredentials>;
+
+    // Migration path: files written before the second-factor code existed
+    // have no codeHash. Rather than lock the admin out, seed one from the
+    // current default code and persist it so future logins are consistent.
+    if (!parsed.codeHash) {
+      const migrated: AdminCredentials = {
+        username: parsed.username ?? "Admin",
+        passwordHash: parsed.passwordHash ?? hashPassword("App@dmin0123"),
+        codeHash: hashPassword("2085"),
+      };
+      fs.writeFileSync(CREDS_FILE, JSON.stringify(migrated, null, 2), "utf-8");
+      console.warn(
+        "[admin-auth] Credentials file predated the login code — added a default code."
+      );
+      return migrated;
+    }
+
+    return parsed as AdminCredentials;
   } catch {
     // Corrupt file - reseed with defaults rather than locking the admin out entirely.
-    const defaultCreds: AdminCredentials = {
-      username: "admin",
-      passwordHash: hashPassword("ChangeMe123!"),
-    };
+    const defaultCreds = defaultCredentials();
     fs.writeFileSync(CREDS_FILE, JSON.stringify(defaultCreds, null, 2), "utf-8");
     console.warn(
-      "[admin-auth] Credentials file was unreadable and has been reset to defaults " +
-        "(username: admin, password: ChangeMe123!)."
+      "[admin-auth] Credentials file was unreadable and has been reset to defaults."
     );
     return defaultCreds;
   }

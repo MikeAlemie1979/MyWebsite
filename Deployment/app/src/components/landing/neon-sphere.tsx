@@ -123,9 +123,24 @@ const FRAG = /* glsl */ `
     //
     // Longitude ping-pongs (0->1->0) instead of repeating, which removes the
     // seam that a plain wrap leaves down the meridian.
-    float lon = atan(p.z, p.x) / 6.2831853 + 0.5;
-    float lat = asin(clamp(p.y, -1.0, 1.0)) / 3.1415927 + 0.5;
-    vec2 uv = vec2(abs(fract(lon) * 2.0 - 1.0), lat);
+    // An equirectangular mapping is degenerate at its own two poles: every
+    // longitude line converges there, so the artwork gets smeared into a
+    // radial starburst / washed-out disc whenever a pole rotates into view.
+    // Painting over it with synthesised noise only trades the smear for a
+    // flat patch, because no amount of blending fixes a bad sample.
+    //
+    // Instead, build a SECOND mapping whose poles sit on the X axis — exactly
+    // where the first mapping is best-conditioned — and cross-fade to it as
+    // the fragment approaches the first mapping's poles. At every point on
+    // the ball at least one of the two mappings is sampling cleanly, so the
+    // surface keeps real texture edge to edge and there is no pole at all.
+    float lonA = atan(p.z, p.x) / 6.2831853 + 0.5;
+    float latA = asin(clamp(p.y, -1.0, 1.0)) / 3.1415927 + 0.5;
+    vec2 uvA = vec2(abs(fract(lonA) * 2.0 - 1.0), latA);
+
+    float lonB = atan(p.y, p.z) / 6.2831853 + 0.5;
+    float latB = asin(clamp(p.x, -1.0, 1.0)) / 3.1415927 + 0.5;
+    vec2 uvB = vec2(abs(fract(lonB) * 2.0 - 1.0), latB);
 
     // Solar convection: displace the sample point by a slow noise field so
     // the surface roils in place — cells swelling, drifting and merging like
@@ -144,7 +159,7 @@ const FRAG = /* glsl */ `
       fbm(p * 4.6 + vec3(tc * 2.3, 0.0, 1.7)),
       fbm(p * 4.6 + vec3(-1.9, tc * 2.7, -3.4))
     );
-    uv += churnBroad * 0.085 + churnFine * 0.025;
+    vec2 churnOffset = churnBroad * 0.085 + churnFine * 0.025;
 
     // Colour migration. The churn above only wobbles each point around its
     // own patch of the artwork, so every spot on the ball keeps showing the
@@ -152,20 +167,29 @@ const FRAG = /* glsl */ `
     // incommensurate rates, so the path does not retrace itself — sweeps the
     // colours across the entire surface, and any given spot eventually sees
     // every part of the source rather than being tied to one region of it.
-    uv += vec2(uTime * 0.017, uTime * 0.011);
+    vec2 drift = vec2(uTime * 0.017, uTime * 0.011);
+    vec2 totalOffset = churnOffset + drift;
+    uvA += totalOffset;
+    uvB += totalOffset;
 
     // Mirror-fold back into range rather than clamping. Clamping would stall
     // the drift against the texture edge, and a plain fract() would snap with
     // a hard seam; folding reverses direction smoothly so the migration runs
     // indefinitely with no visible break.
-    uv = abs(fract(uv) * 2.0 - 1.0);
+    uvA = abs(fract(uvA) * 2.0 - 1.0);
+    uvB = abs(fract(uvB) * 2.0 - 1.0);
 
     // Sample only the middle of the source, which is solidly inside the
     // painted ball — the outer frame is the dark background and its glow, and
     // wrapping that around would band the sphere with black at the poles.
-    uv = vec2(0.22) + uv * 0.56;
+    uvA = vec2(0.22) + uvA * 0.56;
+    uvB = vec2(0.22) + uvB * 0.56;
 
-    vec3 col = texture2D(uTex, uv).rgb;
+    // Cross-fade to mapping B as mapping A approaches its poles. The blend
+    // completes before A degenerates badly, so the smeared region is never
+    // the one on screen.
+    float poleBlend = smoothstep(0.55, 0.88, abs(p.y));
+    vec3 col = mix(texture2D(uTex, uvA).rgb, texture2D(uTex, uvB).rgb, poleBlend);
 
     // Granulation brightness: bright convective cells that swell and fade
     // across the surface. Driven by a moving noise field rather than a single
@@ -177,28 +201,12 @@ const FRAG = /* glsl */ `
     float granule = fbm(p * 3.4 + vec3(tc * 1.6, tc * 0.8, -tc * 1.2)) * 0.5 + 0.5;
     float hueDrift = fbm(p * 2.1 + vec3(-tc * 1.1, tc * 1.4, tc * 0.7)) * 0.5 + 0.5;
 
-    // Every longitude line converges at the poles (p.y -> +-1), which turns
-    // the busy source art into a sharp radial starburst there whenever
-    // rotation brings a pole into view. Fading toward a synthesised cap as
-    // the fragment nears a pole replaces that seam with something smooth
-    // instead — but the cap is built from the same granule/fine-noise fields
-    // driving the rest of the ball rather than one flat colour, so it keeps
-    // showing texture and doesn't read as a bald, solid patch. A tighter
-    // threshold also shrinks how much of the surface the cap actually
-    // covers, versus the wide flat fade this replaces.
-    // Two octaves so the cap carries both broad cells and fine shimmer — it
-    // now covers a much larger area than a tight pinch did, so a single
-    // octave would read as soft and underdetailed next to the sampled art.
-    float capFine = fbm(p * 6.5 + vec3(tc * 2.1, -tc * 1.4, tc * 0.6)) * 0.5 + 0.5;
-    float capDetail = fbm(p * 13.0 + vec3(-tc * 1.7, tc * 2.4, tc * 1.1)) * 0.5 + 0.5;
-    vec3 capColor = mix(uColorA, uColorC, hueDrift)
-                  * (0.62 + 0.55 * capFine + 0.28 * capDetail);
-    // The convergence smears the artwork over a wide polar region, not just
-    // the last few degrees, so the blend has to start well before the pole.
-    // A tight band (0.93 -> 0.995) left the smeared starburst fully visible
-    // just outside it, reading as a blurred bloom stuck to the surface.
-    float poleness = smoothstep(0.82, 0.97, abs(p.y));
-    col = mix(col, capColor, poleness);
+    // No synthesised pole cap here any more. Blending the pole region toward
+    // generated noise was covering the smear rather than removing it, and at
+    // any width wide enough to hide the artefact it read as a soft,
+    // desaturated patch stuck to the bottom of the ball. The dual-mapping
+    // cross-fade above removes the degenerate sample itself, so the surface
+    // is real texture everywhere and needs nothing painted over it.
 
     col *= 0.86 + 0.30 * granule;
 

@@ -7,6 +7,7 @@ export default function AdminLoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [code, setCode] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -19,7 +20,7 @@ export default function AdminLoginPage() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, code }),
       });
 
       const data = await res.json();
@@ -86,6 +87,23 @@ export default function AdminLoginPage() {
               required
               className="w-full bg-black/40 border border-white/10 rounded px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-white/30 transition-colors"
               placeholder="••••••••"
+            />
+          </div>
+
+          <div>
+            <label htmlFor="code" className="block text-sm text-gray-400 mb-2">
+              Code
+            </label>
+            <input
+              id="code"
+              type="password"
+              inputMode="numeric"
+              autoComplete="one-time-code"
+              value={code}
+              onChange={(e) => setCode(e.target.value)}
+              required
+              className="w-full bg-black/40 border border-white/10 rounded px-4 py-2.5 text-white placeholder-gray-600 focus:outline-none focus:border-white/30 transition-colors"
+              placeholder="••••"
             />
           </div>
 

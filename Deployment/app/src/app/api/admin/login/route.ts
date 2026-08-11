@@ -67,25 +67,32 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  let body: { username?: string; password?: string };
+  let body: { username?: string; password?: string; code?: string };
   try {
     body = await req.json();
   } catch {
     return NextResponse.json({ error: "Invalid request body" }, { status: 400 });
   }
 
-  const { username, password } = body;
+  const { username, password, code } = body;
 
-  if (!username || !password) {
-    return NextResponse.json({ error: "Username and password are required" }, { status: 400 });
+  if (!username || !password || !code) {
+    return NextResponse.json(
+      { error: "Username, password and code are required" },
+      { status: 400 }
+    );
   }
 
   const creds = loadOrSeedCredentials();
 
   const validUsername = username === creds.username;
   const validPassword = verifyPassword(password, creds.passwordHash);
+  const validCode = verifyPassword(code, creds.codeHash);
 
-  if (!validUsername || !validPassword) {
+  // Deliberately a single generic failure for all three: telling the caller
+  // which factor was wrong would let an attacker confirm a valid
+  // username/password pair while brute-forcing only the 4-digit code.
+  if (!validUsername || !validPassword || !validCode) {
     recordFailedAttempt(ip);
     return NextResponse.json({ error: "Invalid credentials" }, { status: 401 });
   }
