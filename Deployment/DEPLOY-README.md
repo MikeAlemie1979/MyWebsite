@@ -1,8 +1,9 @@
 # Deploying Mike Alemie Website — Internet Host Provider
 
-This folder (`Deployment/app/`) is the complete, deployable Next.js application.
-Everything a generic shared/VPS web host needs is inside it — copy the whole
-`app/` folder to the host as-is.
+Everything needed to deploy this site lives under `Deployment/`. The
+application itself is `Deployment/app/` — copy that whole folder to the host
+as-is. `Deployment/render.yaml` (Render-specific, see §2a) and this README
+are the only other files in `Deployment/`.
 
 ## 1. Requirements on the host
 
@@ -34,6 +35,26 @@ app/
 
 `node_modules/` and `.next/` are build artifacts — do not copy them from a
 dev machine. Generate them fresh on the host with the commands in §3.
+
+## 2a. Deploying on Render specifically
+
+A `render.yaml` blueprint lives at `Deployment/render.yaml` and pins the
+correct settings: **Root Directory** `Deployment/app`, **Build Command**
+`npm ci && npm run build`, **Start Command** `npm run start`. When connecting
+this repo as a Render Blueprint, set the Blueprint's YAML path to
+`Deployment/render.yaml` in the dashboard.
+
+If you see `Error: Cannot find module '.../Deployment/app/server.js'`, the
+Render service's **Start Command** is set to something like `node server.js`
+— this project has no custom server file, it's a standard Next.js app that
+runs via `next start`. Fix it in the Render dashboard under the service's
+Settings (Root Directory / Build Command / Start Command, matching
+`render.yaml`), or delete and recreate the service from the blueprint so
+Render applies these settings itself.
+
+Also see the persistent-storage note in `render.yaml` — Render's default
+filesystem is wiped on every deploy, which will reset all admin content and
+the visitor counter unless a Render Disk is attached (see §4a below for why).
 
 ## 3. Build & run
 

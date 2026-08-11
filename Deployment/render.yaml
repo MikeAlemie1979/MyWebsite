@@ -1,0 +1,55 @@
+# Render Blueprint — https://render.com/docs/blueprint-spec
+#
+# This app is a standard Next.js application (no custom server.js — it runs
+# via `next start`, which is what `npm run start` invokes). If a Render
+# service for this repo was previously created by hand through the dashboard,
+# its Start Command may be set to something else (e.g. "node server.js",
+# Render's generic Node default) — that produces exactly the error this file
+# fixes: "Cannot find module '.../Deployment/app/server.js'", since no such
+# file exists in this project.
+#
+# This file lives in Deployment/, not the repo root. When connecting this
+# repo as a Render Blueprint, set the Blueprint's YAML path to
+# "Deployment/render.yaml" in the dashboard (Render does not require
+# render.yaml to sit at the repo root — you choose its path when the
+# Blueprint is created). `rootDir` below is still relative to the repo root,
+# not to this file's own location.
+#
+# To apply this blueprint to an EXISTING service instead: Render dashboard →
+# the service → Settings, and set Root Directory / Build Command / Start
+# Command to match the values below (Render does not retroactively apply a
+# newly-added render.yaml to a service it didn't create).
+
+services:
+  - type: web
+    name: mike-alemie-website
+    runtime: node
+    plan: starter
+    rootDir: Deployment/app
+    buildCommand: npm ci && npm run build
+    startCommand: npm run start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_SITE_URL
+        value: https://mikealemie.com # replace with the real production domain
+      - key: ENABLE_HSTS
+        value: "false" # flip to "true" only once TLS on the domain is confirmed working
+    # PORT is supplied by Render automatically — `next start` reads it, no
+    # manual configuration needed.
+    #
+    # IMPORTANT — persistent storage: this app has no database. Admin content
+    # (cards, projects, home text, SMTP/social config) and system state
+    # (admin sessions, visitor count) are flat JSON files written to the app's
+    # working directory at runtime (see Deployment/DEPLOY-README.md §4a).
+    # Render's default filesystem is EPHEMERAL — it is wiped on every deploy
+    # and does not persist between them. Without a persistent disk, admin
+    # content, the admin password, and the visitor count will silently reset
+    # to defaults on every deploy. Attach a Render Disk mounted at this
+    # service's working directory to keep that state across deploys, or plan
+    # to migrate onto the schema already drafted at
+    # Development/Implementation/MAWebsiteDB.sql.
+    # disk:
+    #   name: content-store
+    #   mountPath: /opt/render/project/src/Deployment/app
+    #   sizeGB: 1
