@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useRouter } from "next/navigation";
 import { SMTPSettingsPanel } from "./smtp-settings-panel";
 import { HomeTextManager } from "./home-text-manager";
 import { CardsManager } from "./cards-manager";
@@ -119,11 +118,17 @@ function NavButton({
 
 export function AdminDashboard() {
   const [activeSection, setActiveSection] = useState<Section>("home-text");
-  const router = useRouter();
 
   async function handleLogout() {
-    await fetch("/api/admin/logout", { method: "POST" });
-    router.push("/");
+    try {
+      await fetch("/api/admin/logout", { method: "POST" });
+    } finally {
+      // Hard navigation, not router.push: a soft push keeps the App Router's
+      // client cache, so the dashboard could stay on screen even though the
+      // session cookie was just cleared. Replacing the document also drops
+      // /admin from history, so Back cannot return to the logged-in view.
+      window.location.replace("/");
+    }
   }
 
   return (

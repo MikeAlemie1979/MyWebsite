@@ -1,3 +1,37 @@
-# Admin auth secrets - never commit
+# Dependencies
+node_modules/
+
+# Next.js build output
+.next/
+out/
+
+# TypeScript incremental build cache
+tsconfig.tsbuildinfo
+
+# Admin auth secrets and session store - never commit
 .env.admin-auth.json
 .env.admin-sessions.json
+
+# Runtime content stores - environment-specific, regenerated on first use.
+# Keep these out of version control so a deploy never overwrites live site
+# content (cards, projects, home text, SMTP creds, visitor count, etc.) with
+# whatever happened to be on a developer's machine.
+.env.home-text.json
+.env.cards.json
+.env.projects.json
+.env.about-content.json
+.env.smtp.json
+.env.social-config.json
+.env.social-post-log.json
+.env.visitor-count.json
+
+# Uploaded media - environment-specific, not source
+public/uploads/
+
+# Editor/tooling
+.claude/
+.impeccable/
+
+# OS
+Thumbs.db
+.DS_Store

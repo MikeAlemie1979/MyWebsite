@@ -1,17 +1,21 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 
-const IMG_SIZE = 133;
+const VISITOR_ID_KEY = "ma-visitor-id";
+
+const IMG_SIZE = 88;
 const IMG_STYLE: React.CSSProperties = {
   width: `${IMG_SIZE}px`,
   height: `${IMG_SIZE}px`,
   flexShrink: 0,
-  border: "3px solid #DEF520",
-  borderRadius: "16px",
+  // Border, radius and glow scaled down with the tile — keeping the 3px/16px
+  // chrome from the larger size made the smaller tile read as mostly frame.
+  border: "2px solid #DEF520",
+  borderRadius: "12px",
   overflow: "hidden",
-  boxShadow: "0 0 18px rgba(222,245,32,0.6), inset 0 0 8px rgba(222,245,32,0.1)",
+  boxShadow: "0 0 12px rgba(222,245,32,0.55), inset 0 0 6px rgba(222,245,32,0.1)",
   position: "relative",
 };
 
@@ -48,9 +52,35 @@ function FacebookIcon() {
 }
 
 export function Footer() {
+  const [visitorCount, setVisitorCount] = useState<number | null>(null);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  useEffect(() => {
+    // A UUID persisted in localStorage is the de-dupe key: the same browser
+    // always resends the same id, so the API only counts it once no matter
+    // how many times this component mounts across page loads.
+    let visitorId = window.localStorage.getItem(VISITOR_ID_KEY);
+    if (!visitorId) {
+      visitorId = crypto.randomUUID();
+      window.localStorage.setItem(VISITOR_ID_KEY, visitorId);
+    }
+
+    fetch("/api/visitor-count", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visitorId }),
+    })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((data) => {
+        if (data && typeof data.count === "number") setVisitorCount(data.count);
+      })
+      .catch(() => {
+        // Leave the counter unrendered if the API is unreachable.
+      });
+  }, []);
 
   return (
     <footer
@@ -78,26 +108,42 @@ export function Footer() {
         </p>
       </div>
 
+      {/* Visitor counter — center column, below the copyright line. Styled
+          to match "Back to top" (uppercase, tracking-widest, low-opacity
+          idle) since it reads as a static pill, not an interactive control. */}
+      {visitorCount !== null && (
+        <div className="absolute top-[68px] left-0 right-0 flex justify-center">
+          <span className="text-[12px] uppercase tracking-widest opacity-60">
+            Visitors: {visitorCount.toLocaleString()}
+          </span>
+        </div>
+      )}
+
       {/* Main footer row — vertically centered */}
       <div className="flex items-center justify-between h-full">
         {/* Left: logo + QR */}
         <div className="flex items-center gap-4">
-          <div style={IMG_STYLE}>
+          {/* contain, not cover: cover cropped the logo's edges to fill the
+              square, which is what made it look out of shape. */}
+          <div style={{ ...IMG_STYLE, backgroundColor: "#1a1a1a" }}>
             <Image
               src="/images/pristinenoire-llc.png"
               alt="Pristinenoire LLC logo"
               fill
               sizes={`${IMG_SIZE}px`}
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: "contain", padding: "6px" }}
             />
           </div>
-          <div style={{ ...IMG_STYLE, backgroundColor: "#1a1a1a", padding: "10px" }}>
+          {/* Padding lives on the image only. It was previously set on both
+              the tile and the image, so 20px of a 133px tile went to inset —
+              at the smaller size that would have crushed the QR. */}
+          <div style={{ ...IMG_STYLE, backgroundColor: "#ffffff" }}>
             <Image
               src="/images/qr-code.png"
               alt="QR Code"
               fill
               sizes={`${IMG_SIZE}px`}
-              style={{ objectFit: "contain", padding: "10px" }}
+              style={{ objectFit: "contain", padding: "6px" }}
             />
           </div>
         </div>

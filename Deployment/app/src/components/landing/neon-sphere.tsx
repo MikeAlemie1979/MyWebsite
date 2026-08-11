@@ -186,9 +186,18 @@ const FRAG = /* glsl */ `
     // showing texture and doesn't read as a bald, solid patch. A tighter
     // threshold also shrinks how much of the surface the cap actually
     // covers, versus the wide flat fade this replaces.
+    // Two octaves so the cap carries both broad cells and fine shimmer — it
+    // now covers a much larger area than a tight pinch did, so a single
+    // octave would read as soft and underdetailed next to the sampled art.
     float capFine = fbm(p * 6.5 + vec3(tc * 2.1, -tc * 1.4, tc * 0.6)) * 0.5 + 0.5;
-    vec3 capColor = mix(uColorA, uColorC, hueDrift) * (0.7 + 0.6 * capFine);
-    float poleness = smoothstep(0.93, 0.995, abs(p.y));
+    float capDetail = fbm(p * 13.0 + vec3(-tc * 1.7, tc * 2.4, tc * 1.1)) * 0.5 + 0.5;
+    vec3 capColor = mix(uColorA, uColorC, hueDrift)
+                  * (0.62 + 0.55 * capFine + 0.28 * capDetail);
+    // The convergence smears the artwork over a wide polar region, not just
+    // the last few degrees, so the blend has to start well before the pole.
+    // A tight band (0.93 -> 0.995) left the smeared starburst fully visible
+    // just outside it, reading as a blurred bloom stuck to the surface.
+    float poleness = smoothstep(0.82, 0.97, abs(p.y));
     col = mix(col, capColor, poleness);
 
     col *= 0.86 + 0.30 * granule;
@@ -201,9 +210,19 @@ const FRAG = /* glsl */ `
     float fres = pow(1.0 - max(dot(normalize(vNormal), normalize(vView)), 0.0), 2.0);
     col = mix(col, vec3(0.75, 1.0, 1.0), fres * 0.35);
 
-    // Cursor specular bloom.
-    float spec = pow(max(0.0, 1.0 - length(p.xy - uPointer * 0.9)), 16.0);
-    col = mix(col, vec3(1.0), spec * 0.35);
+    // Cursor specular — a tight glint that tracks the pointer across the
+    // shell. This was previously a screen-space falloff on p.xy with a broad
+    // exponent, which left a large hazy bloom sitting permanently over the
+    // middle of the ball whenever the pointer was at its (0,0) default: it
+    // washed out the surface texture underneath and, unlike everything else
+    // on the sphere, never rotated away. Driving it off the surface normal
+    // against a pointer-steered light direction, with a much tighter
+    // exponent, makes it read as a small moving highlight on a glassy shell
+    // instead of a fixed smudge.
+    vec3 lightDir = normalize(vec3(uPointer * 1.15, 1.0));
+    float ndl = max(0.0, dot(normalize(vNormal), lightDir));
+    float spec = pow(ndl, 110.0);
+    col = mix(col, vec3(1.0), spec * 0.22);
 
     // No brightness or saturation grading here — the reference image already
     // carries the exact neon look we want, and pushing it further only clips

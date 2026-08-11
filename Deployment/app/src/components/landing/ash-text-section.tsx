@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useTheme } from "@/context/theme-context";
-import { CubeReveal } from "./cube-reveal";
+import { CubeReveal, type CubeRevealHandle } from "./cube-reveal";
 
 // Fallback used until the admin-configured sentences load (and if that API
 // is ever unreachable) — was previously the only source, now the default.
@@ -28,9 +28,14 @@ interface HomeTextConfig {
 const ASH_COLORS = ["#8a8a8a", "#4a4a4a", "#ffffff", "#b5b5b5", "#3a3a3a"];
 
 // Scroll budget: each sentence gets one viewport of scroll to assemble and
-// hold, plus a final stretch for the whole thing to fall away as ash.
+// hold, plus a fall phase, plus a hold phase while Mehrdad.png is fully
+// visible so scroll cannot release before the reveal finishes.
 const VH_PER_SENTENCE = 1.15;
 const VH_FOR_FALL = 1.6;
+// The cube reveal is time-driven (~7.6s of tumble-in + two ~1.2s wave passes,
+// see cube-reveal.tsx), so the pin has to be long enough that a normal scroll
+// cannot outrun it. Sized to hold the section through the whole motion.
+const VH_FOR_CUBE = 6;
 
 interface Particle {
   tx: number; // target position in the formed glyph
@@ -121,8 +126,7 @@ export function AshTextSection() {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const cubeWrapRef = useRef<HTMLDivElement>(null);
-  const cubeActiveRef = useRef(false);
-  const [cubeActive, setCubeActive] = useState(false);
+  const cubeRef = useRef<CubeRevealHandle>(null);
   const { motionHidden } = useTheme();
 
   // Admin-configurable via the "Home Ash Text" panel (/api/admin/home-text).
@@ -188,10 +192,7 @@ export function AshTextSection() {
       ctx.fillStyle = "#b5b5b5";
       last.forEach((p) => ctx.fillRect(p.tx, p.ty, p.size, p.size));
       if (cubeWrapRef.current) cubeWrapRef.current.style.opacity = "1";
-      if (!cubeActiveRef.current) {
-        cubeActiveRef.current = true;
-        setCubeActive(true);
-      }
+      cubeRef.current?.setProgress(1);
       return () => {
         window.removeEventListener("resize", onResize);
         window.clearTimeout(resizeTimer);
@@ -209,8 +210,23 @@ export function AshTextSection() {
 
       ctx.clearRect(0, 0, w, h);
 
-      const formSpan = (sentences.length * VH_PER_SENTENCE) /
-        (sentences.length * VH_PER_SENTENCE + VH_FOR_FALL);
+      const totalBudget = sentences.length * VH_PER_SENTENCE + VH_FOR_FALL + VH_FOR_CUBE;
+      const formSpan = (sentences.length * VH_PER_SENTENCE) / totalBudget;
+      const fallEnd  = (sentences.length * VH_PER_SENTENCE + VH_FOR_FALL) / totalBudget;
+
+      // The reveal starts a quarter into the ash-fall and runs to the very end
+      // of the section's scroll budget. Because it is driven from scroll
+      // position rather than elapsed time, the section physically cannot
+      // release before the portrait has finished assembling — reaching the
+      // release point and completing the reveal are the same event.
+      const cubeStart = formSpan + (fallEnd - formSpan) * 0.25;
+      const cubeProgress = Math.max(0, Math.min(1, (progress - cubeStart) / (1 - cubeStart)));
+      cubeRef.current?.setProgress(cubeProgress);
+      if (cubeWrapRef.current) {
+        // Fade the wrapper up over the first slice of the reveal so the
+        // portrait arrives out of the ash rather than switching on.
+        cubeWrapRef.current.style.opacity = String(Math.min(1, cubeProgress / 0.18));
+      }
 
       if (progress <= formSpan) {
         // Assembly phase: which sentence, and how far along is it.
@@ -224,8 +240,6 @@ export function AshTextSection() {
         }
 
         for (const p of particles) {
-          // Each particle lands at its own point in the window, so the
-          // sentence resolves character-by-character rather than all at once.
           const k = Math.min(1, Math.max(0, t / p.arrive));
           const e = easeOut(k);
           const x = p.sx + (p.tx - p.sx) * e;
@@ -235,24 +249,9 @@ export function AshTextSection() {
           ctx.fillRect(x, y, p.size, p.size);
         }
 
-        // Still in the assembly phase — keep the reveal hidden (it may have
-        // already been reached and hidden again by scrolling back up).
-        if (cubeWrapRef.current) cubeWrapRef.current.style.opacity = "0";
-      } else {
-        // Dissolution: the last sentence detaches and falls like ash.
-        const fall = (progress - formSpan) / (1 - formSpan);
-
-        // Once the ash has mostly fallen, fade the Mehrdad reveal in — still
-        // inside this same pinned viewport, so it appears before the section
-        // ever releases scroll to whatever comes next, not after.
-        if (cubeWrapRef.current) {
-          const cubeFade = Math.max(0, Math.min(1, (fall - 0.45) / 0.35));
-          cubeWrapRef.current.style.opacity = String(cubeFade);
-        }
-        if (fall > 0.5 && !cubeActiveRef.current) {
-          cubeActiveRef.current = true;
-          setCubeActive(true);
-        }
+      } else if (progress <= fallEnd) {
+        // Dissolution: the last sentence falls like ash.
+        const fall = (progress - formSpan) / (fallEnd - formSpan);
         const particles = sets[sentences.length - 1];
         if (!particles) {
           raf = requestAnimationFrame(frame);
@@ -274,7 +273,6 @@ export function AshTextSection() {
 
           ctx.globalAlpha = alpha;
           if (p.spark && f < 0.6) {
-            // Occasional ember catching light on the way down.
             ctx.fillStyle = f % 0.2 < 0.1 ? "#ffb347" : "#fff2c4";
             ctx.shadowBlur = 6;
             ctx.shadowColor = "#ff8c1a";
@@ -285,6 +283,12 @@ export function AshTextSection() {
           ctx.fillRect(x, y, p.size, p.size);
           ctx.shadowBlur = 0;
         }
+
+      } else {
+        // Cube phase: ash is gone and the portrait assembles under scroll.
+        // Opacity and per-cube state are both set above, from cubeProgress —
+        // the canvas is already cleared at the top of the frame, so there is
+        // nothing left to draw here.
       }
 
       ctx.globalAlpha = 1;
@@ -299,7 +303,7 @@ export function AshTextSection() {
     };
   }, [motionHidden, sentences, fontFamily]);
 
-  const totalVh = sentences.length * VH_PER_SENTENCE + VH_FOR_FALL;
+  const totalVh = sentences.length * VH_PER_SENTENCE + VH_FOR_FALL + VH_FOR_CUBE;
 
   return (
     <div
@@ -338,7 +342,7 @@ export function AshTextSection() {
               "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, #000 22%, #000 100%)",
           }}
         >
-          <CubeReveal active={cubeActive} />
+          <CubeReveal ref={cubeRef} />
         </div>
 
         <motion.div

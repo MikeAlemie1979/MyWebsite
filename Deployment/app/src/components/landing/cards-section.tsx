@@ -107,24 +107,42 @@ export function CardsSection() {
   // progress plays the single-word title intro (grows from far away, holds,
   // disappears); the rest drives the card track, remapped back to its own
   // 0->1 range so cards still travel the full track width.
-  const WORD_PHASE_END = 0.12;
+  // Four sequential, scroll-scrubbed beats — each finishes before the next
+  // begins, so nothing competes for attention:
+  //   1. BG_IN     background fades up from the previous section
+  //   2. WORD      "Portfolio" grows from tiny to large bold, then fades away
+  //   3. CARDS_IN  the first card fades up in the empty frame
+  //   4. TRACK     the rail starts travelling horizontally
+  const BG_IN_END = 0.06;
+  const WORD_IN_END = 0.13;
+  const WORD_HOLD_END = 0.20;
+  const WORD_OUT_END = 0.27;
+  const CARDS_IN_END = 0.36;
+
   const { scrollYProgress } = useScroll({
     target: wrapperRef,
     offset: ["start start", "end end"],
   });
-  const sectionOpacity = useTransform(scrollYProgress, [0, 0.025], [0, 1]);
+
+  const sectionOpacity = useTransform(scrollYProgress, [0, BG_IN_END], [0, 1]);
+
   const wordOpacity = useTransform(
     scrollYProgress,
-    [0, 0.025, WORD_PHASE_END * 0.75, WORD_PHASE_END],
+    [BG_IN_END, WORD_IN_END, WORD_HOLD_END, WORD_OUT_END],
     [0, 1, 1, 0]
   );
+  // Pops in from very small to large bold, and keeps growing slightly as it
+  // fades so the exit reads as receding forward, not just switching off.
   const wordScale = useTransform(
     scrollYProgress,
-    [0, WORD_PHASE_END * 0.6, WORD_PHASE_END],
-    [0.25, 1.3, 1.3]
+    [BG_IN_END, WORD_IN_END, WORD_HOLD_END, WORD_OUT_END],
+    [0.12, 1.0, 1.15, 1.45]
   );
-  const x = useTransform(scrollYProgress, [0, WORD_PHASE_END, 1], [0, 0, -maxX]);
-  const cardsOpacity = useTransform(scrollYProgress, [WORD_PHASE_END * 0.7, WORD_PHASE_END], [0, 1]);
+
+  // First card only starts appearing after the word is fully gone.
+  const cardsOpacity = useTransform(scrollYProgress, [WORD_OUT_END, CARDS_IN_END], [0, 1]);
+  // ...and the rail only starts moving once that card has fully arrived.
+  const x = useTransform(scrollYProgress, [0, CARDS_IN_END, 1], [0, 0, -maxX]);
 
   useEffect(() => {
     const measure = () => {
@@ -141,11 +159,15 @@ export function CardsSection() {
     <div
       ref={wrapperRef}
       className="relative w-full"
-      style={{ height: `${CARD_COUNT * 100}vh`, backgroundColor: "#DEF520", color: "#0a0a0a" }}
+      // The wrapper stays transparent over the previous section's black. The
+      // yellow lives on the sticky panel below so it can actually fade up —
+      // painting it here meant the slab was always at full strength and the
+      // opacity ramp on the panel had nothing visible to act on.
+      style={{ height: `${CARD_COUNT * 100}vh`, color: "#0a0a0a" }}
     >
       <motion.section
         className="sticky top-0 h-screen w-full overflow-hidden"
-        style={{ opacity: sectionOpacity }}
+        style={{ opacity: sectionOpacity, backgroundColor: "#DEF520" }}
         aria-label="Featured work"
       >
         {/* Single-word title intro: grows in from far away, holds briefly at

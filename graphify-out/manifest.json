@@ -1,0 +1,17 @@
+{
+  "Implementation/MAWebsiteDB.sql": {
+    "mtime": 1786405463.3389266,
+    "ast_hash": "8cd864019efca54e4de89c0297206295",
+    "semantic_hash": "8cd864019efca54e4de89c0297206295"
+  },
+  "CLAUDE.md": {
+    "mtime": 1786409913.5459032,
+    "ast_hash": "a6ad98f49d9e99f12988e4d3f678e47a",
+    "semantic_hash": "a6ad98f49d9e99f12988e4d3f678e47a"
+  },
+  "Implementation/Roadmap.md": {
+    "mtime": 1786409871.9382412,
+    "ast_hash": "e6d30d58ed58c200b4daedb1b0280dd2",
+    "semantic_hash": "e6d30d58ed58c200b4daedb1b0280dd2"
+  }
+}
