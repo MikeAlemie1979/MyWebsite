@@ -88,9 +88,11 @@ stored on disk (see §4a) — not via environment variables.
 
 Admin-editable content (home-page sentences, cards, projects, about-page copy,
 SMTP settings, social config) and the visitor count are held in a **Google
-Spreadsheet** — one tab per document, the document's JSON in cell `A1`.
-Uploaded images go to a **Google Drive folder** and are served back through
-`/api/media/<fileId>`, so the folder itself stays private.
+Spreadsheet** — one tab per document, with a real header row and typed columns
+(e.g. the Cards tab has `ID | Title | Description | Image URL` columns, not a
+JSON blob), defined in `src/lib/sheet-schema.ts`. Uploaded images go to a
+**Google Drive folder** and are served back through `/api/media/<fileId>`, so
+the folder itself stays private.
 
 Configure it with three environment variables:
 
@@ -117,7 +119,18 @@ One-time setup:
    shows the service-account address to share with, and runs a live
    connection test.
 
-The app creates each spreadsheet tab on first save — no manual sheet setup.
+The app creates each spreadsheet tab **and its header row** on first save —
+no manual sheet setup.
+
+The spreadsheet and folder IDs can also be set or overridden live from
+**/admin → System → Storage** (paste the full URL or the bare id) without a
+redeploy. That override is saved to `.env.google-links.json`, a gitignored
+local file — it takes priority over `GOOGLE_SHEET_ID`/`GOOGLE_DRIVE_FOLDER_ID`
+while present, but is lost on the next deploy same as the other `.env.*.json`
+files, at which point the environment variables take over again. Treat the
+panel as a way to test a different sheet/folder without touching Render's
+settings, not as the permanent configuration path — set the env vars for
+anything meant to last.
 
 **If the variables are unset**, the app falls back to local JSON files
 (`.env.*.json`) and `public/uploads/`. That is the intended behavior for local
@@ -135,18 +148,22 @@ the Google Sheets backend and nothing reads it.
 
 ### 4b. Default admin credentials — change immediately
 
-If `.env.admin-auth.json` does not exist, the app seeds it on first request
-with:
+Login is 3-factor: username, password, and a numeric code. If no credentials
+exist yet (checked via the document store — see §4a), the app seeds these
+defaults on first login attempt:
 
 ```
-username: admin
-password: ChangeMe123!
+username: Admin
+password: App@dmin0123
+code:     2085
 ```
 
-**Log in and change this password through the Admin dashboard immediately
-after the first deploy.** Leaving the default in place on a public host is a
-real credential — anyone who knows this project uses this scaffolding can
-guess it.
+**Log in and change these through the Admin dashboard immediately after the
+first deploy.** Leaving the defaults in place on a public host is a real
+credential — anyone who knows this project uses this scaffolding can guess
+them. Because credentials now live in the document store (Google Sheets in
+production, once configured — see §4a), a changed password survives a
+redeploy; under the local-file fallback it does not.
 
 ## 5. What NOT to deploy from a dev machine
 
@@ -154,18 +171,30 @@ guess it.
 (rather than deploying via git), leave these out too:
 
 - `node_modules/`, `.next/`, `tsconfig.tsbuildinfo`
-- Every `.env.*.json` file (these are environment-specific runtime state —
-  see §4a; deploying a developer's copy would leak the dev admin session and
-  overwrite live content)
+- Every `.env.*.json` file, including `.env.google-links.json` (these are
+  environment-specific runtime state — see §4a; deploying a developer's copy
+  would leak dev credentials and could point the live site at a test
+  spreadsheet/folder)
 - `public/uploads/` (environment-specific uploaded media)
 - `.claude/`, `.impeccable/` (editor/tooling metadata)
 
 ## 6. Verified before this package was prepared
 
-- `npm run build` — clean production build, 24 routes, no errors
-- `npm run start` — smoke-tested: `/` returns `200`, `/admin` correctly
-  `307`-redirects to `/admin/login` when unauthenticated (confirms the
-  server-side auth guard survives a production build)
+- `npm run build` — clean production build, 25 routes, no errors, all API
+  routes correctly dynamic (`ƒ`)
+- `npm run start` — smoke-tested against the built output: `/`, `/about`,
+  `/projects`, and `/admin/login` all return `200`
+- Every admin content GET (cards, projects, home-text, about-content) returns
+  `200` with no session — required, since the public pages read through these
+- Every admin POST returns `401 Unauthorized` with no session cookie —
+  confirms the `requireAdmin()` gate holds under a production build, not just
+  in dev
+- This pass ran on the **local-file fallback** (no `GOOGLE_SERVICE_ACCOUNT_JSON`
+  set yet) — the Google Sheets/Drive path is implemented and its column
+  schema/auth flow verified separately, but a live write against the actual
+  target spreadsheet has not been exercised with production credentials.
+  Confirm via **/admin → System → Storage** on the live host after the three
+  Google env vars are set.
 
 ---
 
