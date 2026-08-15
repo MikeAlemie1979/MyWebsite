@@ -17,7 +17,11 @@ export function AboutHeadline({ headline, fontFamily, fontSize, color }: AboutHe
       style={{ backgroundColor: "var(--theme-bg)" }}
       aria-label="About headline"
     >
-      <motion.h1
+      {/* h2, not h1: the page already has its semantic h1 (visually hidden,
+          in about/page.tsx) — a second h1 here was both a duplicate-heading
+          and a heading-order violation, since the flashcards below jump
+          straight to h3 with nothing in between. */}
+      <motion.h2
         className="motion-el tracking-wide max-w-2xl leading-relaxed"
         style={{ fontFamily, fontSize: `${fontSize}px`, color }}
         initial={{ opacity: 0, y: 30 }}
@@ -26,7 +30,7 @@ export function AboutHeadline({ headline, fontFamily, fontSize, color }: AboutHe
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
       >
         {headline}
-      </motion.h1>
+      </motion.h2>
     </section>
   );
 }

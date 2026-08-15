@@ -1,8 +1,24 @@
+import type { Metadata } from "next";
 import { Navigation } from "@/components/landing/navigation";
 import { SlidingCards } from "@/components/projects/sliding-cards";
 import { Footer } from "@/components/landing/footer";
 import { ThemeControl } from "@/components/landing/theme-control";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
+
+const TITLE = "Projects & Prices";
+const DESCRIPTION =
+  "Recent AI design and database engineering projects by Mike Alemie, with approximate pricing for each.";
+
+// Own title/description/OG image rather than inheriting the homepage's, so a
+// classic search result and a generative-engine answer about pricing or past
+// work both quote this page's content instead of the Person bio on "/".
+export const metadata: Metadata = {
+  title: TITLE,
+  description: DESCRIPTION,
+  alternates: { canonical: "/projects" },
+  openGraph: { title: TITLE, description: DESCRIPTION, url: "/projects" },
+  twitter: { title: TITLE, description: DESCRIPTION },
+};
 
 export default function ProjectsPage() {
   return (

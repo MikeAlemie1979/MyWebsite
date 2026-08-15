@@ -50,7 +50,10 @@ function ProjectCard({ project, index }: { project: ProjectItem; index: number }
         <p className="text-eyebrow mb-3" style={{ opacity: 0.55 }}>
           {String(index + 1).padStart(2, "0")} / {String(CARD_COUNT).padStart(2, "0")}
         </p>
-        <h3 className="text-[20px] font-medium tracking-wide mb-3 opacity-95">{project.title}</h3>
+        {/* h2, not h3: the page's h1 ("Projects & Prices") has nothing
+            between it and a project title in the DOM, which is a heading-
+            order skip Lighthouse flags directly. */}
+        <h2 className="text-[20px] font-medium tracking-wide mb-3 opacity-95">{project.title}</h2>
         <p className="text-[13px] leading-relaxed opacity-80">{project.briefInfo}</p>
         <p className="font-display text-[14px] tracking-wide mt-6 opacity-95">{project.approxPrice}</p>
       </div>

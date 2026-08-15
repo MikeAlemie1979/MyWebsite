@@ -34,7 +34,11 @@ function HorizontalCard({ card, index }: { card: CardItem; index: number }) {
         <p className="text-eyebrow" style={{ opacity: 0.55 }}>
           {String(index + 1).padStart(2, "0")} / {String(CARD_COUNT).padStart(2, "0")}
         </p>
-        <h3 className="text-[28px] leading-[1.15] font-bold tracking-tight">{card.title}</h3>
+        {/* h2, not h3: this section renders before ContentSection's own h2 in
+            the DOM, so a card title starting at h3 would skip a heading level
+            straight from the page's h1 — an accessibility violation Lighthouse
+            flags directly. */}
+        <h2 className="text-[28px] leading-[1.15] font-bold tracking-tight">{card.title}</h2>
         <p className="text-[14px] leading-relaxed" style={{ opacity: 0.7 }}>
           {card.description}
         </p>

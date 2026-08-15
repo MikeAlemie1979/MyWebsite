@@ -28,6 +28,10 @@ export const metadata: Metadata = {
   creator: "Mike Alemie",
   alternates: { canonical: "/" },
   robots: { index: true, follow: true },
+  // No dedicated favicon asset exists in this project; reusing the existing
+  // brand logo avoids both a 404 on every page load and inventing a new,
+  // unapproved icon asset.
+  icons: { icon: "/images/pristinenoire-logo.png" },
   openGraph: {
     type: "website",
     url: SITE_URL,
@@ -58,6 +62,26 @@ const PERSON_JSON_LD = {
   worksFor: { "@type": "Organization", name: "Pristinenoire LLC" },
 };
 
+// Person alone answers "who is Mike Alemie" but leaves "what is Pristinenoire
+// LLC" and "what is this site" with nothing structured to quote. Organization
+// and WebSite round those out — the three together are what a generative
+// engine needs to answer either a person-scoped or a company-scoped query
+// about this site without falling back to paraphrasing prose.
+const ORGANIZATION_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "Pristinenoire LLC",
+  url: SITE_URL,
+  founder: { "@type": "Person", name: "Mike Alemie" },
+};
+
+const WEBSITE_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "Mike Alemie",
+  url: SITE_URL,
+};
+
 export default function RootLayout({
   children,
 }: {
@@ -70,6 +94,16 @@ export default function RootLayout({
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(PERSON_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_JSON_LD) }}
+        />
+        <script
+          type="application/ld+json"
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(WEBSITE_JSON_LD) }}
         />
       </head>
       <body>
