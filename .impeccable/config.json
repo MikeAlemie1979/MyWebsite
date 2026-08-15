@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "broken-image",
+        "value": "*",
+        "files": [
+          "Deployment/app/src/components/landing/cards-section.tsx"
+        ],
+        "createdAt": "2026-08-15T19:41:59.232Z",
+        "reason": "src is card.imageUrl! guarded by the hasImage branch (line 26) so it is never empty when this <img> renders; verified live in Chrome with a real uploaded PNG rendering correctly, not as a broken-image box"
+      }
+    ]
+  }
+}
