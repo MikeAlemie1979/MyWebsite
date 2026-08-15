@@ -1,9 +1,6 @@
 import crypto from "crypto";
-import fs from "fs";
-import path from "path";
-
-const CREDS_FILE = path.join(process.cwd(), ".env.admin-auth.json");
-const SESSIONS_FILE = path.join(process.cwd(), ".env.admin-sessions.json");
+import { NextRequest } from "next/server";
+import { readDoc, writeDoc, docExists } from "./store";
 
 const SESSION_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 const SCRYPT_KEYLEN = 64;
@@ -65,101 +62,114 @@ function defaultCredentials(): AdminCredentials {
 }
 
 /**
- * Load admin credentials from the on-disk store, seeding default credentials
- * on first run if the file does not exist.
+ * Load admin credentials from the document store, seeding defaults on first
+ * run. Credentials live in the store (and therefore in Google Sheets in
+ * production) specifically so a changed admin password survives a Render
+ * deploy, which wipes the container filesystem.
  */
-export function loadOrSeedCredentials(): AdminCredentials {
-  if (!fs.existsSync(CREDS_FILE)) {
-    const defaultCreds = defaultCredentials();
-    fs.writeFileSync(CREDS_FILE, JSON.stringify(defaultCreds, null, 2), "utf-8");
-    // eslint-disable-next-line no-console
+export async function loadOrSeedCredentials(): Promise<AdminCredentials> {
+  if (!(await docExists("admin-auth"))) {
+    const seeded = defaultCredentials();
+    await writeDoc("admin-auth", seeded);
     console.warn(
-      "[admin-auth] No admin credentials file found. Seeded default credentials. " +
+      "[admin-auth] No admin credentials found. Seeded default credentials. " +
         "Please change the password via the admin settings as soon as possible."
     );
-    return defaultCreds;
+    return seeded;
   }
 
-  try {
-    const raw = fs.readFileSync(CREDS_FILE, "utf-8");
-    const parsed = JSON.parse(raw) as Partial<AdminCredentials>;
+  const parsed = await readDoc<Partial<AdminCredentials>>("admin-auth", {});
 
-    // Migration path: files written before the second-factor code existed
-    // have no codeHash. Rather than lock the admin out, seed one from the
-    // current default code and persist it so future logins are consistent.
-    if (!parsed.codeHash) {
-      const migrated: AdminCredentials = {
-        username: parsed.username ?? "Admin",
-        passwordHash: parsed.passwordHash ?? hashPassword("App@dmin0123"),
-        codeHash: hashPassword("2085"),
-      };
-      fs.writeFileSync(CREDS_FILE, JSON.stringify(migrated, null, 2), "utf-8");
-      console.warn(
-        "[admin-auth] Credentials file predated the login code — added a default code."
-      );
-      return migrated;
-    }
-
-    return parsed as AdminCredentials;
-  } catch {
-    // Corrupt file - reseed with defaults rather than locking the admin out entirely.
-    const defaultCreds = defaultCredentials();
-    fs.writeFileSync(CREDS_FILE, JSON.stringify(defaultCreds, null, 2), "utf-8");
-    console.warn(
-      "[admin-auth] Credentials file was unreadable and has been reset to defaults."
-    );
-    return defaultCreds;
+  // Migration path: records written before the second-factor code existed have
+  // no codeHash. Rather than lock the admin out, seed one from the current
+  // default code and persist it so future logins are consistent.
+  if (!parsed.passwordHash || !parsed.codeHash) {
+    const migrated: AdminCredentials = {
+      username: parsed.username ?? "Admin",
+      passwordHash: parsed.passwordHash ?? hashPassword("App@dmin0123"),
+      codeHash: parsed.codeHash ?? hashPassword("2085"),
+    };
+    await writeDoc("admin-auth", migrated);
+    console.warn("[admin-auth] Credentials record was incomplete — filled in defaults.");
+    return migrated;
   }
+
+  return parsed as AdminCredentials;
 }
 
-function readSessions(): AdminSession[] {
-  if (!fs.existsSync(SESSIONS_FILE)) return [];
-  try {
-    const raw = fs.readFileSync(SESSIONS_FILE, "utf-8");
-    const parsed = JSON.parse(raw);
-    return Array.isArray(parsed) ? (parsed as AdminSession[]) : [];
-  } catch {
-    return [];
-  }
-}
-
-function writeSessions(sessions: AdminSession[]): void {
-  fs.writeFileSync(SESSIONS_FILE, JSON.stringify(sessions, null, 2), "utf-8");
-}
-
-function pruneExpiredSessions(sessions: AdminSession[]): AdminSession[] {
-  const now = Date.now();
-  return sessions.filter((s) => now - s.createdAt < SESSION_TTL_MS);
-}
+/* --------------------------------------------------------------- sessions */
 
 /**
- * Persist a new session token to the on-disk session store, pruning any
- * expired sessions in the process.
+ * Sessions are held in process memory, deliberately NOT in the document store.
+ *
+ * They churn on every login/logout and are read on every protected page
+ * render, so routing them through the Sheets API would put a network
+ * round-trip in front of each admin navigation and burn the read quota that
+ * the public pages need. The only cost of keeping them in memory is that a
+ * restart or a redeploy forces a re-login — which is correct behavior for a
+ * session, not data loss.
+ *
+ * Held on `globalThis` rather than in a plain module-scope const: Next.js
+ * re-evaluates route modules on every recompile in dev, which would otherwise
+ * reset the map and sign the admin out after each source edit. In production
+ * this makes no difference — `next start` evaluates the module once.
+ *
+ * The one real constraint is that this assumes a single server instance. At
+ * this site's scale (15 concurrent users) that is what Render runs; if the
+ * service is ever scaled out horizontally, sessions would need to move to a
+ * shared store, because a round-robined request would land on an instance
+ * that has never seen the token.
  */
+const globalForSessions = globalThis as unknown as {
+  __adminSessions?: Map<string, number>;
+};
+
+// token -> createdAt
+const sessions: Map<string, number> = (globalForSessions.__adminSessions ??= new Map());
+
+function pruneExpired(): void {
+  const now = Date.now();
+  // Array.from rather than iterating the Map directly: the project's
+  // tsconfig target predates downlevelIteration for Map iterators.
+  Array.from(sessions.keys()).forEach((token) => {
+    if (now - (sessions.get(token) ?? 0) >= SESSION_TTL_MS) sessions.delete(token);
+  });
+}
+
 export function createSession(): AdminSession {
-  const sessions = pruneExpiredSessions(readSessions());
+  pruneExpired();
   const session: AdminSession = { token: createSessionToken(), createdAt: Date.now() };
-  sessions.push(session);
-  writeSessions(sessions);
+  sessions.set(session.token, session.createdAt);
   return session;
 }
 
-/**
- * Check whether a given session token is present and not expired.
- */
 export function isSessionValid(token: string | undefined | null): boolean {
   if (!token) return false;
-  const sessions = pruneExpiredSessions(readSessions());
-  return sessions.some((s) => s.token === token);
+  const createdAt = sessions.get(token);
+  if (createdAt === undefined) return false;
+  if (Date.now() - createdAt >= SESSION_TTL_MS) {
+    sessions.delete(token);
+    return false;
+  }
+  return true;
+}
+
+export function destroySession(token: string | undefined | null): void {
+  if (!token) return;
+  sessions.delete(token);
 }
 
 /**
- * Remove a session token from the store (used on logout).
+ * Gate for admin write endpoints.
+ *
+ * Every admin POST previously accepted writes with no session check at all —
+ * including the SMTP and social-config routes, which carry a mail password and
+ * OAuth tokens. Call this at the top of each mutating handler. The matching
+ * GETs stay open on purpose: the public landing components read their content
+ * from those same `/api/admin/*` GET endpoints.
  */
-export function destroySession(token: string | undefined | null): void {
-  if (!token) return;
-  const sessions = pruneExpiredSessions(readSessions()).filter((s) => s.token !== token);
-  writeSessions(sessions);
+export function requireAdmin(request: NextRequest): boolean {
+  return isSessionValid(request.cookies.get(ADMIN_SESSION_COOKIE)?.value);
 }
 
 export const ADMIN_SESSION_COOKIE = "admin_session";

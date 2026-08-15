@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const CONFIG_FILE = path.join(process.cwd(), ".env.home-text.json");
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
 interface HomeTextSentence {
   id: string;
@@ -41,18 +39,16 @@ const DEFAULT_CONFIG: HomeTextConfig = {
 
 export async function GET() {
   try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const data = fs.readFileSync(CONFIG_FILE, "utf-8");
-      const config = JSON.parse(data);
-      return NextResponse.json(config);
-    }
-    return NextResponse.json(DEFAULT_CONFIG);
+    return NextResponse.json(await readDoc("home-text", DEFAULT_CONFIG));
   } catch (error) {
     return NextResponse.json({ error: "Failed to read home text config" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const config: HomeTextConfig = await request.json();
 
@@ -60,7 +56,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+    await writeDoc("home-text", config);
     return NextResponse.json({ success: true, message: "Home text config saved" });
   } catch (error) {
     return NextResponse.json({ error: "Failed to save home text config" }, { status: 500 });

@@ -1,37 +1,23 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const COUNT_FILE = path.join(process.cwd(), ".env.visitor-count.json");
+import { readDoc, writeDoc } from "@/lib/store";
 
 interface VisitorCountStore {
   count: number;
   seenIds: string[];
 }
 
-function readStore(): VisitorCountStore {
-  try {
-    if (fs.existsSync(COUNT_FILE)) {
-      const data = fs.readFileSync(COUNT_FILE, "utf-8");
-      const parsed = JSON.parse(data);
-      return {
-        count: typeof parsed.count === "number" ? parsed.count : 0,
-        seenIds: Array.isArray(parsed.seenIds) ? parsed.seenIds : [],
-      };
-    }
-  } catch {
-    // Corrupt file — fall through to a fresh store rather than locking the
-    // counter up entirely.
-  }
-  return { count: 0, seenIds: [] };
-}
+const EMPTY: VisitorCountStore = { count: 0, seenIds: [] };
 
-function writeStore(store: VisitorCountStore) {
-  fs.writeFileSync(COUNT_FILE, JSON.stringify(store, null, 2));
+async function readStore(): Promise<VisitorCountStore> {
+  const parsed = await readDoc<Partial<VisitorCountStore>>("visitor-count", EMPTY);
+  return {
+    count: typeof parsed.count === "number" ? parsed.count : 0,
+    seenIds: Array.isArray(parsed.seenIds) ? parsed.seenIds : [],
+  };
 }
 
 export async function GET() {
-  const { count } = readStore();
+  const { count } = await readStore();
   return NextResponse.json({ count });
 }
 
@@ -48,7 +34,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "visitorId is required" }, { status: 400 });
   }
 
-  const store = readStore();
+  const store = await readStore();
 
   // Already seen this browser's id — return the current count unchanged
   // rather than incrementing again.
@@ -58,7 +44,8 @@ export async function POST(request: NextRequest) {
 
   store.seenIds.push(visitorId);
   store.count += 1;
-  writeStore(store);
+  // The store layer caps seenIds so it cannot outgrow a Sheets cell.
+  await writeDoc("visitor-count", store);
 
   return NextResponse.json({ count: store.count });
 }

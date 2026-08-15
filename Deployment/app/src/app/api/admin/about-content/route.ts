@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const CONFIG_FILE = path.join(process.cwd(), ".env.about-content.json");
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
 interface Flashcard {
   id: string;
@@ -42,18 +40,16 @@ const DEFAULT_CONTENT: AboutContent = {
 
 export async function GET() {
   try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const data = fs.readFileSync(CONFIG_FILE, "utf-8");
-      const config = JSON.parse(data);
-      return NextResponse.json(config);
-    }
-    return NextResponse.json(DEFAULT_CONTENT);
+    return NextResponse.json(await readDoc("about-content", DEFAULT_CONTENT));
   } catch (error) {
     return NextResponse.json({ error: "Failed to read About content" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const content: AboutContent = await request.json();
 
@@ -65,7 +61,7 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: "Invalid About content payload" }, { status: 400 });
     }
 
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(content, null, 2));
+    await writeDoc("about-content", content);
     return NextResponse.json({ success: true, message: "About content saved" });
   } catch (error) {
     return NextResponse.json({ error: "Failed to save About content" }, { status: 500 });

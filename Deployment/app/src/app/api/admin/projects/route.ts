@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const CONFIG_FILE = path.join(process.cwd(), ".env.projects.json");
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
 interface ProjectItem {
   id: string;
@@ -30,18 +28,16 @@ const DEFAULT_PROJECTS: ProjectsConfig = {
 
 export async function GET() {
   try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const data = fs.readFileSync(CONFIG_FILE, "utf-8");
-      const config = JSON.parse(data);
-      return NextResponse.json(config);
-    }
-    return NextResponse.json(DEFAULT_PROJECTS);
+    return NextResponse.json(await readDoc("projects", DEFAULT_PROJECTS));
   } catch (error) {
     return NextResponse.json({ error: "Failed to read projects config" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const projects: ProjectItem[] = body.projects;
@@ -67,7 +63,7 @@ export async function POST(request: NextRequest) {
     }
 
     const config: ProjectsConfig = { projects };
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+    await writeDoc("projects", config);
     return NextResponse.json({ success: true, message: "Projects config saved" });
   } catch (error) {
     return NextResponse.json({ error: "Failed to save projects config" }, { status: 500 });

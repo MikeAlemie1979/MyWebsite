@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
-const LOG_FILE = path.join(process.cwd(), ".env.social-post-log.json");
 const MAX_LOG_ENTRIES = 50;
 
 type Platform = "instagram" | "facebook";
@@ -24,23 +23,14 @@ interface SocialPostResult {
   videoUrl?: string;
 }
 
-function readLog(): SocialPostResult[] {
-  try {
-    if (fs.existsSync(LOG_FILE)) {
-      const data = fs.readFileSync(LOG_FILE, "utf-8");
-      const parsed = JSON.parse(data);
-      return Array.isArray(parsed) ? parsed : [];
-    }
-  } catch {
-    // ignore malformed log, start fresh
-  }
-  return [];
+async function readLog(): Promise<SocialPostResult[]> {
+  const parsed = await readDoc<SocialPostResult[]>("social-post-log", []);
+  return Array.isArray(parsed) ? parsed : [];
 }
 
-function appendToLog(entries: SocialPostResult[]) {
-  const existing = readLog();
-  const updated = [...existing, ...entries].slice(-MAX_LOG_ENTRIES);
-  fs.writeFileSync(LOG_FILE, JSON.stringify(updated, null, 2));
+async function appendToLog(entries: SocialPostResult[]) {
+  const existing = await readLog();
+  await writeDoc("social-post-log", [...existing, ...entries].slice(-MAX_LOG_ENTRIES));
 }
 
 async function postToInstagram(payload: SocialPostRequest): Promise<SocialPostResult> {
@@ -78,6 +68,9 @@ async function postToFacebook(payload: SocialPostRequest): Promise<SocialPostRes
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const body: SocialPostRequest = await request.json();
 
@@ -102,7 +95,7 @@ export async function POST(request: NextRequest) {
       )
     );
 
-    appendToLog(results);
+    await appendToLog(results);
 
     return NextResponse.json({ success: true, results });
   } catch (error) {
@@ -110,9 +103,12 @@ export async function POST(request: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
-    return NextResponse.json({ history: readLog() });
+    return NextResponse.json({ history: await readLog() });
   } catch (error) {
     return NextResponse.json({ error: "Failed to read post history" }, { status: 500 });
   }

@@ -83,7 +83,7 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const creds = loadOrSeedCredentials();
+  const creds = await loadOrSeedCredentials();
 
   const validUsername = username === creds.username;
   const validPassword = verifyPassword(password, creds.passwordHash);

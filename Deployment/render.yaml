@@ -35,21 +35,54 @@ services:
         value: https://mikealemie.com # replace with the real production domain
       - key: ENABLE_HSTS
         value: "false" # flip to "true" only once TLS on the domain is confirmed working
+
+      # ---------------------------------------------------------------------
+      # PERSISTENCE — Google Sheets (content) + Google Drive (uploaded images)
+      #
+      # Render's filesystem is EPHEMERAL: it is wiped on every deploy. The app
+      # falls back to local JSON files when these are unset, which is correct
+      # for local development but would silently reset all admin content, the
+      # admin password, and the visitor count on every single deploy here.
+      # These three variables are what make a Render deploy durable.
+      #
+      # `sync: false` means Render prompts for the value in the dashboard and
+      # never stores it in this repo. Set all three under
+      #   Service → Environment → Environment Variables.
+      #
+      # Setup, once:
+      #   1. Google Cloud console → new project → enable the Google Sheets API
+      #      and the Google Drive API.
+      #   2. Create a Service Account, then create a JSON key for it.
+      #   3. Create a Google Spreadsheet; its id is the long segment in the URL
+      #      between /d/ and /edit.
+      #   4. Create a Drive folder for uploads; its id is the last URL segment.
+      #   5. Share BOTH the spreadsheet and the folder with the service
+      #      account's ...@....iam.gserviceaccount.com address, as Editor.
+      #      Skipping this is the single most common failure — Google reports
+      #      an unshared resource as "not found", indistinguishable from a typo.
+      #   6. Paste the values below. Verify afterwards in the running site at
+      #      /admin → System → Storage, which reports the active backend and
+      #      runs a live connection test.
+      #
+      # The app creates one tab per content document on first save; no manual
+      # spreadsheet setup is needed.
+      # ---------------------------------------------------------------------
+
+      # The whole downloaded service-account key file, pasted as one value.
+      # This is a secret: never commit it, and never paste it into chat or a
+      # ticket. Rotate the key in Google Cloud if it is ever exposed.
+      - key: GOOGLE_SERVICE_ACCOUNT_JSON
+        sync: false
+
+      - key: GOOGLE_SHEET_ID
+        sync: false
+
+      - key: GOOGLE_DRIVE_FOLDER_ID
+        sync: false
+
     # PORT is supplied by Render automatically — `next start` reads it, no
     # manual configuration needed.
     #
-    # IMPORTANT — persistent storage: this app has no database. Admin content
-    # (cards, projects, home text, SMTP/social config) and system state
-    # (admin sessions, visitor count) are flat JSON files written to the app's
-    # working directory at runtime (see Deployment/DEPLOY-README.md §4a).
-    # Render's default filesystem is EPHEMERAL — it is wiped on every deploy
-    # and does not persist between them. Without a persistent disk, admin
-    # content, the admin password, and the visitor count will silently reset
-    # to defaults on every deploy. Attach a Render Disk mounted at this
-    # service's working directory to keep that state across deploys, or plan
-    # to migrate onto the schema already drafted at
-    # Development/Implementation/MAWebsiteDB.sql.
-    # disk:
-    #   name: content-store
-    #   mountPath: /opt/render/project/src/Deployment/app
-    #   sizeGB: 1
+    # No Render Disk is required: with the variables above, all durable state
+    # lives in Google. Development/Implementation/MAWebsiteDB.sql is historical
+    # — it targets Microsoft SQL Server, which Render does not offer.

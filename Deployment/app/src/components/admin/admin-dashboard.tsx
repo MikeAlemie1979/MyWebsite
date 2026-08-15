@@ -7,9 +7,10 @@ import { CardsManager } from "./cards-manager";
 import { AboutManager } from "./about-manager";
 import { ProjectsManager } from "./projects-manager";
 import { SocialMediaPanel } from "./social-media-panel";
+import { StoragePanel } from "./storage-panel";
 import { Breadcrumbs } from "@/components/common/breadcrumbs";
 
-type Section = "email" | "social" | "home-text" | "cards" | "about" | "projects";
+type Section = "email" | "social" | "storage" | "home-text" | "cards" | "about" | "projects";
 
 function PageIcon() {
   return (
@@ -89,6 +90,7 @@ const NAV_GROUPS: NavGroup[] = [
     items: [
       { id: "email", label: "Email (SMTP)" },
       { id: "social", label: "Social Media" },
+      { id: "storage", label: "Storage" },
     ],
   },
 ];
@@ -205,6 +207,7 @@ export function AdminDashboard() {
             {activeSection === "about" && <AboutManager />}
             {activeSection === "projects" && <ProjectsManager />}
             {activeSection === "social" && <SocialMediaPanel />}
+            {activeSection === "storage" && <StoragePanel />}
           </div>
         </div>
       </div>

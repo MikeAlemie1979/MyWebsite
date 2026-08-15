@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const CONFIG_FILE = path.join(process.cwd(), ".env.cards.json");
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
 interface CardItem {
   id: string;
@@ -26,18 +24,16 @@ const DEFAULT_CARDS: CardsConfig = {
 
 export async function GET() {
   try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const data = fs.readFileSync(CONFIG_FILE, "utf-8");
-      const config = JSON.parse(data);
-      return NextResponse.json(config);
-    }
-    return NextResponse.json(DEFAULT_CARDS);
+    return NextResponse.json(await readDoc("cards", DEFAULT_CARDS));
   } catch (error) {
     return NextResponse.json({ error: "Failed to read cards config" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const body = await request.json();
     const cards: CardItem[] = body.cards;
@@ -53,7 +49,7 @@ export async function POST(request: NextRequest) {
     }
 
     const config: CardsConfig = { cards };
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(config, null, 2));
+    await writeDoc("cards", config);
     return NextResponse.json({ success: true, message: "Cards config saved" });
   } catch (error) {
     return NextResponse.json({ error: "Failed to save cards config" }, { status: 500 });

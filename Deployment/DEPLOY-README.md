@@ -52,9 +52,9 @@ Settings (Root Directory / Build Command / Start Command, matching
 `render.yaml`), or delete and recreate the service from the blueprint so
 Render applies these settings itself.
 
-Also see the persistent-storage note in `render.yaml` — Render's default
-filesystem is wiped on every deploy, which will reset all admin content and
-the visitor counter unless a Render Disk is attached (see §4a below for why).
+Also set the three Google environment variables described in §4a. Render's
+filesystem is wiped on every deploy, so without them all admin content, the
+admin password, and the visitor counter reset on every single deploy.
 
 ## 3. Build & run
 
@@ -86,38 +86,52 @@ stored on disk (see §4a) — not via environment variables.
 
 ### 4a. Runtime content storage — read before your first deploy
 
-This app does **not** use a database. Admin-editable content (home-page
-sentences, cards, projects, about-page copy, SMTP settings, social config)
-and system state (admin sessions, visitor count) are stored as flat JSON
-files written to the app's working directory at runtime:
+Admin-editable content (home-page sentences, cards, projects, about-page copy,
+SMTP settings, social config) and the visitor count are held in a **Google
+Spreadsheet** — one tab per document, the document's JSON in cell `A1`.
+Uploaded images go to a **Google Drive folder** and are served back through
+`/api/media/<fileId>`, so the folder itself stays private.
 
-```
-.env.admin-auth.json          (seeded automatically on first request)
-.env.admin-sessions.json
-.env.home-text.json
-.env.cards.json
-.env.projects.json
-.env.about-content.json
-.env.smtp.json
-.env.social-config.json
-.env.social-post-log.json
-.env.visitor-count.json
-```
+Configure it with three environment variables:
 
-**Consequences for hosting:**
+| Variable | Purpose |
+|---|---|
+| `GOOGLE_SERVICE_ACCOUNT_JSON` | The entire downloaded service-account key file, pasted as one value. **Secret** — never commit it or paste it into a ticket or chat. |
+| `GOOGLE_SHEET_ID` | The spreadsheet id: the long segment of its URL between `/d/` and `/edit`. |
+| `GOOGLE_DRIVE_FOLDER_ID` | The upload folder's id: the last segment of the folder's URL. |
 
-- The process's working directory must be **writable** by the Node process,
-  and the same directory every time the app restarts.
-- **Never wipe or replace the app folder wholesale on redeploy.** A redeploy
-  that overwrites `app/` from source control will delete these files (they
-  are gitignored on purpose — see §5) and reset all admin content, the admin
-  password, active sessions, and the visitor counter back to defaults.
-  Redeploy by updating `src/`, `public/` (excluding `public/uploads/`),
-  `package.json`, and running a fresh build — leave the `.env.*.json` files
-  and `public/uploads/` in place.
-- A production migration path to a real database already exists as DDL —
-  see `Development/Implementation/MAWebsiteDB.sql` — but the running app does
-  not use it yet; this is future work, not required to deploy today.
+One-time setup:
+
+1. Google Cloud console → new project → enable the **Google Sheets API** and
+   the **Google Drive API**.
+2. Create a **Service Account**, then create a **JSON key** for it.
+3. Create the spreadsheet and the Drive folder.
+4. **Share both** with the service account's
+   `...@....iam.gserviceaccount.com` address, as **Editor**. Skipping this is
+   the most common failure: Google reports an unshared resource as *not
+   found*, which is indistinguishable from a mistyped id.
+5. Set the three variables in the Render dashboard (they are declared
+   `sync: false` in `render.yaml`, so Render prompts for them and never
+   stores them in the repo).
+6. Verify at **/admin → System → Storage**, which reports the active backend,
+   shows the service-account address to share with, and runs a live
+   connection test.
+
+The app creates each spreadsheet tab on first save — no manual sheet setup.
+
+**If the variables are unset**, the app falls back to local JSON files
+(`.env.*.json`) and `public/uploads/`. That is the intended behavior for local
+development, and it means `npm run dev` needs no Google setup at all. It is
+**not** viable on Render, whose filesystem is wiped on every deploy. The
+Storage panel shows a warning whenever the app is running on this fallback.
+
+Admin **sessions** are held in process memory rather than in Sheets, since
+they are read on every protected page render. The only effect is that a
+restart or redeploy requires logging in again.
+
+`Development/Implementation/MAWebsiteDB.sql` is historical: it targets
+Microsoft SQL Server, which Render does not offer. It has been superseded by
+the Google Sheets backend and nothing reads it.
 
 ### 4b. Default admin credentials — change immediately
 

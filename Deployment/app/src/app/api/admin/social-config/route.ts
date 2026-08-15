@@ -1,8 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import * as fs from "fs";
-import * as path from "path";
-
-const CONFIG_FILE = path.join(process.cwd(), ".env.social-config.json");
+import { readDoc, writeDoc } from "@/lib/store";
+import { requireAdmin } from "@/lib/admin-auth";
 
 interface InstagramConfig {
   connected: boolean;
@@ -45,20 +43,21 @@ function maskConfig(config: SocialConfig): SocialConfig {
   };
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
-    if (fs.existsSync(CONFIG_FILE)) {
-      const data = fs.readFileSync(CONFIG_FILE, "utf-8");
-      const config: SocialConfig = JSON.parse(data);
-      return NextResponse.json(maskConfig(config));
-    }
-    return NextResponse.json(maskConfig(DEFAULT_CONFIG));
+    return NextResponse.json(maskConfig(await readDoc("social-config", DEFAULT_CONFIG)));
   } catch (error) {
     return NextResponse.json({ error: "Failed to read social config" }, { status: 500 });
   }
 }
 
 export async function POST(request: NextRequest) {
+  if (!requireAdmin(request)) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
   try {
     const body: SocialConfig = await request.json();
 
@@ -68,14 +67,7 @@ export async function POST(request: NextRequest) {
 
     // Preserve previously saved tokens if the client submits a masked value
     // (i.e. the user didn't change it) instead of overwriting with asterisks.
-    let existing: SocialConfig = DEFAULT_CONFIG;
-    if (fs.existsSync(CONFIG_FILE)) {
-      try {
-        existing = JSON.parse(fs.readFileSync(CONFIG_FILE, "utf-8"));
-      } catch {
-        existing = DEFAULT_CONFIG;
-      }
-    }
+    const existing = await readDoc<SocialConfig>("social-config", DEFAULT_CONFIG);
 
     const isMasked = (value: string) => /^\*+/.test(value) && value.length > 0;
 
@@ -96,7 +88,7 @@ export async function POST(request: NextRequest) {
       },
     };
 
-    fs.writeFileSync(CONFIG_FILE, JSON.stringify(newConfig, null, 2));
+    await writeDoc("social-config", newConfig);
     return NextResponse.json({ success: true, message: "Social config saved", config: maskConfig(newConfig) });
   } catch (error) {
     return NextResponse.json({ error: "Failed to save social config" }, { status: 500 });

@@ -19,13 +19,48 @@ const DEFAULT_SENTENCES = [
   "MEHRDAD MIKE ALEMIE.",
 ];
 const DEFAULT_FONT_FAMILY = "Michroma";
+const DEFAULT_FONT_SIZE = 42;
+const DEFAULT_TEXT_COLOR = "#ffffff";
+const DEFAULT_LETTER_SPACING = 1;
 
 interface HomeTextConfig {
   sentences: { id: string; text: string }[];
   fontFamily: string;
+  fontSize: number;
+  textColor: string;
+  letterSpacing: number;
 }
 
 const ASH_COLORS = ["#8a8a8a", "#4a4a4a", "#ffffff", "#b5b5b5", "#3a3a3a"];
+
+type Rgb = [number, number, number];
+
+function parseHex(hex: string): Rgb {
+  const m = /^#?([0-9a-f]{6})$/i.exec(hex.trim());
+  if (!m) return [255, 255, 255];
+  const n = parseInt(m[1], 16);
+  return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+}
+
+// Particles drift in as ash and settle into the admin-chosen text colour. The
+// blend runs per-particle per-frame, so the results are quantised into a small
+// lookup table built once per config change rather than mixed in the RAF loop —
+// thousands of particles at 60fps make even a hex parse per draw call costly.
+const BLEND_STEPS = 16;
+
+function buildBlendTable(textColor: string): string[][] {
+  const [tr, tg, tb] = parseHex(textColor);
+  return ASH_COLORS.map((ash) => {
+    const [ar, ag, ab] = parseHex(ash);
+    return Array.from({ length: BLEND_STEPS + 1 }, (_, i) => {
+      const t = i / BLEND_STEPS;
+      const r = Math.round(ar + (tr - ar) * t);
+      const g = Math.round(ag + (tg - ag) * t);
+      const b = Math.round(ab + (tb - ab) * t);
+      return `rgb(${r},${g},${b})`;
+    });
+  });
+}
 
 // Scroll budget: each sentence gets one viewport of scroll to assemble and
 // hold, plus a fall phase, plus a hold phase while Mehrdad.png is fully
