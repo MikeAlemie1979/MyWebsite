@@ -8,15 +8,21 @@ import { getFolderId } from "./google-config";
  * (cards / projects / about-content).
  *
  * Like the document store, this has two backends:
- *   - local  — writes into public/uploads/<folder>/, the original behavior,
+ *   - local  — writes into <cwd>/uploads/<folder>/ (NOT public/uploads/),
  *              used whenever Google is not configured (i.e. local dev).
  *   - drive  — uploads into the GOOGLE_DRIVE_FOLDER_ID folder.
  *
- * The Drive backend deliberately returns "/api/media/<fileId>" rather than a
- * Google share link. That keeps the Drive folder private (no "anyone with the
- * link" sharing), avoids having to allowlist a Google host in next.config.js
- * for next/image, and keeps every URL already stored in the content documents
- * valid if the storage backend is ever swapped again.
+ * Neither backend serves its files as a static asset under public/. That was
+ * the original local design and it has a real bug in production: Next.js's
+ * `next start` snapshots the public/ directory listing once at boot and never
+ * rescans it, so a file uploaded while the server is already running 404s for
+ * every visitor until the process restarts — which on Render doesn't happen
+ * until the next deploy. Both backends instead return an "/api/media/..."
+ * URL that always reads live from disk/Drive on every request, exactly like
+ * the Drive path was already designed to. This also keeps local uploads
+ * out of the public/ directory that Next serves unauthenticated by design,
+ * and keeps every URL already stored in the content documents valid if the
+ * storage backend is ever swapped again.
  */
 
 export const ALLOWED_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -46,11 +52,12 @@ export interface UploadOutcome {
 /**
  * Validates and stores one uploaded image.
  *
- * `folder` names the public/uploads subdirectory for the local backend and is
- * only cosmetic under Drive (everything lands in the one configured folder),
- * where it is folded into the filename so uploads stay identifiable by origin.
- * `prefix` is the caller's own id (projectId / cardId), kept for parity with
- * the previous filenames.
+ * `folder` names the local uploads subdirectory and is only cosmetic under
+ * Drive (everything lands in the one configured folder), where it is folded
+ * into the filename so uploads stay identifiable by origin. `prefix` is the
+ * caller's own id (projectId / cardId), used both to make the filename
+ * identifiable at a glance and, for the local backend, as the folder segment
+ * in the served URL.
  */
 export async function saveUpload(
   file: File,
@@ -73,10 +80,10 @@ export async function saveUpload(
   const buffer = Buffer.from(await file.arrayBuffer());
 
   if (mediaBackend() === "local") {
-    const dir = path.join(process.cwd(), "public", "uploads", folder);
+    const dir = path.join(process.cwd(), "uploads", folder);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, filename), buffer);
-    return { url: `/uploads/${folder}/${filename}` };
+    return { url: `/api/media/local/${folder}/${filename}` };
   }
 
   const metadata = {
@@ -115,4 +122,30 @@ export async function saveUpload(
 /** Streams a Drive file back to the browser. Used by /api/media/[fileId]. */
 export async function fetchDriveFile(fileId: string): Promise<Response> {
   return googleFetch(`${DRIVE_FILES}/${encodeURIComponent(fileId)}?alt=media`);
+}
+
+const EXT_CONTENT_TYPE: Record<string, string> = {
+  ".jpg": "image/jpeg",
+  ".jpeg": "image/jpeg",
+  ".png": "image/png",
+  ".webp": "image/webp",
+};
+
+/**
+ * Reads one file back from the local uploads directory. Used by
+ * /api/media/local/[...path]. Every path segment is validated against the
+ * exact charset saveUpload() sanitizes filenames to, which also rules out
+ * "..", so this can never be pointed outside the uploads directory.
+ */
+export function readLocalUpload(segments: string[]): { buffer: Buffer; contentType: string } | null {
+  if (segments.length === 0 || segments.some((s) => !/^[a-zA-Z0-9._-]+$/.test(s))) return null;
+
+  const filePath = path.join(process.cwd(), "uploads", ...segments);
+  if (!fs.existsSync(filePath)) return null;
+
+  const ext = path.extname(filePath).toLowerCase();
+  const contentType = EXT_CONTENT_TYPE[ext];
+  if (!contentType) return null;
+
+  return { buffer: fs.readFileSync(filePath), contentType };
 }

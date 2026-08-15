@@ -20,10 +20,18 @@ are the only other files in `Deployment/`.
 ```
 app/
 ├── src/                  Application source (routes, components, API)
-├── public/               Static assets served at /  (images, uploaded media)
-│   └── uploads/          Created at runtime by the admin upload APIs —
-│                          does not exist until first used, do not delete it
-│                          on redeploy (see §5)
+├── public/               Static assets committed to the repo (logo, hero
+│                          images, etc.) — NOT where uploads go, see below
+├── uploads/               Created at runtime by the admin upload APIs when
+│                          Google Drive isn't configured — does not exist
+│                          until first used, do not delete it on redeploy
+│                          (see §5). Deliberately outside public/: Next's
+│                          production server snapshots public/'s file listing
+│                          once at boot, so an upload written there while the
+│                          server is already running would 404 for every
+│                          visitor until the process restarts. Served instead
+│                          through /api/media/local/[...path], which reads
+│                          from disk on every request.
 ├── package.json           Scripts + engines requirement
 ├── package-lock.json       Exact dependency versions — commit/deploy this
 ├── next.config.js          Build config + optional HSTS headers
@@ -133,7 +141,8 @@ settings, not as the permanent configuration path — set the env vars for
 anything meant to last.
 
 **If the variables are unset**, the app falls back to local JSON files
-(`.env.*.json`) and `public/uploads/`. That is the intended behavior for local
+(`.env.*.json`) and a local `uploads/` directory, served through
+`/api/media/local/[...path]`. That is the intended behavior for local
 development, and it means `npm run dev` needs no Google setup at all. It is
 **not** viable on Render, whose filesystem is wiped on every deploy. The
 Storage panel shows a warning whenever the app is running on this fallback.
@@ -175,7 +184,7 @@ redeploy; under the local-file fallback it does not.
   environment-specific runtime state — see §4a; deploying a developer's copy
   would leak dev credentials and could point the live site at a test
   spreadsheet/folder)
-- `public/uploads/` (environment-specific uploaded media)
+- `uploads/` (environment-specific uploaded media, local-backend only)
 - `.claude/`, `.impeccable/` (editor/tooling metadata)
 
 ## 6. Verified before this package was prepared

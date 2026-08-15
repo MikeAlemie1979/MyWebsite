@@ -118,7 +118,7 @@ export function StoragePanel() {
       <Row label="Content backend" value={onSheets ? "Google Sheets" : "Local JSON files"} />
       <Row
         label="Image backend"
-        value={status.mediaBackend === "drive" ? "Google Drive" : "Local public/uploads"}
+        value={status.mediaBackend === "drive" ? "Google Drive" : "Local uploads/ directory"}
       />
       <Row label="Spreadsheet ID" value={status.sheetId ?? <em className="text-gray-500">not set</em>} />
       <Row label="Drive folder ID" value={status.folderId ?? <em className="text-gray-500">not set</em>} />

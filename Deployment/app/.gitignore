@@ -26,7 +26,12 @@ tsconfig.tsbuildinfo
 .env.visitor-count.json
 
 # Uploaded media - environment-specific, not source
-public/uploads/
+# Local-backend uploaded media — served dynamically via
+# /api/media/local/[...path], deliberately NOT under public/ (see
+# src/lib/media.ts for why: Next's production static-file serving snapshots
+# public/ once at boot, so files written there while the server is already
+# running would never become reachable).
+/uploads/
 
 # Editor/tooling
 .claude/

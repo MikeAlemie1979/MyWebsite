@@ -10,12 +10,17 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
+    const cardId = formData.get("cardId");
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
 
-    const result = await saveUpload(file, "cards");
+    const result = await saveUpload(
+      file,
+      "cards",
+      typeof cardId === "string" && cardId ? cardId : undefined
+    );
     if (result.error) {
       return NextResponse.json({ error: result.error }, { status: result.status ?? 400 });
     }

@@ -2,7 +2,6 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
 
 interface CardItem {
   id: string;
@@ -24,13 +23,31 @@ const PLACEHOLDER_CARDS: CardItem[] = [
 ];
 
 function HorizontalCard({ card, index }: { card: CardItem; index: number }) {
+  const hasImage = !!card.imageUrl;
+
   return (
     <article
       className="relative flex-shrink-0 h-full flex items-stretch rounded-2xl overflow-hidden border border-black/15"
-      style={{ width: "min(88vw, 1100px)", backgroundColor: "rgba(0,0,0,0.04)" }}
+      style={
+        // With an uploaded image, the card sizes to the image's own natural
+        // width at full card height (so it's never cropped) rather than the
+        // old fixed width — capped at 72% of the viewport so one very wide
+        // upload can't blow out the horizontal rail. Placeholder cards (no
+        // image) keep the original fixed width, since there's nothing to
+        // size against.
+        hasImage
+          ? { width: "max-content", maxWidth: "72vw", backgroundColor: "rgba(0,0,0,0.04)" }
+          : { width: "min(88vw, 1100px)", backgroundColor: "rgba(0,0,0,0.04)" }
+      }
     >
       {/* Explanation panel — left side, full card height */}
-      <div className="flex flex-col justify-center gap-4 px-10 py-12 w-[42%] min-w-[280px] border-r border-black/15">
+      <div
+        className={
+          hasImage
+            ? "flex flex-col justify-center gap-4 px-10 py-12 w-[420px] flex-shrink-0 border-r border-black/15"
+            : "flex flex-col justify-center gap-4 px-10 py-12 w-[42%] min-w-[280px] border-r border-black/15"
+        }
+      >
         <p className="text-eyebrow" style={{ opacity: 0.55 }}>
           {String(index + 1).padStart(2, "0")} / {String(CARD_COUNT).padStart(2, "0")}
         </p>
@@ -44,19 +61,37 @@ function HorizontalCard({ card, index }: { card: CardItem; index: number }) {
         </p>
       </div>
 
-      {/* Visual panel — right side */}
-      <div className="relative flex-1 overflow-hidden">
-        {card.imageUrl ? (
-          <Image
-            src={card.imageUrl}
+      {/* Visual panel — right side. flex-initial (not flex-1) so it sizes to
+          the image's intrinsic width instead of stretching to fill; min-w-0
+          overrides the flex default of min-width:auto, which would otherwise
+          block it from shrinking below that intrinsic size once the 72vw cap
+          on the article forces it to. */}
+      <div className="relative h-full flex-initial min-w-0 overflow-hidden">
+        {hasImage ? (
+          // Plain <img>, not next/image: an admin-uploaded image has no
+          // known dimensions ahead of time, and next/image's `fill` mode
+          // (used above previously) requires a pre-sized parent — exactly
+          // what this layout can no longer offer once the box sizes itself
+          // to the image instead of the other way around.
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            src={card.imageUrl!}
             alt={card.title}
-            fill
-            className="object-cover"
-            sizes="60vw"
+            // h-full (not h-auto): the image must scale UP to match the
+            // card's height in the normal case — that's the "expand to fit"
+            // behavior itself. Tried switching to h-auto so a width-capped
+            // image would shrink in both dimensions instead of leaving a
+            // letterbox gap, but with both width and height auto the image
+            // has no anchor to scale up FROM and renders at its raw upload
+            // pixel size instead, which is worse. object-contain keeps the
+            // rare case (a very wide image hitting the 72vw cap) undistorted
+            // even though it leaves a visible gap there — a fair trade
+            // against every normal-aspect image rendering full height.
+            className="h-full w-auto max-w-full object-contain block"
           />
         ) : (
           <div
-            className="absolute inset-0"
+            className="w-[480px] h-full relative"
             style={{
               background:
                 "radial-gradient(circle at 30% 25%, rgba(0,0,0,0.16), transparent 60%), radial-gradient(circle at 75% 80%, rgba(0,0,0,0.10), transparent 55%)",

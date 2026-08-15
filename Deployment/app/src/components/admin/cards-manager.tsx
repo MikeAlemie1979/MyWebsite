@@ -65,6 +65,10 @@ export function CardsManager() {
     try {
       const formData = new FormData();
       formData.append("file", file);
+      // Ties the stored filename to this specific card (e.g.
+      // "c1755..._Prj01.png") instead of a bare timestamp, so it's
+      // identifiable in the Drive folder / uploads directory on sight.
+      formData.append("cardId", id);
 
       const response = await fetch("/api/admin/cards/upload", {
         method: "POST",
