@@ -24,6 +24,16 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 - Typography system — `globals.css` now defines `--font-display` (Michroma, scoped via `.font-display`/`.text-display`/`.text-eyebrow` to headlines, eyebrows, and the nav wordmark) paired with `--font-body` (Inter) for body copy, a modular type scale (`--size-sm/base/md/lg/xl`), and a `.prose` 60ch measure utility; cramped 10-13px card/caption text across landing + about + admin bumped to 12-15px with improved line-height and contrast (notably: contact-form error text, admin sidebar group descriptions)
 - Hero sphere reintroduced — `neon-sphere.tsx` now texture-maps `/images/sphere-ref.png` via equirectangular UV mapping instead of pure procedural noise; pole-pinch fixed with a blend-to-uniform-colour cap (not a texel sample, which risked landing on a black crack); "solar convection" domain-warp + continuous UV drift makes the surface colour migrate across the whole ball over time (sun-like), with per-pixel granulation brightness/hue drift; single-owner CSS opacity fade (shader-side `uFade` removed) keeps the ball and its glow ring fading in together; horizontal offset in `hero-sphere.tsx` is now `+220px` from center (`sphereXWithOffset`)
 
+### Save Point "ED06" — per-page SEO metadata, GEO/AEO JSON-LD, first performance/accessibility pass
+- Investigated whether SEO/GEO/AEO were implemented: root `layout.tsx` already had `Person` JSON-LD + basic OG/Twitter metadata, but `/about` and `/projects` both silently inherited the homepage's title/description via the Next.js metadata template — no page-specific `<title>`/description for either page, and nothing for a generative engine to quote when answering e.g. a pricing question scoped to `/projects`.
+- `/projects/page.tsx` (server component) now exports its own `metadata` (title "Projects & Prices", own description, canonical, OG/Twitter). `/about/page.tsx` is `"use client"` and can't export `metadata` directly, so a new sibling `Deployment/app/src/app/about/layout.tsx` was added to hold the About page's metadata instead — the standard Next.js pattern for attaching metadata to a client-component page.
+- Root `layout.tsx` gained `Organization` JSON-LD (Pristinenoire LLC, founder Mike Alemie) and `WebSite` JSON-LD alongside the pre-existing `Person` schema, so a generative engine can answer a company-scoped query as well as a person-scoped one. Also added a favicon (`icons: { icon: "/images/pristinenoire-logo.png" }`) — none existed before, which was 404ing on every page load.
+- Ran a real performance check for the first time — `npx lighthouse` (desktop preset) against a genuine `npm run build && npm run start` production server, all three routes. Home scored Performance 50/100 (≈6s Total Blocking Time, 7.2s Speed Index) — flagged, not fixed, as a separate larger problem: almost certainly the hero's Three.js sphere + canvas ash-particle text running heavy JS on initial load. `/about` and `/projects` (no 3D/canvas content) scored 98-99/100, confirming the perf issue is isolated to the homepage hero.
+- Lighthouse's accessibility audit caught a real heading-order bug along the way, fixed: About page's visible headline (`about-headline.tsx`) `<h1>` → `<h2>` (page already had a real hidden `<h1>`, so it was a duplicate `<h1>`); `cards-section.tsx` (home) and `sliding-cards.tsx` (projects) card/project titles `<h3>` → `<h2>` since neither page had an intervening `<h2>` before their `<h3>` cards (`flashcards.tsx` was already correct once the new `<h2>` existed above it).
+- Final Lighthouse scores (fresh, correctly-matched build — see the build/server-mismatch pitfall in `Development/CLAUDE.md`): Home — Perf 50 / A11y 100 / Best Practices 100 / SEO 100. About — 99 / 100 / 100 / 100. Projects — 98 / 100 / 100 / 100.
+- **Correction to the ED05 punch list**: the "left/right image gradient-to-black" item was already shipped in a later session than ED05 — `ash-text-section.tsx`'s `ash-left.png`/`ash-right.png` already carry a bottom mask-gradient (`linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)`), confirmed in code during this save point. Removed from the pending list below.
+- **Not done, carried forward**: the homepage performance problem itself (Three.js sphere + canvas ash-text blocking the main thread ~6s) is unaddressed — now a tracked, reproducible finding (Perf 50/100 on "/") rather than an unknown; fixing it means code-splitting/deferring/lazy-loading hero rendering, a bigger change than this pass covered.
+
 ### Save Point "ED05" — Google Sheets/Drive backend + admin API auth gate
 - Persistence rework — admin-editable content previously lived only in flat `.env.*.json` files under `Deployment/app`, which Render's ephemeral filesystem wipes on every deploy. New document-store abstraction (`src/lib/store.ts`) supports two backends: `fs` (default, unchanged `.env.*.json` behaviour, used locally and whenever Google isn't configured) and `sheets` (Google Sheets as the database, auto-selected once Google env vars/admin overrides are set). The originally-drafted T-SQL migration target `Development/Implementation/MAWebsiteDB.sql` targeted Microsoft SQL Server, which Render doesn't offer, and is now superseded by this approach — not implemented, not deleted.
 - Sheets schema — `src/lib/sheet-schema.ts` decomposes each JSON document into real header rows + typed columns across 12 named tabs (Cards, Projects, Home Text Sentences, Home Text Settings, About Content, About Flashcards, SMTP, Social Config, Visitor Count, Admin Credentials, Social Post Log, Visitor IDs) rather than storing a JSON blob in a cell. Store includes a 60-second read cache with write-through invalidation to stay under Sheets' ~60 reads/min quota against the landing page's config fan-out.
@@ -89,10 +99,11 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 - About Page — content/build status pending final review
 - Admin: Social media posting (Instagram + Facebook) — connect live APIs, panel UI built
 
-## In Progress (carried into ED05)
+## In Progress (carried into ED06)
 
 - Ash-text admin controls (`fontSize`/`textColor`/`letterSpacing`) not yet wired to the rendered effect
-- 8-item visual punch list (hero theme, footer background, image gradients, admin-control audit, Projects card sizing, image-fit, Chrome confirmation pass) — see ED05 save point above
+- 7-item visual punch list (hero theme, footer background, admin-control audit, Projects card sizing, image-fit, Chrome confirmation pass) — image-gradient item shipped, see ED06 correction above
+- Homepage performance — Lighthouse Performance 50/100 on "/" (hero Three.js sphere + canvas ash-text blocking main thread ~6s); "/about" and "/projects" unaffected at 98-99/100
 
 ## Not Started
 
@@ -102,10 +113,14 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 
 ---
 
-**Last Updated**: August 15, 2026 — Save Point "ED05" (Google Sheets/Drive backend, admin POST auth gate)
+**Last Updated**: August 15, 2026 — Save Point "ED06" (per-page SEO/GEO/AEO metadata, first Lighthouse performance/accessibility pass)
+
+### Known follow-ups from ED06
+- Homepage performance (Perf 50/100, hero Three.js sphere + canvas ash-text) not addressed — tracked and reproducible now, but unfixed; needs code-splitting/deferring/lazy-loading the hero's visually-critical rendering, a bigger change than this pass.
+- Everything below carried forward unchanged, except the image-gradient item (now confirmed shipped, see ED06 correction above).
 
 ### Known follow-ups from ED05
-- See the "Carried-forward, still pending" bullet in the ED05 save point above (ash-text admin controls, 8-item visual punch list) — not done, do not mark complete.
+- See the "Carried-forward, still pending" bullet in the ED05 save point above (ash-text admin controls, remaining punch-list items) — not done, do not mark complete.
 - Live write to Google Sheets/Drive not yet exercised — pending `GOOGLE_SERVICE_ACCOUNT_JSON` provisioning.
 
 ### Known follow-ups from ED04
