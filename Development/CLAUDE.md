@@ -94,7 +94,7 @@ The application follows a layered architecture as defined in `SysArch.md`:
 2. **Frontend Layer** - React components, Next.js pages
 3. **API Layer** - Next.js API routes (serverless functions)
 4. **Security & Compliance Layer** - Authentication, authorization
-5. **Data Persistence** - Configuration files, database integration (if needed)
+5. **Data Persistence** - Document-store abstraction (`src/lib/store.ts`): flat `.env.*.json` files (`fs` backend, default/local) or Google Sheets as the database (`sheets` backend, auto-selected once configured) with a schema-driven column mapping (`src/lib/sheet-schema.ts`); uploaded images go to local `public/uploads/**` or Google Drive (`src/lib/media.ts`) the same way
 
 ### Development Approach
 - **Modular Agile Iterative (MAI)**: Page-by-page development with iterative refinement
@@ -128,15 +128,19 @@ The application follows a layered architecture as defined in `SysArch.md`:
 **Admin Login/Auth** (COMPLETE) — `src/app/admin/login/page.tsx` (3-factor login: Username=Admin, Password=App@dmin0123, Code=2085; Back to Home link). `AdminCredentials` interface (`admin-auth.ts`) includes a `codeHash` field hashed with the same scrypt "salt:hash" scheme as the password. The login API (`api/admin/login/route.ts`) validates all three factors and returns a single generic 401 for any credential failure — it never reveals which factor was wrong. Old credential files without `codeHash` get the default code seeded automatically on next load.
 
 **Admin Dashboard** (`src/components/admin/`)
-- `admin-dashboard.tsx` - Main admin dashboard component (dark theme, Tailwind CSS; Log Out button). Sidebar redesigned into three groups: Pages (About, Projects & Prices), Homepage Sections (nested under Home — Ash Text, Cards), System (Email SMTP, Social Media), each with icons and descriptions
+- `admin-dashboard.tsx` - Main admin dashboard component (dark theme, Tailwind CSS; Log Out button). Sidebar redesigned into three groups: Pages (About, Projects & Prices), Homepage Sections (nested under Home — Ash Text, Cards), System (Email SMTP, Social Media, Storage), each with icons and descriptions
 - `smtp-settings-panel.tsx` - SMTP email configuration panel (working)
+- `storage-panel.tsx` - Storage backend status (fs vs Google Sheets/Drive), service-account email, per-document reachability, "Test connection", editable Sheet/Drive-folder link fields
 - `home-text-manager.tsx`, `cards-manager.tsx`, `about-manager.tsx`, `projects-manager.tsx`, `social-media-panel.tsx`
 
 **API Routes** (`src/app/api/`)
 - `admin/smtp-config/route.ts` - SMTP configuration management (GET/POST)
-  - Stores config in `.env.smtp.json`
+  - Persists via the document store (`src/lib/store.ts`) — `.env.smtp.json` on the `fs` backend, an "SMTP" Sheets tab on the `sheets` backend
   - Validates required fields
   - Returns configuration data
+- `admin/storage-status/route.ts` - reports active store backend, service-account email, per-document reachability, and a "Test connection" action for the admin Storage panel
+- `media/[fileId]/route.ts` - serves images uploaded to Google Drive when the `sheets`/Drive backend is active, keeping the Drive folder itself private
+- Every admin POST route (cards, projects, home-text, about-content, smtp-config, social-config, social-post, and the three upload routes) enforces `requireAdmin()` (`src/lib/admin-auth.ts`); the matching GET routes stay unauthenticated on purpose since the public landing page reads content through them
 
 ### In Progress
 About page content finalization; social media posting panel needs live Instagram/Facebook API connections. See `Development/Implementation/Roadmap.md` for status.
@@ -204,7 +208,16 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 10, 2026 — Save Point "ED04" / "ED04-final"
+**Last Updated**: August 15, 2026 — Save Point "ED05" (Google Sheets/Drive backend, admin POST auth gate)
+
+### ED05 landmarks (persistence + admin security)
+- Persistence is no longer flat-JSON-only. `src/lib/store.ts` is a document-store abstraction with a `fs` backend (unchanged `.env.*.json` behaviour, default) and a `sheets` backend (Google Sheets, auto-selected once Google env vars/admin overrides are set). **Read/write content through the store, not the filesystem directly** — new admin-editable fields should be added to `src/lib/sheet-schema.ts`'s per-tab column mapping as well as the fs shape, or they'll silently work locally and vanish on the Sheets backend.
+- `Development/Implementation/MAWebsiteDB.sql` (T-SQL/SQL Server) is **superseded**, not implemented — Render doesn't offer SQL Server. Don't resume that migration; the Sheets/Drive store is the actual persistence solution now.
+- Every admin POST route must call `requireAdmin()` (`src/lib/admin-auth.ts`) — this was missing site-wide until ED05 and was a live vulnerability (unauthenticated writes to SMTP password / social OAuth tokens included). When adding a new admin POST route, copy the auth check from an existing one (e.g. `api/admin/cards/route.ts`) — don't skip it.
+- Admin sessions are intentionally NOT in the document store — they're an in-memory `Map` on `globalThis` (`src/lib/admin-auth.ts`). Do not migrate sessions into Sheets; that would add a network round-trip + quota cost to every protected page render. A redeploy/restart forcing re-login is expected behavior, not a bug.
+- `GOOGLE_SERVICE_ACCOUNT_JSON` / `GOOGLE_SHEET_ID` / `GOOGLE_DRIVE_FOLDER_ID` are the only Google-related secrets; they live in `Deployment/render.yaml` as `sync: false` and are never committed. A live override of the sheet/folder IDs (not the key) can be set from the admin Storage panel, stored in gitignored `.env.google-links.json`.
+- Live Sheets/Drive writes are **unverified** — the service-account key hasn't been provisioned yet. Don't assume the `sheets` backend has been exercised end-to-end; treat it as built-but-dormant until confirmed.
+- Ash-text admin controls (`fontSize`/`textColor`/`letterSpacing`) still aren't wired to the rendered effect, and an 8-item visual punch list is still open — see `Development/Implementation/Roadmap.md` ED05 entry for the itemized list. Do not mark these done.
 
 ### ED04 landmarks (landing page + admin)
 - **CubeReveal API change (important, supersedes ED03)**: `cube-reveal.tsx` is now a `forwardRef` component exposing `setProgress(p: number)` via `useImperativeHandle` — it is driven by a scroll-derived progress value computed in `ash-text-section.tsx`'s RAF loop, **not** a time-based CSS-transition-delay `active` boolean. Every cube's opacity/transform/brightness-wave is a direct function of that progress number, so the section's scroll position and the reveal's progress are the same number by construction — a fast scroll can no longer outrun the animation. If you see references to an `active` prop on `CubeReveal` anywhere, that's stale.

@@ -1,8 +1,10 @@
 {
   "/page": "app/page.js",
-  "/api/visitor-count/route": "app/api/visitor-count/route.js",
-  "/admin/login/page": "app/admin/login/page.js",
   "/api/admin/home-text/route": "app/api/admin/home-text/route.js",
+  "/api/admin/storage-status/route": "app/api/admin/storage-status/route.js",
+  "/api/admin/login/route": "app/api/admin/login/route.js",
   "/api/admin/cards/route": "app/api/admin/cards/route.js",
+  "/admin/login/page": "app/admin/login/page.js",
+  "/api/visitor-count/route": "app/api/visitor-count/route.js",
   "/admin/(protected)/page": "app/admin/(protected)/page.js"
 }
