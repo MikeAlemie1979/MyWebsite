@@ -189,15 +189,28 @@ redeploy; under the local-file fallback it does not.
 
 ## 6. Verified before this package was prepared
 
-- `npm run build` — clean production build, 25 routes, no errors, all API
+- `npm run build` — clean production build, 26 routes, no errors, all API
   routes correctly dynamic (`ƒ`)
 - `npm run start` — smoke-tested against the built output: `/`, `/about`,
   `/projects`, and `/admin/login` all return `200`
 - Every admin content GET (cards, projects, home-text, about-content) returns
   `200` with no session — required, since the public pages read through these
-- Every admin POST returns `401 Unauthorized` with no session cookie —
-  confirms the `requireAdmin()` gate holds under a production build, not just
-  in dev
+- Every admin POST and upload route returns `401 Unauthorized` with no
+  session cookie — confirms the `requireAdmin()` gate holds under a
+  production build, not just in dev
+- `/api/media/local/[...path]` and `/api/media/[fileId]` (the local-fallback
+  and Drive-backed image routes) are public with no session required, as
+  intended, and correctly 400/404 on a garbage id rather than serving
+  anything
+- **Uploaded-image reachability was specifically regression-tested**: a file
+  uploaded through the running production server, with no restart, was
+  fetched back and confirmed `200` with byte-identical content. This matters
+  because Next's production server snapshots `public/`'s file listing once at
+  boot and never rescans it — a naive implementation serving uploads as
+  static files from `public/` would 404 for every visitor until the process
+  restarted, which on a long-running Render deploy could mean indefinitely.
+  Uploads are deliberately served through a dynamic route instead (see the
+  `uploads/` entry in §2) specifically to avoid this.
 - This pass ran on the **local-file fallback** (no `GOOGLE_SERVICE_ACCOUNT_JSON`
   set yet) — the Google Sheets/Drive path is implemented and its column
   schema/auth flow verified separately, but a live write against the actual
