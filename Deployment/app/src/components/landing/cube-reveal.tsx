@@ -16,7 +16,7 @@ const IMAGE_ASPECT = 1840 / 913;
 // Trimmed off the bottom-anchored box's height. The grid inside keeps the
 // full uncropped height, so the portrait is never squeezed — the surplus runs
 // off the top, where the parent's mask gradient already dissolves it.
-const HEIGHT_TRIM_PX = 96;
+const HEIGHT_TRIM_PX = 108;
 
 const GRID_COLS = 12;
 const GRID_ROWS = 6;

@@ -380,10 +380,19 @@ export function AshTextSection() {
           <CubeReveal ref={cubeRef} />
         </div>
 
+        {/* Both side images fade into the section's own black via a bottom
+            mask, the same technique CubeReveal uses above (there fading its
+            top edge into the background instead). Without it each PNG ends
+            on a hard rectangular edge partway up the section, which reads as
+            a sprite pasted on top rather than part of the scene. */}
         <motion.div
           aria-hidden
           className="pointer-events-none select-none absolute left-0 z-20"
-          style={{ bottom: "-31px" }}
+          style={{
+            bottom: "-31px",
+            WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)",
+            maskImage: "linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)",
+          }}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
@@ -400,7 +409,11 @@ export function AshTextSection() {
         <motion.div
           aria-hidden
           className="pointer-events-none select-none absolute right-0 z-20"
-          style={{ bottom: "-31px" }}
+          style={{
+            bottom: "-31px",
+            WebkitMaskImage: "linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)",
+            maskImage: "linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)",
+          }}
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.3 }}
