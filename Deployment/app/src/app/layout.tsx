@@ -3,6 +3,16 @@ import "./globals.css";
 import { ThemeProvider } from "@/context/theme-context";
 import { TargetCursor } from "@/components/common/target-cursor";
 import { HeroMouseTrail } from "@/components/landing/hero-mouse-trail";
+import { warnIfLocalBackend } from "@/lib/google-config";
+
+// Runs once per server process (not once per request — see the module-level
+// guard inside), so this is the closest thing to a boot-time check available
+// without enabling Next's experimental instrumentation hook. Printed to
+// stdout specifically so it shows up in Render's own log tail: the local-file
+// fallback silently working made a real deploy look fine right up until
+// content vanished on the next redeploy, and the only place that ever said
+// otherwise was a banner inside /admin nobody had a reason to open yet.
+warnIfLocalBackend();
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://mikealemie.com";
 const TITLE = "Mike Alemie | AI Designer & Database Engineer";

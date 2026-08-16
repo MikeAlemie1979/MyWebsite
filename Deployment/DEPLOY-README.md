@@ -60,9 +60,34 @@ Settings (Root Directory / Build Command / Start Command, matching
 `render.yaml`), or delete and recreate the service from the blueprint so
 Render applies these settings itself.
 
-Also set the three Google environment variables described in §4a. Render's
-filesystem is wiped on every deploy, so without them all admin content, the
-admin password, and the visitor counter reset on every single deploy.
+Also set the five Google environment variables described in §4a and §4a-i —
+**in the Render dashboard itself, under Environment**, not just in a local
+`.env.local` file. Render never reads a local `.env.local`; it's a separate
+machine. This is the single most common way a deploy ends up "working" but
+silently not persisting anything — see §2b.
+
+## 2b. "I deployed and my changes aren't saving" — check this first
+
+If cards/projects/content appear to save, then vanish (on a reload, after a
+while, or after the next deploy): the Google env vars almost certainly were
+never set **in Render's dashboard**, even if they're correctly sitting in a
+local `.env.local` on your own machine — Render cannot see that file.
+
+1. Check the **Render service's own log output** at boot for a line starting
+   `[storage] Running on local files, not Google Sheets` — this is printed
+   automatically whenever the five variables in §4a/§4a-i aren't fully set,
+   specifically so this doesn't require guessing.
+2. Or log into `/admin` on the live site → **System → Storage** — an amber
+   "Running on local files" banner means the same thing.
+3. Fix by adding the missing variables in **Render dashboard → your service
+   → Environment** (not locally), then let it redeploy.
+4. If Drive was already connected locally, **"Connect Google Drive" has to be
+   clicked again on the live site** after redeploying — that connection is
+   per-environment (see §4a-i step 4), it doesn't carry over from local
+   testing.
+5. Also add the live domain's callback URL to the OAuth client's Authorized
+   redirect URIs in Cloud Console (see §4a-i step 2) — the one registered for
+   local testing (`localhost:...`) only works there.
 
 ## 3. Build & run
 

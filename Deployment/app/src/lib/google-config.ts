@@ -88,3 +88,39 @@ export function saveLinks(links: Partial<GoogleLinks>): GoogleLinks {
 export function clearLinks(): void {
   if (fs.existsSync(OVERRIDE_FILE)) fs.unlinkSync(OVERRIDE_FILE);
 }
+
+let warned = false;
+
+/**
+ * Logs once, at server startup, when the app is about to run on the local-
+ * file fallback rather than Google Sheets. On Render this state is easy to
+ * miss: the site works, admin saves succeed, nothing errors — the only
+ * visible sign is a banner inside /admin → System → Storage, and content
+ * silently resets on the next deploy regardless of whether anyone ever
+ * opened that page. Printing to stdout puts it in the platform's own log
+ * tail instead, where a first deploy is actually likely to be checked.
+ *
+ * Reads GOOGLE_SERVICE_ACCOUNT_JSON directly rather than importing the check
+ * from google-auth.ts, which itself imports getSheetId from this module —
+ * importing back would be a cycle.
+ */
+export function warnIfLocalBackend(): void {
+  if (warned) return;
+  warned = true;
+
+  const hasServiceAccount = Boolean(process.env.GOOGLE_SERVICE_ACCOUNT_JSON?.trim());
+  const sheetId = getSheetId();
+  if (hasServiceAccount && sheetId) return; // Sheets is configured — nothing to warn about
+
+  const missing = [
+    !hasServiceAccount && "GOOGLE_SERVICE_ACCOUNT_JSON",
+    !sheetId && "GOOGLE_SHEET_ID",
+  ].filter(Boolean);
+
+  console.warn(
+    `[storage] Running on local files, not Google Sheets — missing: ${missing.join(", ")}. ` +
+      "Content saved now (cards, projects, etc.) will be LOST on the next deploy. " +
+      "Set these in the Render dashboard under Environment, or see Deployment/DEPLOY-README.md §4a. " +
+      "Confirm the fix at /admin -> System -> Storage."
+  );
+}
