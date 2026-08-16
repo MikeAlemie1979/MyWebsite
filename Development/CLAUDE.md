@@ -210,7 +210,14 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 16, 2026 — Save Point "ED08" (relational Cards/Projects schema, indexed image naming, load overlay, portfolio/project layout, hero fade sync)
+**Last Updated**: August 16, 2026 — Save Point "ED09" (imageUrl data-loss fix, Cards auto-ID admin rework, Home Portfolio image box sizing)
+
+### ED09 landmarks (imageUrl data-loss fix, Cards auto-ID)
+- **`imageUrl` must exist in all four places or it silently vanishes on save**: `src/lib/sheet-schema.ts`'s Cards/Projects tab specs, both API routes' (`cards/route.ts`, `projects/route.ts`) interfaces/validation, and both admin managers' (`cards-manager.tsx`, `projects-manager.tsx`) POST payloads. The ED08 relational migration dropped it from all four at once — displayed fine within the admin's own session (in-memory state) but never persisted, a genuine data-loss bug, not a display bug. Any future field added to Cards/Projects needs the same four-place check.
+- Cold-restart is the only real persistence test — a page reload can pass on stale in-memory cache even when a save is silently failing. Verify with: save → kill the entire dev server process → restart → read. This is how the ED09 imageUrl bug was actually caught and actually confirmed fixed.
+- `cards-manager.tsx` no longer accepts a manually-typed ID or CardId — IDs are always auto-assigned ("+ Add Card" = next CardId, "+ Add Content Line" = next image number within a card group). Do not reintroduce a free-text ID field; this was a direct user requirement.
+- Home Portfolio image panel (`cards-section.tsx`) uses `width:70%, height:70%` + `object-contain` — both dimensions are capped to the same fixed box so portrait/landscape uploads read at a consistent size. Don't go back to `height:auto`, which reintroduces per-image size variance driven by upload aspect ratio.
+- Live-deployment-only "resetting" report is suspected (not confirmed) to be a missing Render env var causing silent fallback to the ephemeral `fs` backend — check the admin Storage panel / Render Environment tab first before assuming a code bug, since local persistence was independently proven solid this same save point.
 
 ### ED08 landmarks (relational Cards/Projects schema, indexed image naming)
 - **BREAKING Sheets schema change — clear/recreate old tabs before testing on the `sheets` backend.** Cards tab: {id,title,description,imageUrl} → {id, cardId, cardContent, cardImgNumber}; multiple rows can share a `cardId`, which groups them into one Home Portfolio card. Projects tab: {id,title,briefInfo,approxPrice,imageUrl,order} → {id, cardId, details, cardLogoNumber, minDevCost}; `cardId` references a Cards group. `store.ts`'s `parseTab` reads by column **position**, not by matching header text — an old-header tab will silently misalign into the new fields rather than erroring. Any pre-existing "Cards" or "Projects" tab must be cleared/recreated.

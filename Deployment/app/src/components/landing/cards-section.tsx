@@ -84,24 +84,26 @@ function HorizontalCard({ card, index, total }: { card: PortfolioCard; index: nu
         ))}
       </div>
 
-      {/* Visual panel — right side, fixed width so the image's 70% sizing has
-          a stable box to sit inside regardless of the source image's own
-          aspect ratio. */}
+      {/* Visual panel — right side, a fixed-size box (same width AND height on
+          every card) so every uploaded image reads at the same on-screen
+          size regardless of its own resolution or aspect ratio. */}
       {hasImage && (
         <div
           className="relative h-full flex items-center justify-center overflow-hidden flex-shrink-0"
           style={{ width: "min(65vw, 900px)" }}
         >
           {/* Plain <img>, not next/image: an admin-uploaded image has no known
-              dimensions ahead of time. Sized to 70% of this panel's width,
-              per the "70% of width" spec — height follows via object-contain
-              so the aspect ratio is never distorted. */}
+              dimensions ahead of time. Capped to 70% of BOTH the panel's
+              width and height (not just width) and object-contain, so every
+              image fits inside the same bounding box without distortion —
+              a portrait upload and a landscape upload end up visually the
+              same size instead of one towering over the other. */}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={card.imageUrl!}
             alt={card.contents[0] ?? "Portfolio image"}
             className="object-contain block"
-            style={{ width: "70%", height: "auto", maxHeight: "100%" }}
+            style={{ width: "70%", height: "70%" }}
           />
         </div>
       )}
