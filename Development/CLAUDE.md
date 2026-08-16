@@ -94,7 +94,7 @@ The application follows a layered architecture as defined in `SysArch.md`:
 2. **Frontend Layer** - React components, Next.js pages
 3. **API Layer** - Next.js API routes (serverless functions)
 4. **Security & Compliance Layer** - Authentication, authorization
-5. **Data Persistence** - Document-store abstraction (`src/lib/store.ts`): flat `.env.*.json` files (`fs` backend, default/local) or Google Sheets as the database (`sheets` backend, auto-selected once configured) with a schema-driven column mapping (`src/lib/sheet-schema.ts`); uploaded images go to local `public/uploads/**` or Google Drive (`src/lib/media.ts`) the same way
+5. **Data Persistence** - Document-store abstraction (`src/lib/store.ts`): flat `.env.*.json` files (`fs` backend, default/local) or Google Sheets as the database (`sheets` backend, auto-selected once configured) with a schema-driven column mapping (`src/lib/sheet-schema.ts`). Uploaded images go to a non-public local `uploads/` directory served per-request via `/api/media/local/[...path]` (not `public/uploads/**`, which `next start` snapshots at boot and never rescans), or to Google Drive (`src/lib/media.ts`) via a separate OAuth connection (`src/lib/google-oauth.ts`) — the Sheets service account cannot upload to Drive on personal accounts (see landmarks below) and is Sheets-only
 
 ### Development Approach
 - **Modular Agile Iterative (MAI)**: Page-by-page development with iterative refinement
@@ -139,7 +139,9 @@ The application follows a layered architecture as defined in `SysArch.md`:
   - Validates required fields
   - Returns configuration data
 - `admin/storage-status/route.ts` - reports active store backend, service-account email, per-document reachability, and a "Test connection" action for the admin Storage panel
-- `media/[fileId]/route.ts` - serves images uploaded to Google Drive when the `sheets`/Drive backend is active, keeping the Drive folder itself private
+- `media/[fileId]/route.ts` - serves images uploaded to Google Drive when the `sheets`/Drive backend is active, keeping the Drive folder itself private; authenticates with the OAuth token (not the service account), since OAuth-uploaded files are owned by the connected account
+- `media/local/[...path]/route.ts` - serves locally-uploaded images from the non-public `uploads/` directory, reading from disk on every request (fixes the `public/uploads/` no-restart 404 bug)
+- `admin/google-oauth/start/route.ts`, `admin/google-oauth/callback/route.ts` - "Connect Google Drive" OAuth flow (`src/lib/google-oauth.ts`); refresh token persisted via the document store's `google-oauth` document type
 - Every admin POST route (cards, projects, home-text, about-content, smtp-config, social-config, social-post, and the three upload routes) enforces `requireAdmin()` (`src/lib/admin-auth.ts`); the matching GET routes stay unauthenticated on purpose since the public landing page reads content through them
 
 ### In Progress
@@ -208,7 +210,15 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 15, 2026 — Save Point "ED06" (per-page SEO/GEO/AEO metadata, first Lighthouse performance/accessibility pass)
+**Last Updated**: August 15, 2026 — Save Point "ED07" (card upload fix, no-restart upload serving, contact form SMTP dispatch, Google Drive OAuth)
+
+### ED07 landmarks (uploads, contact form, Google Drive OAuth)
+- **Service accounts cannot upload to a personal (non-Workspace) Google Drive — this is a Google platform restriction, not a bug in this codebase.** It fails with a 403 "Service Accounts do not have storage quota" and is not fixable by any code change, folder-sharing setting, or permission tweak. Confirmed against the live API. Google's own documented fix is OAuth as the real account owner, which is what `src/lib/google-oauth.ts` implements. Do not attempt to "fix" this by touching Drive folder sharing/permissions again — it has already been tried and ruled out.
+- Sheets access uses the service account exclusively; Drive uploads/read-back use the OAuth connection exclusively. Don't merge these — a file uploaded via OAuth is owned by the connected account and a service-account request for it will 404.
+- **Always verify `.env.local` is listed in `.gitignore` before running `git add` in this project.** It was found unprotected (holding the service-account private key and OAuth client secret) — never staged/committed, but the gap existed silently. Treat this as a standing pre-flight check, not a one-time fix.
+- Local uploads are served via `/api/media/local/[...path]` (reads `uploads/` from disk per-request), not `public/uploads/**`. `next start` snapshots the `public/` directory listing once at boot, so any file uploaded to `public/uploads/` while the server is already running 404s until the process restarts — on Render that means until the next deploy. Don't move uploads back under `public/`.
+- The "Connect Google Drive" step in the admin Storage panel is a one-time manual action a human must perform after each fresh deploy target (Google's consent screen can't be automated). The refresh token it produces then persists in the document store and renews itself indefinitely — don't assume it needs to be re-run on every deploy.
+- Known/accepted, not a bug: the Storage panel's "Connected as [email]" can render blank — the OAuth scope is deliberately minimal (`drive.file` only) and doesn't include profile-email read access. Do not add scope just to populate that field.
 
 ### ED06 landmarks (SEO/GEO/AEO + performance)
 - **Per-route metadata pattern**: a server-component page (e.g. `projects/page.tsx`) exports `metadata` directly. A `"use client"` page (e.g. `about/page.tsx`) cannot export `metadata` — Next.js's fix is a sibling `layout.tsx` in the same route folder that holds the `metadata` export instead (see `Deployment/app/src/app/about/layout.tsx`). Without one of these two, a page silently inherits the root layout's title/description via the metadata template — no error, no warning, just wrong `<title>`/OG tags and nothing generative-engine-quotable on that page. When adding a new page, check which pattern applies before assuming metadata is handled.
