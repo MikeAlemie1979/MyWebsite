@@ -90,7 +90,16 @@ three commands wired into their UI: an install step, `npm run build`, and
 
 No API keys are required to boot the app. SMTP credentials and social-media
 tokens are configured **after deploy**, through the Admin dashboard, and are
-stored on disk (see §4a) — not via environment variables.
+stored via the document store (see §4a) — not via environment variables.
+
+**The public contact form (`/`) sends real email through `nodemailer`** using
+whatever is saved in Admin → Email (SMTP). Until that's configured, the form
+fails honestly with a 503 rather than pretending to succeed — visit `/admin`
+and save working SMTP credentials before announcing the site is live, or
+visitor messages will bounce. Submissions are sent **to the configured
+`fromEmail` address** (it doubles as both the sender identity and the inbox
+that receives them) with the visitor's own address set as Reply-To, so
+replying goes straight back to them.
 
 ### 4a. Runtime content storage — read before your first deploy
 

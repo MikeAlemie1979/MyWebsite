@@ -7,6 +7,20 @@ import { Toggle } from "@/components/common/toggle";
 
 const MAX_ATTACHMENT_BYTES = 300 * 1024;
 
+function fileToBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      // readAsDataURL yields "data:<mime>;base64,<data>" — only the part
+      // after the comma is the actual base64 payload nodemailer wants.
+      const result = reader.result as string;
+      resolve(result.slice(result.indexOf(",") + 1));
+    };
+    reader.onerror = () => reject(reader.error);
+    reader.readAsDataURL(file);
+  });
+}
+
 interface FormState {
   fullName: string;
   email: string;
@@ -72,13 +86,22 @@ export function ContactForm() {
 
     setStatus("sending");
     try {
+      // The attachment previously never left the browser — only its size was
+      // sent, so the server had nothing to actually attach. Base64-encoding
+      // it into the JSON body is fine at this size (300KB cap keeps the
+      // encoded payload comfortably under a few hundred KB).
+      const attachment = file
+        ? {
+            name: file.name,
+            type: file.type || "application/octet-stream",
+            data: await fileToBase64(file),
+          }
+        : null;
+
       const res = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          ...form,
-          attachmentSize: file?.size ?? 0,
-        }),
+        body: JSON.stringify({ ...form, attachment }),
       });
       if (!res.ok) {
         const data = await res.json();
