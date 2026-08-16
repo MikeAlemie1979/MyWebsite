@@ -239,7 +239,7 @@ redeploy; under the local-file fallback it does not.
 
 ## 6. Verified before this package was prepared
 
-- `npm run build` — clean production build, 26 routes, no errors, all API
+- `npm run build` — clean production build, 28 routes, no errors, all API
   routes correctly dynamic (`ƒ`)
 - `npm run start` — smoke-tested against the built output: `/`, `/about`,
   `/projects`, and `/admin/login` all return `200`
