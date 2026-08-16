@@ -39,9 +39,11 @@ export type DocKey =
   | "social-config"
   | "social-post-log"
   | "visitor-count"
-  | "admin-auth";
+  | "admin-auth"
+  | "google-oauth";
 
 export const DOC_KEYS: DocKey[] = [
+  "google-oauth",
   "home-text",
   "cards",
   "projects",

@@ -80,6 +80,20 @@ services:
       - key: GOOGLE_DRIVE_FOLDER_ID
         sync: false
 
+      # Powers "Connect Google Drive" in Admin → System → Storage. Separate
+      # from GOOGLE_SERVICE_ACCOUNT_JSON on purpose: service accounts have no
+      # storage quota on a personal (non-Workspace) Drive, so image uploads
+      # need to run as the real account owner via OAuth instead — the service
+      # account above stays Sheets-only. From an OAuth 2.0 Client ID
+      # (type: Web application) in the same Cloud Console project, with this
+      # service's own URL + "/api/admin/google-oauth/callback" registered as
+      # an Authorized redirect URI.
+      - key: GOOGLE_OAUTH_CLIENT_ID
+        sync: false
+
+      - key: GOOGLE_OAUTH_CLIENT_SECRET
+        sync: false
+
     # PORT is supplied by Render automatically — `next start` reads it, no
     # manual configuration needed.
     #

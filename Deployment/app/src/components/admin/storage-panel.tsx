@@ -15,6 +15,9 @@ interface StorageStatus {
   sheetId: string | null;
   folderId: string | null;
   overridden: boolean;
+  driveOAuthConfigured: boolean;
+  driveConnected: boolean;
+  driveConnectedEmail: string | null;
   missing: string[];
   reachable: boolean | null;
   documents: DocStatus[];
@@ -54,7 +57,7 @@ export function StoragePanel() {
     load();
   }, [load]);
 
-  const save = async (clear = false) => {
+  const save = async (clear = false, disconnectDrive = false) => {
     setSaving(true);
     setMessage("");
     try {
@@ -62,7 +65,11 @@ export function StoragePanel() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(
-          clear ? { clear: true } : { sheetId: sheetInput, folderId: folderInput }
+          disconnectDrive
+            ? { disconnectDrive: true }
+            : clear
+              ? { clear: true }
+              : { sheetId: sheetInput, folderId: folderInput }
         ),
       });
       const data = await res.json();
@@ -70,7 +77,13 @@ export function StoragePanel() {
         setStatus(data);
         setSheetInput("");
         setFolderInput("");
-        setMessage(clear ? "✓ Reverted to the environment settings." : "✓ Storage settings saved.");
+        setMessage(
+          disconnectDrive
+            ? "✓ Disconnected Google Drive."
+            : clear
+              ? "✓ Reverted to the environment settings."
+              : "✓ Storage settings saved."
+        );
         setTimeout(() => setMessage(""), 4000);
       } else {
         setMessage(data.error || "Failed to save storage settings");
@@ -81,6 +94,19 @@ export function StoragePanel() {
       setSaving(false);
     }
   };
+
+  // The OAuth callback redirects back to /admin?drive_connect=success|denied|error
+  // rather than posting a message some other way, since it's a full page
+  // navigation coming back from Google, not a fetch this component made.
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const result = params.get("drive_connect");
+    if (!result) return;
+    if (result === "success") setMessage("✓ Google Drive connected.");
+    else if (result === "denied") setMessage("Drive connection cancelled.");
+    else setMessage("Failed to connect Google Drive. Check the server logs.");
+    window.history.replaceState({}, "", window.location.pathname);
+  }, []);
 
   if (loading && !status) return <div className="text-gray-400">Checking storage…</div>;
   if (!status) return <div className="text-red-300">Could not read storage status.</div>;
@@ -133,11 +159,53 @@ export function StoragePanel() {
 
       {status.serviceAccountEmail && (
         <p className="mt-4 text-xs text-gray-400 leading-relaxed">
-          Share both the spreadsheet and the Drive folder with the address above, as{" "}
-          <strong>Editor</strong>. Without that, Google reports &quot;not found&quot; even when the
-          links are correct.
+          Share the spreadsheet with the address above, as <strong>Editor</strong>. Without that,
+          Google reports &quot;not found&quot; even when the link is correct. This account is only
+          for Sheets — see below for images.
         </p>
       )}
+
+      {/* ---------------------------------------------------------------- */}
+
+      <div className="mt-8 pt-6 border-t border-white/10">
+        <h4 className="text-sm font-medium text-white mb-1">Google Drive (images)</h4>
+        <p className="text-xs text-gray-500 mb-4">
+          Uploaded images run as your own Google account, not the service account above — Google
+          gives service accounts no storage quota on a personal Drive, so uploads with one fail no
+          matter how the folder is shared.
+        </p>
+
+        {!status.driveOAuthConfigured && (
+          <p className="text-xs text-amber-200/80">
+            Not available yet — set <code>GOOGLE_OAUTH_CLIENT_ID</code> and{" "}
+            <code>GOOGLE_OAUTH_CLIENT_SECRET</code> first.
+          </p>
+        )}
+
+        {status.driveOAuthConfigured && status.driveConnected && (
+          <div className="flex items-center justify-between gap-3 p-3 rounded bg-green-500/10 border border-green-500/30">
+            <span className="text-sm text-green-300">
+              ✓ Connected as <strong>{status.driveConnectedEmail}</strong>
+            </span>
+            <button
+              onClick={() => save(false, true)}
+              disabled={saving}
+              className="text-xs px-3 py-1.5 bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 rounded transition-colors disabled:opacity-40 flex-shrink-0"
+            >
+              Disconnect
+            </button>
+          </div>
+        )}
+
+        {status.driveOAuthConfigured && !status.driveConnected && (
+          <a
+            href="/api/admin/google-oauth/start"
+            className="inline-block bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded font-medium transition-colors text-sm"
+          >
+            Connect Google Drive
+          </a>
+        )}
+      </div>
 
       {/* ---------------------------------------------------------------- */}
 

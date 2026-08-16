@@ -111,7 +111,7 @@ JSON blob), defined in `src/lib/sheet-schema.ts`. Uploaded images go to a
 **Google Drive folder** and are served back through `/api/media/<fileId>`, so
 the folder itself stays private.
 
-Configure it with three environment variables:
+Configure Sheets access with three environment variables:
 
 | Variable | Purpose |
 |---|---|
@@ -125,16 +125,57 @@ One-time setup:
    the **Google Drive API**.
 2. Create a **Service Account**, then create a **JSON key** for it.
 3. Create the spreadsheet and the Drive folder.
-4. **Share both** with the service account's
+4. **Share the spreadsheet** with the service account's
    `...@....iam.gserviceaccount.com` address, as **Editor**. Skipping this is
    the most common failure: Google reports an unshared resource as *not
-   found*, which is indistinguishable from a mistyped id.
+   found*, which is indistinguishable from a mistyped id. Do **not** share
+   the Drive folder with it — see below for why that wouldn't help anyway.
 5. Set the three variables in the Render dashboard (they are declared
    `sync: false` in `render.yaml`, so Render prompts for them and never
    stores them in the repo).
 6. Verify at **/admin → System → Storage**, which reports the active backend,
    shows the service-account address to share with, and runs a live
    connection test.
+
+### 4a-i. Google Drive uploads need a second, different credential
+
+Uploaded images do **not** use the service account above. Google gives
+service accounts **zero storage quota** on a personal (non-Workspace) Drive —
+`files.create` fails with a 403 no matter how the destination folder is
+shared. The fix Google documents for personal accounts is to upload as the
+real account owner instead, via OAuth — the service account stays
+Sheets-only.
+
+Two more environment variables, from an **OAuth 2.0 Client ID** (not a
+service account) in the same Cloud Console project:
+
+| Variable | Purpose |
+|---|---|
+| `GOOGLE_OAUTH_CLIENT_ID` | From an OAuth 2.0 Client ID, type **Web application**. |
+| `GOOGLE_OAUTH_CLIENT_SECRET` | The matching secret. **Secret** — same handling as the service-account key. |
+
+Setup:
+
+1. **Google Auth Platform** (in the same Cloud Console project) → configure
+   the OAuth consent screen: External user type, add the site owner's own
+   Google account under **Audience → Test users** (no Google verification is
+   needed while the app stays in Testing mode with a narrow `drive.file`
+   scope).
+2. **Clients → Create client → Web application.** Add an **Authorized
+   redirect URI** of `<your site URL>/api/admin/google-oauth/callback` —
+   e.g. `https://mikealemie.com/api/admin/google-oauth/callback` in
+   production, `http://localhost:3000/api/admin/google-oauth/callback` for
+   local dev. This must match `NEXT_PUBLIC_SITE_URL` exactly (protocol,
+   host, no trailing slash) or Google rejects the redirect.
+3. Set `GOOGLE_OAUTH_CLIENT_ID` and `GOOGLE_OAUTH_CLIENT_SECRET` in Render.
+4. Log into **/admin → System → Storage** and click **Connect Google
+   Drive**. This is a one-time step a human has to click through — Google's
+   consent screen cannot be automated. Sign in as the account whose Drive
+   quota should hold the uploads, and Allow.
+5. The refresh token this produces is stored via the same document store as
+   everything else (a "Google Drive Connection" sheet tab) and renews itself
+   indefinitely — no need to repeat this after a redeploy, only if access is
+   revoked from the Google account's own permissions page.
 
 The app creates each spreadsheet tab **and its header row** on first save —
 no manual sheet setup.

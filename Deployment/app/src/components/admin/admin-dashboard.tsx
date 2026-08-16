@@ -119,7 +119,14 @@ function NavButton({
 }
 
 export function AdminDashboard() {
-  const [activeSection, setActiveSection] = useState<Section>("home-text");
+  // The Google Drive OAuth callback redirects back to /admin?drive_connect=...
+  // rather than staying client-side (it's a full navigation from Google), so
+  // land on Storage in that case or its result message would never be seen.
+  const [activeSection, setActiveSection] = useState<Section>(() =>
+    typeof window !== "undefined" && new URLSearchParams(window.location.search).has("drive_connect")
+      ? "storage"
+      : "home-text"
+  );
 
   async function handleLogout() {
     try {

@@ -8,6 +8,11 @@ out/
 # TypeScript incremental build cache
 tsconfig.tsbuildinfo
 
+# Local Google credentials (service-account key, OAuth client secret,
+# NEXT_PUBLIC_SITE_URL override) - never commit. Next.js loads .env.local
+# automatically in every environment, dev and `next start` alike.
+.env.local
+
 # Admin auth secrets and session store - never commit
 .env.admin-auth.json
 .env.admin-sessions.json

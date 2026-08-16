@@ -1,7 +1,7 @@
 import * as fs from "fs";
 import * as path from "path";
-import { googleFetch, isGoogleConfigured } from "./google-auth";
 import { getFolderId } from "./google-config";
+import { getDriveAccessToken } from "./google-oauth";
 
 /**
  * Image upload handling shared by the three admin upload routes
@@ -9,8 +9,16 @@ import { getFolderId } from "./google-config";
  *
  * Like the document store, this has two backends:
  *   - local  — writes into <cwd>/uploads/<folder>/ (NOT public/uploads/),
- *              used whenever Google is not configured (i.e. local dev).
- *   - drive  — uploads into the GOOGLE_DRIVE_FOLDER_ID folder.
+ *              used whenever Drive isn't connected.
+ *   - drive  — uploads into the GOOGLE_DRIVE_FOLDER_ID folder, authenticated
+ *              as the real Google account via OAuth (see google-oauth.ts) —
+ *              deliberately NOT the service account used for Sheets. Service
+ *              accounts get zero storage quota on a personal (non-Workspace)
+ *              Drive, so uploads with one fail outright regardless of
+ *              sharing; acting as the account owner uses their own quota
+ *              instead. Every file this creates is therefore owned by that
+ *              account, not the service account — so reading it back must
+ *              use the same OAuth token too, not the service account's.
  *
  * Neither backend serves its files as a static asset under public/. That was
  * the original local design and it has a real bug in production: Next.js's
@@ -39,8 +47,9 @@ function driveFolderId(): string | undefined {
   return getFolderId() ?? undefined;
 }
 
-export function mediaBackend(): "local" | "drive" {
-  return isGoogleConfigured() && driveFolderId() ? "drive" : "local";
+export async function mediaBackend(): Promise<"local" | "drive"> {
+  const token = await getDriveAccessToken();
+  return token && driveFolderId() ? "drive" : "local";
 }
 
 export interface UploadOutcome {
@@ -79,12 +88,16 @@ export async function saveUpload(
   const filename = `${idPrefix}${Date.now()}-${safeName}`;
   const buffer = Buffer.from(await file.arrayBuffer());
 
-  if (mediaBackend() === "local") {
+  const backend = await mediaBackend();
+  if (backend === "local") {
     const dir = path.join(process.cwd(), "uploads", folder);
     if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
     fs.writeFileSync(path.join(dir, filename), buffer);
     return { url: `/api/media/local/${folder}/${filename}` };
   }
+
+  const accessToken = await getDriveAccessToken();
+  if (!accessToken) return { error: "Google Drive is not connected", status: 500 };
 
   const metadata = {
     name: `${folder}-${filename}`,
@@ -107,11 +120,19 @@ export async function saveUpload(
     Buffer.from(`\r\n--${boundary}--`),
   ]);
 
-  const response = await googleFetch(`${DRIVE_UPLOAD}?uploadType=multipart&fields=id`, {
+  const response = await fetch(`${DRIVE_UPLOAD}?uploadType=multipart&fields=id`, {
     method: "POST",
-    headers: { "Content-Type": `multipart/related; boundary=${boundary}` },
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": `multipart/related; boundary=${boundary}`,
+    },
     body,
   });
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    console.error("[media] Drive upload failed:", response.status, text.slice(0, 500));
+    return { error: "Failed to upload to Google Drive", status: 502 };
+  }
 
   const { id } = (await response.json()) as { id?: string };
   if (!id) return { error: "Drive upload returned no file id", status: 500 };
@@ -119,9 +140,21 @@ export async function saveUpload(
   return { url: `/api/media/${id}` };
 }
 
-/** Streams a Drive file back to the browser. Used by /api/media/[fileId]. */
+/**
+ * Streams a Drive file back to the browser. Used by /api/media/[fileId].
+ * Files uploaded through saveUpload() are owned by the OAuth-connected
+ * account, not the service account, so reading them back needs that same
+ * token — a service-account request would get a 404 for a file it was never
+ * given access to.
+ */
 export async function fetchDriveFile(fileId: string): Promise<Response> {
-  return googleFetch(`${DRIVE_FILES}/${encodeURIComponent(fileId)}?alt=media`);
+  const accessToken = await getDriveAccessToken();
+  if (!accessToken) {
+    return new Response(null, { status: 404 });
+  }
+  return fetch(`${DRIVE_FILES}/${encodeURIComponent(fileId)}?alt=media`, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  });
 }
 
 const EXT_CONTENT_TYPE: Record<string, string> = {

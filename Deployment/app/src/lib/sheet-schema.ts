@@ -214,6 +214,21 @@ export const SHEET_SCHEMA: Record<DocKey, TabSpec[]> = {
       ],
     },
   ],
+
+  // The refresh token behind "Connect Google Drive". Service accounts have no
+  // storage quota on a personal (non-Workspace) Drive — uploads must run as
+  // the real account owner instead, via a one-time OAuth consent that this
+  // token lets the server renew indefinitely without asking again.
+  "google-oauth": [
+    {
+      kind: "kv",
+      tab: "Google Drive Connection",
+      fields: [
+        f("connectedEmail", "Connected Account"),
+        f("refreshToken", "Refresh Token"),
+      ],
+    },
+  ],
 };
 
 /* ------------------------------------------------------------ conversion */
