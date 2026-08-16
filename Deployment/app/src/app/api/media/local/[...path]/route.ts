@@ -22,9 +22,10 @@ export async function GET(_request: NextRequest, { params }: { params: { path: s
   return new NextResponse(new Uint8Array(result.buffer), {
     headers: {
       "Content-Type": result.contentType,
-      // Filenames are timestamp-suffixed and never reused, so the bytes
-      // behind a given URL can never change.
-      "Cache-Control": "public, max-age=31536000, immutable",
+      // Cards/Projects images now live at a stable slot-based path
+      // (CardImg01, Logo01, ...) that gets overwritten on re-upload, so this
+      // can't be marked immutable like the old timestamp-suffixed names were.
+      "Cache-Control": "public, max-age=300, must-revalidate",
     },
   });
 }

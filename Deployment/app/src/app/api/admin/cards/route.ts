@@ -4,9 +4,9 @@ import { requireAdmin } from "@/lib/admin-auth";
 
 interface CardItem {
   id: string;
-  title: string;
-  description: string;
-  imageUrl: string | null;
+  cardId: number;
+  cardContent: string;
+  cardImgNumber: number;
 }
 
 interface CardsConfig {
@@ -15,10 +15,8 @@ interface CardsConfig {
 
 const DEFAULT_CARDS: CardsConfig = {
   cards: [
-    { id: "c1", title: "Data Architecture", description: "Placeholder content — editable via Admin.", imageUrl: null },
-    { id: "c2", title: "AI Systems", description: "Placeholder content — editable via Admin.", imageUrl: null },
-    { id: "c3", title: "Product Design", description: "Placeholder content — editable via Admin.", imageUrl: null },
-    { id: "c4", title: "Cloud Engineering", description: "Placeholder content — editable via Admin.", imageUrl: null },
+    { id: "c1", cardId: 1, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1 },
+    { id: "c2", cardId: 2, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1 },
   ],
 };
 
@@ -43,7 +41,12 @@ export async function POST(request: NextRequest) {
     }
 
     for (const card of cards) {
-      if (typeof card.id !== "string" || typeof card.title !== "string" || typeof card.description !== "string") {
+      if (
+        typeof card.id !== "string" ||
+        typeof card.cardId !== "number" ||
+        typeof card.cardContent !== "string" ||
+        typeof card.cardImgNumber !== "number"
+      ) {
         return NextResponse.json({ error: "Invalid card shape" }, { status: 400 });
       }
     }

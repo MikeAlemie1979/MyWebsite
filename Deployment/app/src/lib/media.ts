@@ -141,6 +141,86 @@ export async function saveUpload(
 }
 
 /**
+ * Stores an image under a stable, predictable name derived from the sheet
+ * row it belongs to (`CardImg01`, `Logo03`, ...) instead of a timestamp, so
+ * the Cards/Projects sheet columns (`cardImgNumber` / `cardLogoNumber`) and
+ * the actual file on disk/Drive are always the same identifier. Re-uploading
+ * the same cardId+index overwrites the previous file — that's the point,
+ * since the slot (not the moment of upload) is what's stable.
+ */
+export async function saveIndexedUpload(
+  file: File,
+  folder: "cards" | "projects",
+  cardId: number,
+  index: number,
+  kind: "CardImg" | "Logo"
+): Promise<UploadOutcome> {
+  if (!ALLOWED_TYPES.includes(file.type)) {
+    return {
+      error: "Invalid file type. Only JPG, PNG, and WEBP images are allowed.",
+      status: 400,
+    };
+  }
+  if (file.size > MAX_SIZE_BYTES) {
+    return { error: "File too large. Maximum size is 2MB.", status: 400 };
+  }
+
+  const ext = path.extname(sanitizeFileName(file.name || "upload.png")) || ".png";
+  const idx2 = String(index).padStart(2, "0");
+  const baseName = `${kind}${idx2}`;
+  const filename = `${baseName}${ext}`;
+  const buffer = Buffer.from(await file.arrayBuffer());
+
+  const backend = await mediaBackend();
+  if (backend === "local") {
+    const dir = path.join(process.cwd(), "uploads", folder, String(cardId));
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(path.join(dir, filename), buffer);
+    return { url: `/api/media/local/${folder}/${cardId}/${filename}` };
+  }
+
+  const accessToken = await getDriveAccessToken();
+  if (!accessToken) return { error: "Google Drive is not connected", status: 500 };
+
+  const metadata = {
+    name: `${folder}-${cardId}-${filename}`,
+    parents: [driveFolderId()!],
+  };
+
+  const boundary = `mab${Date.now().toString(16)}`;
+  const body = Buffer.concat([
+    Buffer.from(
+      `--${boundary}\r\n` +
+        "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+        `${JSON.stringify(metadata)}\r\n` +
+        `--${boundary}\r\n` +
+        `Content-Type: ${file.type}\r\n\r\n`
+    ),
+    buffer,
+    Buffer.from(`\r\n--${boundary}--`),
+  ]);
+
+  const response = await fetch(`${DRIVE_UPLOAD}?uploadType=multipart&fields=id`, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${accessToken}`,
+      "Content-Type": `multipart/related; boundary=${boundary}`,
+    },
+    body,
+  });
+  if (!response.ok) {
+    const text = await response.text().catch(() => "");
+    console.error("[media] Drive upload failed:", response.status, text.slice(0, 500));
+    return { error: "Failed to upload to Google Drive", status: 502 };
+  }
+
+  const { id } = (await response.json()) as { id?: string };
+  if (!id) return { error: "Drive upload returned no file id", status: 500 };
+
+  return { url: `/api/media/${id}` };
+}
+
+/**
  * Streams a Drive file back to the browser. Used by /api/media/[fileId].
  * Files uploaded through saveUpload() are owned by the OAuth-connected
  * account, not the service account, so reading them back needs that same

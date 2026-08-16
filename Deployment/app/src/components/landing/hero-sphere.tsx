@@ -289,14 +289,16 @@ export function HeroSection() {
 
       <TopStarBand />
 
-      {/* Corner figure — fades in on load, pinned to the hero's bottom-left. */}
+      {/* Corner figure — fades in on load, pinned to the hero's bottom-left.
+          Duration/delay kept in sync with the sphere's own entrance fade
+          below so both appear together over the same 4s. */}
       <motion.div
         aria-hidden
         className="pointer-events-none select-none absolute left-0 z-0"
         style={{ bottom: "17px" }}
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 1.4, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        transition={{ duration: 4, delay: 0, ease: [0.16, 1, 0.3, 1] }}
       >
         <Image
           src="/images/home-figure.png"
@@ -310,13 +312,25 @@ export function HeroSection() {
 
       {/* Living neon sphere with its ring of drifting labels — accelerates,
           shrinks, drifts off in a random direction, and fades as the hero
-          scrolls past. */}
+          scrolls past. The scroll-exit fade (sphereOpacity, bound via style)
+          and this entrance fade-in can't share one opacity value, so the
+          entrance lives on an outer wrapper and the two multiply visually:
+          on mount this wrapper ramps 0->1 over 4s (matching the corner
+          image), while the inner div keeps its existing scroll-driven fade
+          untouched. */}
       <motion.div
-        className="relative z-[45] flex items-center justify-center"
-        style={{ width: SPHERE_SIZE, height: SPHERE_SIZE, x: sphereXWithOffset, y: sphereY, scale: sphereScale, opacity: sphereOpacity }}
+        className="relative z-[45]"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 4, delay: 0, ease: [0.16, 1, 0.3, 1] }}
       >
-        <NeonSphere size={SPHERE_SIZE} scrollProgressRef={scrollProgressRef} />
-        <FlashTexts sphereSize={SPHERE_SIZE} />
+        <motion.div
+          className="relative flex items-center justify-center"
+          style={{ width: SPHERE_SIZE, height: SPHERE_SIZE, x: sphereXWithOffset, y: sphereY, scale: sphereScale, opacity: sphereOpacity }}
+        >
+          <NeonSphere size={SPHERE_SIZE} scrollProgressRef={scrollProgressRef} />
+          <FlashTexts sphereSize={SPHERE_SIZE} />
+        </motion.div>
       </motion.div>
 
       {/* Scroll cue */}

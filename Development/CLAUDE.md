@@ -210,7 +210,14 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 15, 2026 — Save Point "ED07" (card upload fix, no-restart upload serving, contact form SMTP dispatch, Google Drive OAuth)
+**Last Updated**: August 16, 2026 — Save Point "ED08" (relational Cards/Projects schema, indexed image naming, load overlay, portfolio/project layout, hero fade sync)
+
+### ED08 landmarks (relational Cards/Projects schema, indexed image naming)
+- **BREAKING Sheets schema change — clear/recreate old tabs before testing on the `sheets` backend.** Cards tab: {id,title,description,imageUrl} → {id, cardId, cardContent, cardImgNumber}; multiple rows can share a `cardId`, which groups them into one Home Portfolio card. Projects tab: {id,title,briefInfo,approxPrice,imageUrl,order} → {id, cardId, details, cardLogoNumber, minDevCost}; `cardId` references a Cards group. `store.ts`'s `parseTab` reads by column **position**, not by matching header text — an old-header tab will silently misalign into the new fields rather than erroring. Any pre-existing "Cards" or "Projects" tab must be cleared/recreated.
+- Image slot naming replaces timestamp naming for Cards/Projects uploads: `saveIndexedUpload()` in `src/lib/media.ts` writes `CardImg01.ext`/`CardImg02.ext` (Cards, per cardId) and `Logo01.ext`/`Logo02.ext` (Projects, per cardId). Re-uploading the same cardId+index slot **overwrites** the existing file — this is intentional stable-slot identity, not append-only history. The old timestamp-based `saveUpload()` still exists but is scoped to about-content uploads only; don't reuse it for cards/projects.
+- Projects count is no longer fixed at 7 — the hardcoded validation (`api/admin/projects/route.ts`) and matching 7-slot admin UI gate (`projects-manager.tsx`) were both removed. Any count >= 0 is valid now; don't reintroduce the 7-item assumption elsewhere.
+- `src/components/common/loading-overlay.tsx` is self-contained inside `CardsSection` (`cards-section.tsx`) — it's `position: fixed`, so it needs no wiring in `page.tsx`. Only appears if the cards fetch exceeds 2s.
+- `hero-sphere.tsx`'s entrance fade is now two nested `motion.div`s: an outer one owns the new 4s `initial/animate` entrance fade, an inner one (unchanged) still owns the scroll-driven `sphereOpacity` exit fade via `style`. Don't collapse them into one div — that would make the two fades fight over a single `opacity` prop instead of composing.
 
 ### ED07 landmarks (uploads, contact form, Google Drive OAuth)
 - **Service accounts cannot upload to a personal (non-Workspace) Google Drive — this is a Google platform restriction, not a bug in this codebase.** It fails with a 403 "Service Accounts do not have storage quota" and is not fixable by any code change, folder-sharing setting, or permission tweak. Confirmed against the live API. Google's own documented fix is OAuth as the real account owner, which is what `src/lib/google-oauth.ts` implements. Do not attempt to "fix" this by touching Drive folder sharing/permissions again — it has already been tried and ruled out.

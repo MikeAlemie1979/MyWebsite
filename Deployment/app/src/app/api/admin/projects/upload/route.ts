@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { requireAdmin } from "@/lib/admin-auth";
-import { saveUpload } from "@/lib/media";
+import { saveIndexedUpload } from "@/lib/media";
 
 export async function POST(request: NextRequest) {
   if (!requireAdmin(request)) {
@@ -10,17 +10,17 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
-    const projectId = formData.get("projectId");
+    const cardId = Number(formData.get("cardId"));
+    const logoIndex = Number(formData.get("logoIndex"));
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
+    if (!Number.isFinite(cardId) || !Number.isFinite(logoIndex)) {
+      return NextResponse.json({ error: "cardId and logoIndex are required" }, { status: 400 });
+    }
 
-    const result = await saveUpload(
-      file,
-      "projects",
-      typeof projectId === "string" && projectId ? projectId : undefined
-    );
+    const result = await saveIndexedUpload(file, "projects", cardId, logoIndex, "Logo");
     if (result.error) {
       return NextResponse.json({ error: result.error }, { status: result.status ?? 400 });
     }

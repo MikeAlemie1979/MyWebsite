@@ -4,11 +4,10 @@ import { requireAdmin } from "@/lib/admin-auth";
 
 interface ProjectItem {
   id: string;
-  title: string;
-  briefInfo: string;
-  approxPrice: string;
-  imageUrl: string | null;
-  order: number;
+  cardId: number;
+  details: string;
+  cardLogoNumber: number;
+  minDevCost: string;
 }
 
 interface ProjectsConfig {
@@ -16,14 +15,9 @@ interface ProjectsConfig {
 }
 
 const DEFAULT_PROJECTS: ProjectsConfig = {
-  projects: Array.from({ length: 7 }, (_, i) => ({
-    id: `p${i + 1}`,
-    title: `Project ${i + 1}`,
-    briefInfo: "Placeholder project description.",
-    approxPrice: "$—",
-    imageUrl: null,
-    order: i,
-  })),
+  projects: [
+    { id: "p1", cardId: 1, details: "Placeholder project details.", cardLogoNumber: 1, minDevCost: "$—" },
+  ],
 };
 
 export async function GET() {
@@ -42,21 +36,17 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const projects: ProjectItem[] = body.projects;
 
-    if (!Array.isArray(projects) || projects.length !== 7) {
-      return NextResponse.json(
-        { error: "Invalid payload: projects must be an array of exactly 7 items" },
-        { status: 400 }
-      );
+    if (!Array.isArray(projects)) {
+      return NextResponse.json({ error: "Invalid payload: projects must be an array" }, { status: 400 });
     }
 
     for (const project of projects) {
       if (
         typeof project.id !== "string" ||
-        typeof project.title !== "string" ||
-        typeof project.briefInfo !== "string" ||
-        typeof project.approxPrice !== "string" ||
-        typeof project.order !== "number" ||
-        (project.imageUrl !== null && typeof project.imageUrl !== "string")
+        typeof project.cardId !== "number" ||
+        typeof project.details !== "string" ||
+        typeof project.cardLogoNumber !== "number" ||
+        typeof project.minDevCost !== "string"
       ) {
         return NextResponse.json({ error: "Invalid project shape" }, { status: 400 });
       }

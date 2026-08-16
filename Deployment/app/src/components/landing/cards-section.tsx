@@ -2,41 +2,63 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { LoadingOverlay } from "@/components/common/loading-overlay";
 
 interface CardItem {
   id: string;
-  title: string;
-  description: string;
+  cardId: number;
+  cardContent: string;
+  cardImgNumber: number;
   imageUrl?: string | null;
+}
+
+interface PortfolioCard {
+  cardId: number;
+  contents: string[];
+  imageUrl: string | null;
 }
 
 const CARD_COUNT = 7;
 
-const PLACEHOLDER_CARDS: CardItem[] = [
-  { id: "c1", title: "Data Architecture", description: "Schemas, pipelines, and storage designed to stay correct as the data grows.", imageUrl: null },
-  { id: "c2", title: "AI Systems", description: "Models and agents wired into real workflows, not demos.", imageUrl: null },
-  { id: "c3", title: "Product Design", description: "Interfaces shaped around the decision the user actually came to make.", imageUrl: null },
-  { id: "c4", title: "Cloud Engineering", description: "Infrastructure sized to the load it really carries, and no larger.", imageUrl: null },
-  { id: "c5", title: "Web Applications", description: "Fast, accessible front ends built to survive their second year.", imageUrl: null },
-  { id: "c6", title: "Database Tuning", description: "Query plans, indexes, and access patterns measured before they are changed.", imageUrl: null },
-  { id: "c7", title: "Automation", description: "The repetitive parts handed to systems that do not get tired.", imageUrl: null },
+const PLACEHOLDER_GROUPS: PortfolioCard[] = [
+  { cardId: 1, contents: ["Data Architecture — Schemas, pipelines, and storage designed to stay correct as the data grows."], imageUrl: null },
+  { cardId: 2, contents: ["AI Systems — Models and agents wired into real workflows, not demos."], imageUrl: null },
+  { cardId: 3, contents: ["Product Design — Interfaces shaped around the decision the user actually came to make."], imageUrl: null },
+  { cardId: 4, contents: ["Cloud Engineering — Infrastructure sized to the load it really carries, and no larger."], imageUrl: null },
+  { cardId: 5, contents: ["Web Applications — Fast, accessible front ends built to survive their second year."], imageUrl: null },
+  { cardId: 6, contents: ["Database Tuning — Query plans, indexes, and access patterns measured before they are changed."], imageUrl: null },
+  { cardId: 7, contents: ["Automation — The repetitive parts handed to systems that do not get tired."], imageUrl: null },
 ];
 
-function HorizontalCard({ card, index }: { card: CardItem; index: number }) {
+/** Groups flat Cards-tab rows into one Portfolio card per CardId. */
+function groupCards(rows: CardItem[]): PortfolioCard[] {
+  const byId = new Map<number, CardItem[]>();
+  for (const row of rows) {
+    const list = byId.get(row.cardId) ?? [];
+    list.push(row);
+    byId.set(row.cardId, list);
+  }
+  return Array.from(byId.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([cardId, group]) => {
+      const sorted = [...group].sort((a, b) => a.cardImgNumber - b.cardImgNumber);
+      return {
+        cardId,
+        contents: sorted.map((r) => r.cardContent).filter(Boolean),
+        imageUrl: sorted.find((r) => r.imageUrl)?.imageUrl ?? null,
+      };
+    });
+}
+
+function HorizontalCard({ card, index, total }: { card: PortfolioCard; index: number; total: number }) {
   const hasImage = !!card.imageUrl;
 
   return (
     <article
       className="relative flex-shrink-0 h-full flex items-stretch rounded-2xl overflow-hidden border border-black/15"
       style={
-        // With an uploaded image, the card sizes to the image's own natural
-        // width at full card height (so it's never cropped) rather than the
-        // old fixed width — capped at 72% of the viewport so one very wide
-        // upload can't blow out the horizontal rail. Placeholder cards (no
-        // image) keep the original fixed width, since there's nothing to
-        // size against.
         hasImage
-          ? { width: "max-content", maxWidth: "72vw", backgroundColor: "rgba(0,0,0,0.04)" }
+          ? { width: "min(100vw, 1400px)", backgroundColor: "rgba(0,0,0,0.04)" }
           : { width: "min(88vw, 1100px)", backgroundColor: "rgba(0,0,0,0.04)" }
       }
     >
@@ -49,62 +71,56 @@ function HorizontalCard({ card, index }: { card: CardItem; index: number }) {
         }
       >
         <p className="text-eyebrow" style={{ opacity: 0.55 }}>
-          {String(index + 1).padStart(2, "0")} / {String(CARD_COUNT).padStart(2, "0")}
+          {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
         </p>
         {/* h2, not h3: this section renders before ContentSection's own h2 in
             the DOM, so a card title starting at h3 would skip a heading level
             straight from the page's h1 — an accessibility violation Lighthouse
             flags directly. */}
-        <h2 className="text-[28px] leading-[1.15] font-bold tracking-tight">{card.title}</h2>
-        <p className="text-[14px] leading-relaxed" style={{ opacity: 0.7 }}>
-          {card.description}
-        </p>
+        {card.contents.map((content, i) => (
+          <p key={i} className="text-[14px] leading-relaxed" style={{ opacity: 0.7 }}>
+            {content}
+          </p>
+        ))}
       </div>
 
-      {/* Visual panel — right side. flex-initial (not flex-1) so it sizes to
-          the image's intrinsic width instead of stretching to fill; min-w-0
-          overrides the flex default of min-width:auto, which would otherwise
-          block it from shrinking below that intrinsic size once the 72vw cap
-          on the article forces it to. */}
-      <div className="relative h-full flex-initial min-w-0 overflow-hidden">
-        {hasImage ? (
-          // Plain <img>, not next/image: an admin-uploaded image has no
-          // known dimensions ahead of time, and next/image's `fill` mode
-          // (used above previously) requires a pre-sized parent — exactly
-          // what this layout can no longer offer once the box sizes itself
-          // to the image instead of the other way around.
-          // eslint-disable-next-line @next/next/no-img-element
+      {/* Visual panel — right side, fixed width so the image's 70% sizing has
+          a stable box to sit inside regardless of the source image's own
+          aspect ratio. */}
+      {hasImage && (
+        <div
+          className="relative h-full flex items-center justify-center overflow-hidden flex-shrink-0"
+          style={{ width: "min(65vw, 900px)" }}
+        >
+          {/* Plain <img>, not next/image: an admin-uploaded image has no known
+              dimensions ahead of time. Sized to 70% of this panel's width,
+              per the "70% of width" spec — height follows via object-contain
+              so the aspect ratio is never distorted. */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={card.imageUrl!}
-            alt={card.title}
-            // h-full (not h-auto): the image must scale UP to match the
-            // card's height in the normal case — that's the "expand to fit"
-            // behavior itself. Tried switching to h-auto so a width-capped
-            // image would shrink in both dimensions instead of leaving a
-            // letterbox gap, but with both width and height auto the image
-            // has no anchor to scale up FROM and renders at its raw upload
-            // pixel size instead, which is worse. object-contain keeps the
-            // rare case (a very wide image hitting the 72vw cap) undistorted
-            // even though it leaves a visible gap there — a fair trade
-            // against every normal-aspect image rendering full height.
-            className="h-full w-auto max-w-full object-contain block"
+            alt={card.contents[0] ?? "Portfolio image"}
+            className="object-contain block"
+            style={{ width: "70%", height: "auto", maxHeight: "100%" }}
           />
-        ) : (
-          <div
-            className="w-[480px] h-full relative"
-            style={{
-              background:
-                "radial-gradient(circle at 30% 25%, rgba(0,0,0,0.16), transparent 60%), radial-gradient(circle at 75% 80%, rgba(0,0,0,0.10), transparent 55%)",
-            }}
-          />
-        )}
-      </div>
+        </div>
+      )}
+      {!hasImage && (
+        <div
+          className="w-[480px] h-full relative"
+          style={{
+            background:
+              "radial-gradient(circle at 30% 25%, rgba(0,0,0,0.16), transparent 60%), radial-gradient(circle at 75% 80%, rgba(0,0,0,0.10), transparent 55%)",
+          }}
+        />
+      )}
     </article>
   );
 }
 
 export function CardsSection() {
-  const [cards, setCards] = useState<CardItem[]>(PLACEHOLDER_CARDS);
+  const [cards, setCards] = useState<PortfolioCard[]>(PLACEHOLDER_GROUPS);
+  const [showOverlay, setShowOverlay] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   // Distance the track must travel so the last card ends flush with the right
@@ -113,27 +129,32 @@ export function CardsSection() {
 
   useEffect(() => {
     let cancelled = false;
+    // Only shown if the fetch is still pending after 2s — fast/cached loads
+    // never flash it.
+    const overlayTimer = setTimeout(() => {
+      if (!cancelled) setShowOverlay(true);
+    }, 2000);
 
     fetch("/api/admin/cards")
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (cancelled) return;
         if (data && Array.isArray(data.cards) && data.cards.length > 0) {
-          // Always render exactly CARD_COUNT panels — admin content fills the
-          // front of the track, placeholders top it up to seven. Placeholders
-          // reusing an id already supplied by the admin are dropped so the
-          // track never shows the same card twice.
-          const seen = new Set<string>(data.cards.map((c: CardItem) => c.id));
-          const filler = PLACEHOLDER_CARDS.filter((c) => !seen.has(c.id));
-          setCards([...data.cards, ...filler].slice(0, CARD_COUNT));
+          const grouped = groupCards(data.cards as CardItem[]);
+          if (grouped.length > 0) setCards(grouped);
         }
       })
       .catch(() => {
         // fall back to placeholder cards on error
+      })
+      .finally(() => {
+        clearTimeout(overlayTimer);
+        if (!cancelled) setShowOverlay(false);
       });
 
     return () => {
       cancelled = true;
+      clearTimeout(overlayTimer);
     };
   }, []);
 
@@ -195,45 +216,48 @@ export function CardsSection() {
   }, [cards]);
 
   return (
-    <div
-      ref={wrapperRef}
-      className="relative w-full"
-      // The wrapper stays transparent over the previous section's black. The
-      // yellow lives on the sticky panel below so it can actually fade up —
-      // painting it here meant the slab was always at full strength and the
-      // opacity ramp on the panel had nothing visible to act on.
-      style={{ height: `${CARD_COUNT * 100}vh`, color: "#0a0a0a" }}
-    >
-      <motion.section
-        className="sticky top-0 h-screen w-full overflow-hidden"
-        style={{ opacity: sectionOpacity, backgroundColor: "#DEF520" }}
-        aria-label="Featured work"
+    <>
+      <LoadingOverlay show={showOverlay} />
+      <div
+        ref={wrapperRef}
+        className="relative w-full"
+        // The wrapper stays transparent over the previous section's black. The
+        // yellow lives on the sticky panel below so it can actually fade up —
+        // painting it here meant the slab was always at full strength and the
+        // opacity ramp on the panel had nothing visible to act on.
+        style={{ height: `${CARD_COUNT * 100}vh`, color: "#0a0a0a" }}
       >
-        {/* Single-word title intro: grows in from far away, holds briefly at
-            full size, then disappears — the cards only take over once this
-            has fully faded, so the two moments never compete for attention. */}
-        <motion.div
-          className="absolute inset-0 flex items-center justify-center pointer-events-none"
-          style={{ opacity: wordOpacity }}
+        <motion.section
+          className="sticky top-0 h-screen w-full overflow-hidden"
+          style={{ opacity: sectionOpacity, backgroundColor: "#DEF520" }}
+          aria-label="Featured work"
         >
-          <motion.p
-            className="text-eyebrow font-bold"
-            style={{ fontSize: "clamp(3rem, 12vw, 9rem)", letterSpacing: "0.02em", scale: wordScale }}
+          {/* Single-word title intro: grows in from far away, holds briefly at
+              full size, then disappears — the cards only take over once this
+              has fully faded, so the two moments never compete for attention. */}
+          <motion.div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ opacity: wordOpacity }}
           >
-            Portfolio
-          </motion.p>
-        </motion.div>
+            <motion.p
+              className="text-eyebrow font-bold"
+              style={{ fontSize: "clamp(3rem, 12vw, 9rem)", letterSpacing: "0.02em", scale: wordScale }}
+            >
+              Portfolio
+            </motion.p>
+          </motion.div>
 
-        <motion.div
-          ref={trackRef}
-          className="flex gap-8 h-full pl-[30px] pr-[30px] w-max"
-          style={{ x, opacity: cardsOpacity }}
-        >
-          {cards.map((card, i) => (
-            <HorizontalCard key={card.id} card={card} index={i} />
-          ))}
-        </motion.div>
-      </motion.section>
-    </div>
+          <motion.div
+            ref={trackRef}
+            className="flex gap-8 h-full pl-[30px] pr-[30px] w-max"
+            style={{ x, opacity: cardsOpacity }}
+          >
+            {cards.map((card, i) => (
+              <HorizontalCard key={card.cardId} card={card} index={i} total={cards.length} />
+            ))}
+          </motion.div>
+        </motion.section>
+      </div>
+    </>
   );
 }

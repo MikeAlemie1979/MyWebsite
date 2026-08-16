@@ -4,13 +4,18 @@ import React, { useEffect, useRef, useState } from "react";
 
 interface CardItem {
   id: string;
-  title: string;
-  description: string;
-  imageUrl: string | null;
+  cardId: number;
+  cardContent: string;
+  cardImgNumber: number;
+  imageUrl?: string | null;
 }
 
 function generateId(): string {
   return `c${Date.now()}${Math.floor(Math.random() * 1000)}`;
+}
+
+function nextCardId(cards: CardItem[]): number {
+  return cards.length === 0 ? 1 : Math.max(...cards.map((c) => c.cardId)) + 1;
 }
 
 export function CardsManager() {
@@ -39,15 +44,22 @@ export function CardsManager() {
     }
   };
 
-  const handleChange = (id: string, field: "title" | "description", value: string) => {
-    setCards((prev) => prev.map((c) => (c.id === id ? { ...c, [field]: value } : c)));
+  const handleChange = (id: string, field: "cardContent" | "cardId", value: string) => {
+    setCards((prev) =>
+      prev.map((c) =>
+        c.id === id ? { ...c, [field]: field === "cardId" ? Number(value) || 0 : value } : c
+      )
+    );
   };
 
   const handleAddCard = () => {
-    setCards((prev) => [
-      ...prev,
-      { id: generateId(), title: "", description: "", imageUrl: null },
-    ]);
+    setCards((prev) => {
+      const cardId = nextCardId(prev);
+      return [
+        ...prev,
+        { id: generateId(), cardId, cardContent: "", cardImgNumber: 1, imageUrl: null },
+      ];
+    });
   };
 
   const handleDeleteCard = (id: string) => {
@@ -60,15 +72,15 @@ export function CardsManager() {
 
   const handleFileSelect = async (id: string, file: File | undefined) => {
     if (!file) return;
+    const card = cards.find((c) => c.id === id);
+    if (!card) return;
     setUploadingId(id);
     setMessage("");
     try {
       const formData = new FormData();
       formData.append("file", file);
-      // Ties the stored filename to this specific card (e.g.
-      // "c1755..._Prj01.png") instead of a bare timestamp, so it's
-      // identifiable in the Drive folder / uploads directory on sight.
-      formData.append("cardId", id);
+      formData.append("cardId", String(card.cardId));
+      formData.append("index", String(card.cardImgNumber));
 
       const response = await fetch("/api/admin/cards/upload", {
         method: "POST",
@@ -96,7 +108,14 @@ export function CardsManager() {
       const response = await fetch("/api/admin/cards", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cards }),
+        body: JSON.stringify({
+          cards: cards.map(({ id, cardId, cardContent, cardImgNumber }) => ({
+            id,
+            cardId,
+            cardContent,
+            cardImgNumber,
+          })),
+        }),
       });
 
       if (response.ok) {
@@ -114,12 +133,18 @@ export function CardsManager() {
 
   if (loading) return <div className="text-gray-400">Loading cards...</div>;
 
+  const sortedCards = [...cards].sort((a, b) => a.cardId - b.cardId || a.cardImgNumber - b.cardImgNumber);
+
   return (
     <div className="bg-black/40 border border-white/10 rounded-lg p-6 max-w-4xl">
       <h3 className="text-xl font-bold mb-6 text-white">Landing Page Cards</h3>
+      <p className="text-xs text-gray-500 mb-4">
+        Rows sharing the same CardId group into one Home Portfolio card. Image number sets the
+        filename (CardImg01, CardImg02, ...) within that card's own image set.
+      </p>
 
       <div className="space-y-6">
-        {cards.map((card) => (
+        {sortedCards.map((card) => (
           <div key={card.id} className="bg-white/5 border border-white/10 rounded-lg p-4">
             <div className="flex gap-4">
               <div className="flex-shrink-0 w-28">
@@ -128,7 +153,7 @@ export function CardsManager() {
                     // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={card.imageUrl}
-                      alt={card.title || "Card image"}
+                      alt={`Card ${card.cardId} image`}
                       className="w-full h-full object-cover"
                     />
                   ) : (
@@ -164,23 +189,39 @@ export function CardsManager() {
               </div>
 
               <div className="flex-1 space-y-3">
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">Title</label>
-                  <input
-                    type="text"
-                    value={card.title}
-                    onChange={(e) => handleChange(card.id, "title", e.target.value)}
-                    placeholder="Card title"
-                    className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500"
-                  />
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-1">CardId</label>
+                    <input
+                      type="number"
+                      value={card.cardId}
+                      onChange={(e) => handleChange(card.id, "cardId", e.target.value)}
+                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm text-gray-300 mb-1">Image Number</label>
+                    <input
+                      type="number"
+                      value={card.cardImgNumber}
+                      onChange={(e) =>
+                        setCards((prev) =>
+                          prev.map((c) =>
+                            c.id === card.id ? { ...c, cardImgNumber: Number(e.target.value) || 1 } : c
+                          )
+                        )
+                      }
+                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
+                    />
+                  </div>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-300 mb-1">Description</label>
+                  <label className="block text-sm text-gray-300 mb-1">CardContent</label>
                   <textarea
-                    value={card.description}
-                    onChange={(e) => handleChange(card.id, "description", e.target.value)}
-                    placeholder="Card description"
-                    rows={2}
+                    value={card.cardContent}
+                    onChange={(e) => handleChange(card.id, "cardContent", e.target.value)}
+                    placeholder="Card content"
+                    rows={3}
                     className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
                   />
                 </div>
