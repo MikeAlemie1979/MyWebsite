@@ -18,6 +18,11 @@ function nextCardId(cards: CardItem[]): number {
   return cards.length === 0 ? 1 : Math.max(...cards.map((c) => c.cardId)) + 1;
 }
 
+function nextImgNumber(cards: CardItem[], cardId: number): number {
+  const used = cards.filter((c) => c.cardId === cardId).map((c) => c.cardImgNumber);
+  return used.length === 0 ? 1 : Math.max(...used) + 1;
+}
+
 export function CardsManager() {
   const [cards, setCards] = useState<CardItem[]>([]);
   const [loading, setLoading] = useState(true);
@@ -44,14 +49,12 @@ export function CardsManager() {
     }
   };
 
-  const handleChange = (id: string, field: "cardContent" | "cardId", value: string) => {
-    setCards((prev) =>
-      prev.map((c) =>
-        c.id === id ? { ...c, [field]: field === "cardId" ? Number(value) || 0 : value } : c
-      )
-    );
+  const handleContentChange = (id: string, value: string) => {
+    setCards((prev) => prev.map((c) => (c.id === id ? { ...c, cardContent: value } : c)));
   };
 
+  // Creates a brand new Home Portfolio card — id and cardId are both assigned
+  // automatically, never typed in by the admin.
   const handleAddCard = () => {
     setCards((prev) => {
       const cardId = nextCardId(prev);
@@ -62,8 +65,21 @@ export function CardsManager() {
     });
   };
 
-  const handleDeleteCard = (id: string) => {
+  // Adds one more content/image line to an existing card group — its image
+  // number auto-increments within that card's own set (CardImg01, 02, ...).
+  const handleAddContentLine = (cardId: number) => {
+    setCards((prev) => [
+      ...prev,
+      { id: generateId(), cardId, cardContent: "", cardImgNumber: nextImgNumber(prev, cardId), imageUrl: null },
+    ]);
+  };
+
+  const handleDeleteLine = (id: string) => {
     setCards((prev) => prev.filter((c) => c.id !== id));
+  };
+
+  const handleDeleteCard = (cardId: number) => {
+    setCards((prev) => prev.filter((c) => c.cardId !== cardId));
   };
 
   const handleRemoveImage = (id: string) => {
@@ -109,11 +125,12 @@ export function CardsManager() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          cards: cards.map(({ id, cardId, cardContent, cardImgNumber }) => ({
+          cards: cards.map(({ id, cardId, cardContent, cardImgNumber, imageUrl }) => ({
             id,
             cardId,
             cardContent,
             cardImgNumber,
+            imageUrl: imageUrl ?? null,
           })),
         }),
       });
@@ -133,112 +150,116 @@ export function CardsManager() {
 
   if (loading) return <div className="text-gray-400">Loading cards...</div>;
 
-  const sortedCards = [...cards].sort((a, b) => a.cardId - b.cardId || a.cardImgNumber - b.cardImgNumber);
+  const groupIds = Array.from(new Set(cards.map((c) => c.cardId))).sort((a, b) => a - b);
 
   return (
     <div className="bg-black/40 border border-white/10 rounded-lg p-6 max-w-4xl">
       <h3 className="text-xl font-bold mb-6 text-white">Landing Page Cards</h3>
       <p className="text-xs text-gray-500 mb-4">
-        Rows sharing the same CardId group into one Home Portfolio card. Image number sets the
-        filename (CardImg01, CardImg02, ...) within that card's own image set.
+        Each block below is one Home Portfolio card. IDs and image numbers are assigned
+        automatically — add a content line to give a card multiple text/image entries.
       </p>
 
       <div className="space-y-6">
-        {sortedCards.map((card) => (
-          <div key={card.id} className="bg-white/5 border border-white/10 rounded-lg p-4">
-            <div className="flex gap-4">
-              <div className="flex-shrink-0 w-28">
-                <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
-                  {card.imageUrl ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={card.imageUrl}
-                      alt={`Card ${card.cardId} image`}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    <span className="text-xs text-gray-500 text-center px-2">No image</span>
-                  )}
-                </div>
-                <input
-                  type="file"
-                  accept="image/jpeg,image/jpg,image/png,image/webp"
-                  className="hidden"
-                  ref={(el) => {
-                    fileInputRefs.current[card.id] = el;
-                  }}
-                  onChange={(e) => handleFileSelect(card.id, e.target.files?.[0])}
-                />
-                <button
-                  type="button"
-                  onClick={() => fileInputRefs.current[card.id]?.click()}
-                  disabled={uploadingId === card.id}
-                  className="w-full mt-2 text-xs bg-white/10 hover:bg-white/20 text-white py-1.5 rounded transition-colors disabled:opacity-50"
-                >
-                  {uploadingId === card.id ? "Uploading..." : "Upload"}
-                </button>
-                {card.imageUrl && (
+        {groupIds.map((cardId) => {
+          const rows = cards
+            .filter((c) => c.cardId === cardId)
+            .sort((a, b) => a.cardImgNumber - b.cardImgNumber);
+
+          return (
+            <div key={cardId} className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-gray-300">Card {cardId}</span>
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
-                    onClick={() => handleRemoveImage(card.id)}
-                    className="w-full mt-1 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 py-1.5 rounded transition-colors"
+                    onClick={() => handleAddContentLine(cardId)}
+                    className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors"
                   >
-                    Remove Image
+                    + Add Content Line
                   </button>
-                )}
-              </div>
-
-              <div className="flex-1 space-y-3">
-                <div className="grid grid-cols-2 gap-3">
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-1">CardId</label>
-                    <input
-                      type="number"
-                      value={card.cardId}
-                      onChange={(e) => handleChange(card.id, "cardId", e.target.value)}
-                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm text-gray-300 mb-1">Image Number</label>
-                    <input
-                      type="number"
-                      value={card.cardImgNumber}
-                      onChange={(e) =>
-                        setCards((prev) =>
-                          prev.map((c) =>
-                            c.id === card.id ? { ...c, cardImgNumber: Number(e.target.value) || 1 } : c
-                          )
-                        )
-                      }
-                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
-                    />
-                  </div>
-                </div>
-                <div>
-                  <label className="block text-sm text-gray-300 mb-1">CardContent</label>
-                  <textarea
-                    value={card.cardContent}
-                    onChange={(e) => handleChange(card.id, "cardContent", e.target.value)}
-                    placeholder="Card content"
-                    rows={3}
-                    className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
-                  />
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteCard(cardId)}
+                    className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
+                  >
+                    Delete Card
+                  </button>
                 </div>
               </div>
 
-              <div className="flex-shrink-0">
-                <button
-                  type="button"
-                  onClick={() => handleDeleteCard(card.id)}
-                  className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
+              {rows.map((card) => (
+                <div key={card.id} className="flex gap-4 border-t border-white/10 pt-4 first:border-0 first:pt-0">
+                  <div className="flex-shrink-0 w-28">
+                    <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
+                      {card.imageUrl ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={card.imageUrl}
+                          alt={`Card ${card.cardId} image ${card.cardImgNumber}`}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <span className="text-xs text-gray-500 text-center px-2">No image</span>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      accept="image/jpeg,image/jpg,image/png,image/webp"
+                      className="hidden"
+                      ref={(el) => {
+                        fileInputRefs.current[card.id] = el;
+                      }}
+                      onChange={(e) => handleFileSelect(card.id, e.target.files?.[0])}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => fileInputRefs.current[card.id]?.click()}
+                      disabled={uploadingId === card.id}
+                      className="w-full mt-2 text-xs bg-white/10 hover:bg-white/20 text-white py-1.5 rounded transition-colors disabled:opacity-50"
+                    >
+                      {uploadingId === card.id ? "Uploading..." : "Upload"}
+                    </button>
+                    {card.imageUrl && (
+                      <button
+                        type="button"
+                        onClick={() => handleRemoveImage(card.id)}
+                        className="w-full mt-1 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 py-1.5 rounded transition-colors"
+                      >
+                        Remove Image
+                      </button>
+                    )}
+                  </div>
+
+                  <div className="flex-1 space-y-2">
+                    <label className="block text-sm text-gray-300">
+                      CardContent — image {card.cardImgNumber}
+                    </label>
+                    <textarea
+                      value={card.cardContent}
+                      onChange={(e) => handleContentChange(card.id, e.target.value)}
+                      placeholder="Card content"
+                      rows={3}
+                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
+                    />
+                  </div>
+
+                  {rows.length > 1 && (
+                    <div className="flex-shrink-0">
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteLine(card.id)}
+                        className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
+                      >
+                        Delete Line
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-          </div>
-        ))}
+          );
+        })}
 
         {cards.length === 0 && (
           <p className="text-gray-500 text-sm">No cards yet. Click "Add Card" to create one.</p>

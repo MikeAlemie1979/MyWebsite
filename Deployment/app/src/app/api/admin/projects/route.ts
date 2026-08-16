@@ -8,6 +8,7 @@ interface ProjectItem {
   details: string;
   cardLogoNumber: number;
   minDevCost: string;
+  imageUrl: string | null;
 }
 
 interface ProjectsConfig {
@@ -16,7 +17,7 @@ interface ProjectsConfig {
 
 const DEFAULT_PROJECTS: ProjectsConfig = {
   projects: [
-    { id: "p1", cardId: 1, details: "Placeholder project details.", cardLogoNumber: 1, minDevCost: "$—" },
+    { id: "p1", cardId: 1, details: "Placeholder project details.", cardLogoNumber: 1, minDevCost: "$—", imageUrl: null },
   ],
 };
 
@@ -46,7 +47,8 @@ export async function POST(request: NextRequest) {
         typeof project.cardId !== "number" ||
         typeof project.details !== "string" ||
         typeof project.cardLogoNumber !== "number" ||
-        typeof project.minDevCost !== "string"
+        typeof project.minDevCost !== "string" ||
+        (project.imageUrl !== null && typeof project.imageUrl !== "string")
       ) {
         return NextResponse.json({ error: "Invalid project shape" }, { status: 400 });
       }

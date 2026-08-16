@@ -7,6 +7,7 @@ interface CardItem {
   cardId: number;
   cardContent: string;
   cardImgNumber: number;
+  imageUrl: string | null;
 }
 
 interface CardsConfig {
@@ -15,8 +16,8 @@ interface CardsConfig {
 
 const DEFAULT_CARDS: CardsConfig = {
   cards: [
-    { id: "c1", cardId: 1, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1 },
-    { id: "c2", cardId: 2, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1 },
+    { id: "c1", cardId: 1, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1, imageUrl: null },
+    { id: "c2", cardId: 2, cardContent: "Placeholder content — editable via Admin.", cardImgNumber: 1, imageUrl: null },
   ],
 };
 
@@ -45,7 +46,8 @@ export async function POST(request: NextRequest) {
         typeof card.id !== "string" ||
         typeof card.cardId !== "number" ||
         typeof card.cardContent !== "string" ||
-        typeof card.cardImgNumber !== "number"
+        typeof card.cardImgNumber !== "number" ||
+        (card.imageUrl !== null && typeof card.imageUrl !== "string")
       ) {
         return NextResponse.json({ error: "Invalid card shape" }, { status: 400 });
       }

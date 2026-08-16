@@ -113,12 +113,13 @@ export function ProjectsManager() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          projects: projects.map(({ id, cardId, details, cardLogoNumber, minDevCost }) => ({
+          projects: projects.map(({ id, cardId, details, cardLogoNumber, minDevCost, imageUrl }) => ({
             id,
             cardId,
             details,
             cardLogoNumber,
             minDevCost,
+            imageUrl: imageUrl ?? null,
           })),
         }),
       });
