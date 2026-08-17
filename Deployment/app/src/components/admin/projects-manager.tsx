@@ -2,23 +2,37 @@
 
 import React, { useEffect, useRef, useState } from "react";
 
-interface ProjectItem {
+interface ProjectRow {
   id: string;
+  projectId: number;
   cardId: number;
-  details: string;
-  cardLogoNumber: number;
+  content: string;
+  contentIndex: number;
   minDevCost: string;
   imageUrl?: string | null;
+}
+
+interface CardOption {
+  cardId: number;
+  label: string;
 }
 
 function generateId(): string {
   return `p${Date.now()}${Math.floor(Math.random() * 1000)}`;
 }
 
-const EMPTY_PROJECTS: ProjectItem[] = [];
+function nextProjectId(rows: ProjectRow[]): number {
+  return rows.length === 0 ? 1 : Math.max(...rows.map((r) => r.projectId)) + 1;
+}
+
+function nextContentIndex(rows: ProjectRow[], projectId: number): number {
+  const used = rows.filter((r) => r.projectId === projectId).map((r) => r.contentIndex);
+  return used.length === 0 ? 1 : Math.max(...used) + 1;
+}
 
 export function ProjectsManager() {
-  const [projects, setProjects] = useState<ProjectItem[]>(EMPTY_PROJECTS);
+  const [rows, setRows] = useState<ProjectRow[]>([]);
+  const [cardOptions, setCardOptions] = useState<CardOption[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
@@ -27,6 +41,7 @@ export function ProjectsManager() {
 
   useEffect(() => {
     fetchProjects();
+    fetchCardOptions();
   }, []);
 
   const fetchProjects = async () => {
@@ -34,9 +49,7 @@ export function ProjectsManager() {
       const response = await fetch("/api/admin/projects");
       if (response.ok) {
         const data = await response.json();
-        if (Array.isArray(data.projects)) {
-          setProjects(data.projects);
-        }
+        if (Array.isArray(data.projects)) setRows(data.projects);
       }
     } catch (error) {
       console.error("Failed to fetch projects config:", error);
@@ -45,64 +58,113 @@ export function ProjectsManager() {
     }
   };
 
-  const handleFieldChange = (id: string, field: keyof ProjectItem, value: any) => {
-    setProjects((prev) => prev.map((p) => (p.id === id ? { ...p, [field]: value } : p)));
+  // Populates the CardID dropdown from the real Home Portfolio cards, so a
+  // project can only link to a card that actually exists.
+  const fetchCardOptions = async () => {
+    try {
+      const response = await fetch("/api/admin/cards");
+      if (response.ok) {
+        const data = await response.json();
+        if (Array.isArray(data.cards)) {
+          const byId = new Map<number, string>();
+          for (const c of data.cards) {
+            if (!byId.has(c.cardId)) byId.set(c.cardId, c.cardContent || "");
+          }
+          setCardOptions(
+            Array.from(byId.entries())
+              .sort(([a], [b]) => a - b)
+              .map(([cardId, content]) => ({
+                cardId,
+                label: content ? `Card ${cardId} — ${content.slice(0, 30)}` : `Card ${cardId}`,
+              }))
+          );
+        }
+      }
+    } catch (error) {
+      console.error("Failed to fetch card options:", error);
+    }
   };
 
+  const handleContentChange = (id: string, value: string) => {
+    setRows((prev) => prev.map((r) => (r.id === id ? { ...r, content: value } : r)));
+  };
+
+  const handleHeaderFieldChange = (projectId: number, field: "cardId" | "minDevCost", value: any) => {
+    setRows((prev) =>
+      prev.map((r) => (r.projectId === projectId && r.contentIndex === 1 ? { ...r, [field]: value } : r))
+    );
+  };
+
+  // New project — id, projectId, and contentIndex are all assigned
+  // automatically, never typed in by the admin.
   const handleAddProject = () => {
-    setProjects((prev) => [
-      ...prev,
-      { id: generateId(), cardId: 1, details: "", cardLogoNumber: 1, minDevCost: "", imageUrl: null },
-    ]);
-  };
-
-  const handleDeleteProject = (id: string) => {
-    setProjects((prev) => prev.filter((p) => p.id !== id));
-  };
-
-  const moveProject = (id: string, direction: -1 | 1) => {
-    setProjects((prev) => {
-      const index = prev.findIndex((p) => p.id === id);
-      const targetIndex = index + direction;
-      if (targetIndex < 0 || targetIndex >= prev.length) return prev;
-      const next = [...prev];
-      [next[index], next[targetIndex]] = [next[targetIndex], next[index]];
-      return next;
+    setRows((prev) => {
+      const projectId = nextProjectId(prev);
+      const cardId = cardOptions[0]?.cardId ?? 1;
+      return [
+        ...prev,
+        { id: generateId(), projectId, cardId, content: "", contentIndex: 1, minDevCost: "", imageUrl: null },
+      ];
     });
   };
 
-  const handleImageUpload = async (id: string, file: File) => {
-    const project = projects.find((p) => p.id === id);
-    if (!project) return;
-    setUploadingId(id);
+  const handleAddBulletPoint = (projectId: number) => {
+    setRows((prev) => [
+      ...prev,
+      {
+        id: generateId(),
+        projectId,
+        cardId: prev.find((r) => r.projectId === projectId)?.cardId ?? 1,
+        content: "",
+        contentIndex: nextContentIndex(prev, projectId),
+        minDevCost: "",
+        imageUrl: null,
+      },
+    ]);
+  };
+
+  const handleDeleteLine = (id: string) => {
+    setRows((prev) => prev.filter((r) => r.id !== id));
+  };
+
+  const handleDeleteProject = (projectId: number) => {
+    setRows((prev) => prev.filter((r) => r.projectId !== projectId));
+  };
+
+  const handleRemoveImage = (projectId: number) => {
+    setRows((prev) =>
+      prev.map((r) => (r.projectId === projectId && r.contentIndex === 1 ? { ...r, imageUrl: null } : r))
+    );
+  };
+
+  const handleFileSelect = async (projectId: number, file: File | undefined) => {
+    if (!file) return;
+    setUploadingId(`project-${projectId}`);
     setMessage("");
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("cardId", String(project.cardId));
-      formData.append("logoIndex", String(project.cardLogoNumber));
+      formData.append("projectId", String(projectId));
 
       const response = await fetch("/api/admin/projects/upload", {
         method: "POST",
         body: formData,
       });
 
-      if (response.ok) {
-        const data = await response.json();
-        handleFieldChange(id, "imageUrl", data.url);
+      const data = await response.json();
+
+      if (response.ok && data.url) {
+        setRows((prev) =>
+          prev.map((r) => (r.projectId === projectId && r.contentIndex === 1 ? { ...r, imageUrl: data.url } : r))
+        );
       } else {
-        const err = await response.json().catch(() => ({}));
-        setMessage(err.error || "Failed to upload image");
+        setMessage(data.error || "Failed to upload image");
       }
     } catch (error) {
       setMessage("Error uploading image");
     } finally {
       setUploadingId(null);
     }
-  };
-
-  const handleRemoveImage = (id: string) => {
-    handleFieldChange(id, "imageUrl", null);
   };
 
   const handleSave = async () => {
@@ -113,11 +175,12 @@ export function ProjectsManager() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          projects: projects.map(({ id, cardId, details, cardLogoNumber, minDevCost, imageUrl }) => ({
+          projects: rows.map(({ id, projectId, cardId, content, contentIndex, minDevCost, imageUrl }) => ({
             id,
+            projectId,
             cardId,
-            details,
-            cardLogoNumber,
+            content,
+            contentIndex,
             minDevCost,
             imageUrl: imageUrl ?? null,
           })),
@@ -140,152 +203,150 @@ export function ProjectsManager() {
 
   if (loading) return <div className="text-gray-400">Loading projects...</div>;
 
+  const projectIds = Array.from(new Set(rows.map((r) => r.projectId))).sort((a, b) => a - b);
+
   return (
-    <div className="bg-black/40 border border-white/10 rounded-lg p-6 max-w-3xl">
+    <div className="bg-black/40 border border-white/10 rounded-lg p-6 max-w-4xl">
       <h3 className="text-xl font-bold mb-2 text-white">Projects and Prices</h3>
       <p className="text-sm text-gray-400 mb-6">
-        Manage the project cards shown on the public Projects and Prices page. CardId links a
-        project back to a Home Portfolio card; Logo Number sets the logo filename (Logo01, Logo02, ...).
+        Each block below is one Projects-page card: a header, an image, a cost, and any number of
+        bullet points. IDs are assigned automatically. CardID links it back to a real Home
+        Portfolio card.
       </p>
 
       <div className="space-y-6">
-        {projects.map((project, index) => (
-          <div key={project.id} className="bg-white/5 border border-white/20 rounded-lg p-4">
-            <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-gray-300">
-                Slot {index + 1} of {projects.length}
-              </span>
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => moveProject(project.id, -1)}
-                  disabled={index === 0}
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs px-2 py-1 rounded disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="Move up"
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  onClick={() => moveProject(project.id, 1)}
-                  disabled={index === projects.length - 1}
-                  className="bg-white/10 hover:bg-white/20 text-white text-xs px-2 py-1 rounded disabled:opacity-30 disabled:cursor-not-allowed"
-                  aria-label="Move down"
-                >
-                  ↓
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleDeleteProject(project.id)}
-                  className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
+        {projectIds.map((projectId) => {
+          const lines = rows
+            .filter((r) => r.projectId === projectId)
+            .sort((a, b) => a.contentIndex - b.contentIndex);
+          const header = lines[0];
+          if (!header) return null;
 
-            <div className="space-y-4">
+          return (
+            <div key={projectId} className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-semibold text-gray-300">Project {projectId}</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => handleAddBulletPoint(projectId)}
+                    className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors"
+                  >
+                    + Add Bullet Point
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteProject(projectId)}
+                    className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
+                  >
+                    Delete Project
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-sm text-gray-300 mb-2">CardID</label>
-                  <input
-                    type="number"
-                    value={project.cardId}
-                    onChange={(e) => handleFieldChange(project.id, "cardId", Number(e.target.value) || 0)}
+                  <label className="block text-sm text-gray-300 mb-2">CardID (linked Home card)</label>
+                  <select
+                    value={header.cardId}
+                    onChange={(e) => handleHeaderFieldChange(projectId, "cardId", Number(e.target.value))}
                     className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
-                  />
+                  >
+                    {cardOptions.length === 0 && <option value={header.cardId}>Card {header.cardId}</option>}
+                    {cardOptions.map((opt) => (
+                      <option key={opt.cardId} value={opt.cardId}>
+                        {opt.label}
+                      </option>
+                    ))}
+                  </select>
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-300 mb-2">Logo Number</label>
+                  <label className="block text-sm text-gray-300 mb-2">Min Development Cost</label>
                   <input
-                    type="number"
-                    value={project.cardLogoNumber}
-                    onChange={(e) =>
-                      handleFieldChange(project.id, "cardLogoNumber", Number(e.target.value) || 1)
-                    }
-                    className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white"
+                    type="text"
+                    value={header.minDevCost}
+                    onChange={(e) => handleHeaderFieldChange(projectId, "minDevCost", e.target.value)}
+                    placeholder="$1,000+"
+                    className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500"
                   />
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm text-gray-300 mb-2">Details</label>
-                <textarea
-                  value={project.details}
-                  onChange={(e) => handleFieldChange(project.id, "details", e.target.value)}
-                  placeholder="Project details"
-                  rows={3}
-                  className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-300 mb-2">Min Development Cost</label>
-                <input
-                  type="text"
-                  value={project.minDevCost}
-                  onChange={(e) => handleFieldChange(project.id, "minDevCost", e.target.value)}
-                  placeholder="$1,000+"
-                  className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500"
-                />
-              </div>
-
-              <div>
-                <label className="block text-sm text-gray-300 mb-2">Logo</label>
-                <div className="flex items-start gap-4">
-                  {project.imageUrl ? (
-                    <div className="relative">
+              <div className="flex gap-4">
+                <div className="flex-shrink-0 w-28">
+                  <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
+                    {header.imageUrl ? (
+                      // eslint-disable-next-line @next/next/no-img-element
                       <img
-                        src={project.imageUrl}
-                        alt={`Project logo ${project.cardLogoNumber}`}
-                        className="w-24 h-24 object-contain bg-white/5 rounded border border-white/20"
+                        src={header.imageUrl}
+                        alt={`Project ${projectId} logo`}
+                        className="w-full h-full object-contain"
                       />
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveImage(project.id)}
-                        className="absolute -top-2 -right-2 bg-red-500/80 hover:bg-red-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center"
-                        aria-label="Remove image"
-                      >
-                        ×
-                      </button>
-                    </div>
-                  ) : (
-                    <div className="w-24 h-24 flex items-center justify-center bg-white/5 border border-dashed border-white/20 rounded text-xs text-gray-500 text-center px-1">
-                      No logo
-                    </div>
-                  )}
-
-                  <div className="flex-1">
-                    <input
-                      ref={(el) => {
-                        fileInputRefs.current[project.id] = el;
-                      }}
-                      type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/webp"
-                      className="hidden"
-                      onChange={(e) => {
-                        const file = e.target.files?.[0];
-                        if (file) handleImageUpload(project.id, file);
-                        e.target.value = "";
-                      }}
-                    />
+                    ) : (
+                      <span className="text-xs text-gray-500 text-center px-2">No logo</span>
+                    )}
+                  </div>
+                  <input
+                    type="file"
+                    accept="image/jpeg,image/jpg,image/png,image/webp"
+                    className="hidden"
+                    ref={(el) => {
+                      fileInputRefs.current[projectId] = el;
+                    }}
+                    onChange={(e) => handleFileSelect(projectId, e.target.files?.[0])}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => fileInputRefs.current[projectId]?.click()}
+                    disabled={uploadingId === `project-${projectId}`}
+                    className="w-full mt-2 text-xs bg-white/10 hover:bg-white/20 text-white py-1.5 rounded transition-colors disabled:opacity-50"
+                  >
+                    {uploadingId === `project-${projectId}` ? "Uploading..." : "Upload Logo"}
+                  </button>
+                  {header.imageUrl && (
                     <button
                       type="button"
-                      onClick={() => fileInputRefs.current[project.id]?.click()}
-                      disabled={uploadingId === project.id}
-                      className="bg-white/10 hover:bg-white/20 text-white text-sm px-3 py-2 rounded disabled:opacity-50"
+                      onClick={() => handleRemoveImage(projectId)}
+                      className="w-full mt-1 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 py-1.5 rounded transition-colors"
                     >
-                      {uploadingId === project.id ? "Uploading..." : "Upload Logo"}
+                      Remove Logo
                     </button>
-                    <p className="text-xs text-gray-500 mt-2">JPG, PNG, or WEBP. Max 2MB.</p>
-                  </div>
+                  )}
+                </div>
+
+                <div className="flex-1 space-y-3">
+                  {lines.map((line, rowIndex) => (
+                    <div key={line.id} className="flex gap-2 items-start">
+                      <div className="flex-1">
+                        <label className="block text-sm text-gray-300 mb-1">
+                          {rowIndex === 0 ? "Header" : `Bullet Point ${rowIndex}`}
+                        </label>
+                        <textarea
+                          value={line.content}
+                          onChange={(e) => handleContentChange(line.id, e.target.value)}
+                          placeholder={rowIndex === 0 ? "Project header" : "Bullet point"}
+                          rows={rowIndex === 0 ? 1 : 2}
+                          className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
+                        />
+                      </div>
+                      {rowIndex > 0 && (
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteLine(line.id)}
+                          className="mt-6 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
 
-        {projects.length === 0 && (
+        {rows.length === 0 && (
           <p className="text-gray-500 text-sm">No projects yet. Click "Add Project" to create one.</p>
         )}
 

@@ -4,9 +4,10 @@ import { requireAdmin } from "@/lib/admin-auth";
 
 interface ProjectItem {
   id: string;
+  projectId: number;
   cardId: number;
-  details: string;
-  cardLogoNumber: number;
+  content: string;
+  contentIndex: number;
   minDevCost: string;
   imageUrl: string | null;
 }
@@ -17,7 +18,15 @@ interface ProjectsConfig {
 
 const DEFAULT_PROJECTS: ProjectsConfig = {
   projects: [
-    { id: "p1", cardId: 1, details: "Placeholder project details.", cardLogoNumber: 1, minDevCost: "$—", imageUrl: null },
+    {
+      id: "p1",
+      projectId: 1,
+      cardId: 1,
+      content: "Placeholder project header",
+      contentIndex: 1,
+      minDevCost: "$—",
+      imageUrl: null,
+    },
   ],
 };
 
@@ -44,9 +53,10 @@ export async function POST(request: NextRequest) {
     for (const project of projects) {
       if (
         typeof project.id !== "string" ||
+        typeof project.projectId !== "number" ||
         typeof project.cardId !== "number" ||
-        typeof project.details !== "string" ||
-        typeof project.cardLogoNumber !== "number" ||
+        typeof project.content !== "string" ||
+        typeof project.contentIndex !== "number" ||
         typeof project.minDevCost !== "string" ||
         (project.imageUrl !== null && typeof project.imageUrl !== "string")
       ) {

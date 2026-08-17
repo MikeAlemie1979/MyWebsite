@@ -10,17 +10,19 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     const file = formData.get("file");
-    const cardId = Number(formData.get("cardId"));
-    const logoIndex = Number(formData.get("logoIndex"));
+    // Namespaced by the project's own id, not the linked Home card's cardId —
+    // each project has exactly one logo, so this only ever needs one slot
+    // (index 1), independent of which card it links to.
+    const projectId = Number(formData.get("projectId"));
 
     if (!file || !(file instanceof File)) {
       return NextResponse.json({ error: "No file provided" }, { status: 400 });
     }
-    if (!Number.isFinite(cardId) || !Number.isFinite(logoIndex)) {
-      return NextResponse.json({ error: "cardId and logoIndex are required" }, { status: 400 });
+    if (!Number.isFinite(projectId)) {
+      return NextResponse.json({ error: "projectId is required" }, { status: 400 });
     }
 
-    const result = await saveIndexedUpload(file, "projects", cardId, logoIndex, "Logo");
+    const result = await saveIndexedUpload(file, "projects", projectId, 1, "Logo");
     if (result.error) {
       return NextResponse.json({ error: result.error }, { status: result.status ?? 400 });
     }

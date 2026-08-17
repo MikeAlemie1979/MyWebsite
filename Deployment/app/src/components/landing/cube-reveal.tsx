@@ -13,17 +13,11 @@ const IMAGE_SRC = "/images/mehrdad.png";
 // distort the sliced background.
 const IMAGE_ASPECT = 1840 / 913;
 
-// Trimmed off the bottom-anchored box's height. The grid inside keeps the
-// full uncropped height, so the portrait is never squeezed — the surplus runs
-// off the top, where the parent's mask gradient already dissolves it.
-const HEIGHT_TRIM_PX = 108;
-
-// Caps the bottom-anchored box's visible height so the reveal reads as a
-// shorter strip instead of the previous near-full-viewport height — the
-// grid inside still keeps its full uncropped aspect-ratio height, so this
-// only changes how much runs off the top under the mask, never distorting
-// the portrait itself.
-const MAX_VISIBLE_HEIGHT_PX = 320;
+// The reveal's actual display size — both the outer box AND the grid inside
+// it share this exact height (and a width derived from IMAGE_ASPECT), so the
+// whole portrait scales down uniformly instead of the outer box clipping a
+// still-full-size grid (which cropped the top off rather than shrinking it).
+const DISPLAY_HEIGHT_PX = 320;
 
 const GRID_COLS = 12;
 const GRID_ROWS = 6;
@@ -135,17 +129,13 @@ export const CubeReveal = forwardRef<CubeRevealHandle>(function CubeReveal(_prop
 
   return (
     <div
-      className="relative w-full overflow-hidden"
-      // Aspect-ratio box minus the trim: the grid inside keeps the image's
-      // true 1840/913 proportions, and the outer box crops height rather than
-      // distorting it.
-      style={{ height: `min(calc(100vw / ${IMAGE_ASPECT} - ${HEIGHT_TRIM_PX}px), ${MAX_VISIBLE_HEIGHT_PX}px)` }}
+      className="relative overflow-hidden"
+      style={{ height: DISPLAY_HEIGHT_PX, width: DISPLAY_HEIGHT_PX * IMAGE_ASPECT }}
       aria-hidden
     >
       <div
-        className="absolute inset-x-0 bottom-0 grid"
+        className="absolute inset-0 grid"
         style={{
-          height: `calc(100vw / ${IMAGE_ASPECT})`,
           gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
           gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
         }}

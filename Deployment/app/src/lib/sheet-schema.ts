@@ -106,9 +106,14 @@ export const SHEET_SCHEMA: Record<DocKey, TabSpec[]> = {
       path: "projects",
       columns: [
         col("id", "Id"),
+        // Groups multiple rows into one Projects-page card — same pattern as
+        // Cards' cardId. The lowest contentIndex in a group is the card's
+        // header (and carries its image + cost); every row after it is a
+        // bullet point.
+        col("projectId", "ProjectId", "number"),
         col("cardId", "CardID", "number"),
-        col("details", "details"),
-        col("cardLogoNumber", "CardLogonNmber", "number"),
+        col("content", "Content"),
+        col("contentIndex", "ContentIndex", "number"),
         col("minDevCost", "Min Development Cost"),
         col("imageUrl", "Image URL", "nullableString"),
       ],

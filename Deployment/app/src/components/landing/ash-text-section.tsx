@@ -355,27 +355,16 @@ export function AshTextSection() {
             is set imperatively by the RAF loop above, not React state, to
             stay frame-smooth.
 
-            Spans the full page width and is anchored to the bottom of the
-            pinned viewport, so it meets the next section's edge flush with no
-            dark strip between them. Height comes from CubeReveal's own
-            aspect-ratio box, so the portrait keeps its 1840/913 proportions
-            and is never squeezed narrow or stretched wide.
-
-            At full width that makes it taller than the viewport, so the
-            surplus runs off the top — where a mask dissolves it into the
-            section background rather than letting it end on a hard cut. The
-            bottom edge is the one that has to stay flush, so the overflow is
-            pushed to the top deliberately. */}
+            Anchored to the bottom-left of the pinned viewport. CubeReveal now
+            sizes itself to a small, fully-visible fixed box (no longer a
+            full-width image cropped down to a shorter strip), so there's no
+            overflow left to dissolve — the top-fade mask that used to hide
+            that overflow was removed, since keeping it here would fade real,
+            visible portrait content instead. */}
         <div
           ref={cubeWrapRef}
-          className="pointer-events-none absolute left-0 bottom-0 w-screen z-10"
-          style={{
-            opacity: 0,
-            WebkitMaskImage:
-              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, #000 22%, #000 100%)",
-            maskImage:
-              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, #000 22%, #000 100%)",
-          }}
+          className="pointer-events-none absolute left-0 bottom-0 z-10"
+          style={{ opacity: 0 }}
         >
           <CubeReveal ref={cubeRef} />
         </div>

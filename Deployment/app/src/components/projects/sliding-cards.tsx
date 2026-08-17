@@ -5,20 +5,54 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useTheme } from "@/context/theme-context";
 
-interface ProjectItem {
+interface ProjectRow {
   id: string;
+  projectId: number;
   cardId: number;
-  details: string;
-  cardLogoNumber: number;
+  content: string;
+  contentIndex: number;
   minDevCost: string;
   imageUrl?: string | null;
 }
 
-const PLACEHOLDER_PROJECTS: ProjectItem[] = [
-  { id: "p1", cardId: 1, details: "Placeholder project details.", cardLogoNumber: 1, minDevCost: "$—", imageUrl: null },
+interface ProjectCardData {
+  projectId: number;
+  header: string;
+  bullets: string[];
+  minDevCost: string;
+  imageUrl: string | null;
+}
+
+const PLACEHOLDER_PROJECTS: ProjectCardData[] = [
+  { projectId: 1, header: "Placeholder project header", bullets: [], minDevCost: "$—", imageUrl: null },
 ];
 
-function ProjectCard({ project, index, total }: { project: ProjectItem; index: number; total: number }) {
+/** Groups flat Projects-tab rows into one card per projectId — the row with
+ * the lowest contentIndex is the header (and carries the image/cost); every
+ * row after it is a bullet point. */
+function groupProjects(rows: ProjectRow[]): ProjectCardData[] {
+  const byId = new Map<number, ProjectRow[]>();
+  for (const row of rows) {
+    const list = byId.get(row.projectId) ?? [];
+    list.push(row);
+    byId.set(row.projectId, list);
+  }
+  return Array.from(byId.entries())
+    .sort(([a], [b]) => a - b)
+    .map(([projectId, group]) => {
+      const sorted = [...group].sort((a, b) => a.contentIndex - b.contentIndex);
+      const [header, ...rest] = sorted;
+      return {
+        projectId,
+        header: header?.content ?? "",
+        bullets: rest.map((r) => r.content).filter(Boolean),
+        minDevCost: header?.minDevCost ?? "",
+        imageUrl: header?.imageUrl ?? null,
+      };
+    });
+}
+
+function ProjectCard({ project, index, total }: { project: ProjectCardData; index: number; total: number }) {
   return (
     <motion.div
       className="motion-el relative flex-shrink-0 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm h-full flex flex-col overflow-hidden group cursor-pointer"
@@ -35,7 +69,7 @@ function ProjectCard({ project, index, total }: { project: ProjectItem; index: n
           <div className="relative w-full h-full">
             <Image
               src={project.imageUrl}
-              alt={`Project ${index + 1} logo`}
+              alt={`${project.header || `Project ${index + 1}`} logo`}
               fill
               className="object-contain"
               sizes="(max-width: 768px) 80vw, 420px"
@@ -46,7 +80,7 @@ function ProjectCard({ project, index, total }: { project: ProjectItem; index: n
         )}
       </div>
 
-      {/* Details — 50% of card height */}
+      {/* Details — 50% of card height: header + bullet points */}
       <div className="relative flex flex-col justify-center gap-3 px-6 py-4 overflow-hidden" style={{ height: "50%" }}>
         <p className="text-eyebrow" style={{ opacity: 0.55 }}>
           {String(index + 1).padStart(2, "0")} / {String(total).padStart(2, "0")}
@@ -54,8 +88,16 @@ function ProjectCard({ project, index, total }: { project: ProjectItem; index: n
         {/* h2, not h3: the page's h1 ("Projects & Prices") has nothing
             between it and a project's own heading in the DOM, which is a
             heading-order skip Lighthouse flags directly. */}
-        <h2 className="sr-only">Project {index + 1}</h2>
-        <p className="text-[16px] leading-relaxed opacity-80">{project.details}</p>
+        <h2 className="text-[18px] font-bold tracking-tight leading-snug">{project.header}</h2>
+        {project.bullets.length > 0 && (
+          <ul className="list-disc pl-5 space-y-1">
+            {project.bullets.map((b, i) => (
+              <li key={i} className="text-[16px] leading-relaxed opacity-80">
+                {b}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Development Cost — 10% of card height */}
@@ -77,7 +119,7 @@ function ProjectCard({ project, index, total }: { project: ProjectItem; index: n
  * same mechanism as the landing page's Selected Work section.
  */
 export function SlidingCards() {
-  const [projects, setProjects] = useState<ProjectItem[]>(PLACEHOLDER_PROJECTS);
+  const [projects, setProjects] = useState<ProjectCardData[]>(PLACEHOLDER_PROJECTS);
   const { motionHidden } = useTheme();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
@@ -91,7 +133,8 @@ export function SlidingCards() {
       .then((data) => {
         if (cancelled) return;
         if (data && Array.isArray(data.projects) && data.projects.length > 0) {
-          setProjects(data.projects);
+          const grouped = groupProjects(data.projects as ProjectRow[]);
+          if (grouped.length > 0) setProjects(grouped);
         }
       })
       .catch(() => {
@@ -126,7 +169,7 @@ export function SlidingCards() {
     return (
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto" aria-label="Projects and prices">
         {projects.map((project, i) => (
-          <div key={project.id} className="h-[420px]">
+          <div key={project.projectId} className="h-[420px]">
             <ProjectCard project={project} index={i} total={projects.length} />
           </div>
         ))}
@@ -143,7 +186,7 @@ export function SlidingCards() {
       <section className="sticky top-0 h-screen w-full overflow-hidden flex items-center" aria-label="Projects and prices">
         <motion.div ref={trackRef} className="flex gap-8 h-[70vh] pl-[30px] pr-[30px] w-max" style={{ x }}>
           {projects.map((project, i) => (
-            <ProjectCard key={project.id} project={project} index={i} total={projects.length} />
+            <ProjectCard key={project.projectId} project={project} index={i} total={projects.length} />
           ))}
         </motion.div>
       </section>
