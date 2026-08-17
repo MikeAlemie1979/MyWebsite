@@ -206,15 +206,37 @@ export function AdminDashboard() {
             </div>
           </div>
 
-          {/* Main Content */}
+          {/* Main Content — every section stays mounted the whole time (hidden
+              via CSS, not conditionally rendered) so switching tabs never
+              unmounts a manager and discards whatever the admin was mid-way
+              through editing but hadn't saved yet. Conditionally rendering
+              (`{activeSection === "x" && <X/>}`) was the actual cause of the
+              "Cards content disappears when I navigate away" bug: unmounting
+              CardsManager threw away its local React state, and remounting it
+              re-fetched from the server, which looks identical to data loss
+              even though nothing was ever lost server-side. */}
           <div className="lg:col-span-3">
-            {activeSection === "email" && <SMTPSettingsPanel />}
-            {activeSection === "home-text" && <HomeTextManager />}
-            {activeSection === "cards" && <CardsManager />}
-            {activeSection === "about" && <AboutManager />}
-            {activeSection === "projects" && <ProjectsManager />}
-            {activeSection === "social" && <SocialMediaPanel />}
-            {activeSection === "storage" && <StoragePanel />}
+            <div className={activeSection === "email" ? "" : "hidden"}>
+              <SMTPSettingsPanel />
+            </div>
+            <div className={activeSection === "home-text" ? "" : "hidden"}>
+              <HomeTextManager />
+            </div>
+            <div className={activeSection === "cards" ? "" : "hidden"}>
+              <CardsManager />
+            </div>
+            <div className={activeSection === "about" ? "" : "hidden"}>
+              <AboutManager />
+            </div>
+            <div className={activeSection === "projects" ? "" : "hidden"}>
+              <ProjectsManager />
+            </div>
+            <div className={activeSection === "social" ? "" : "hidden"}>
+              <SocialMediaPanel />
+            </div>
+            <div className={activeSection === "storage" ? "" : "hidden"}>
+              <StoragePanel />
+            </div>
           </div>
         </div>
       </div>

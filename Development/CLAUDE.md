@@ -210,7 +210,11 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 16, 2026 — Save Point "ED09" (imageUrl data-loss fix, Cards auto-ID admin rework, Home Portfolio image box sizing)
+**Last Updated**: August 16, 2026 — Save Point "ED10" (admin unmount data-loss fix, uniform card font size)
+
+### ED10 landmarks (admin unmount data-loss fix, uniform card font size)
+- **All admin dashboard sections must stay mounted** — `admin-dashboard.tsx` toggles the active section's visibility with a `hidden` CSS class, not conditional rendering (`{activeSection === "x" && <X/>}`). Conditional rendering unmounts the inactive manager component, which throws away any unsaved local React state; the earlier "Cards content lost when navigating" report was this, not a persistence bug — remounting on tab-back re-fetches from the server and looks exactly like data loss. Don't reintroduce conditional mounting for any of the 7 admin sections.
+- `cards-section.tsx` (Home Portfolio) and `sliding-cards.tsx` (Projects page) card text is a uniform 16px — was 14px/13px, changed per direct user request. Keep font sizing consistent between the two if either changes again.
 
 ### ED09 landmarks (imageUrl data-loss fix, Cards auto-ID)
 - **`imageUrl` must exist in all four places or it silently vanishes on save**: `src/lib/sheet-schema.ts`'s Cards/Projects tab specs, both API routes' (`cards/route.ts`, `projects/route.ts`) interfaces/validation, and both admin managers' (`cards-manager.tsx`, `projects-manager.tsx`) POST payloads. The ED08 relational migration dropped it from all four at once — displayed fine within the admin's own session (in-memory state) but never persisted, a genuine data-loss bug, not a display bug. Any future field added to Cards/Projects needs the same four-place check.

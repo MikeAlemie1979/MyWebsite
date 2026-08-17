@@ -78,7 +78,7 @@ function HorizontalCard({ card, index, total }: { card: PortfolioCard; index: nu
             straight from the page's h1 — an accessibility violation Lighthouse
             flags directly. */}
         {card.contents.map((content, i) => (
-          <p key={i} className="text-[14px] leading-relaxed" style={{ opacity: 0.7 }}>
+          <p key={i} className="text-[16px] leading-relaxed" style={{ opacity: 0.7 }}>
             {content}
           </p>
         ))}

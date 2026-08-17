@@ -20,8 +20,8 @@
     "semantic_hash": "5491b25618803d8d5d958f5a3d321bd8"
   },
   "Deployment/app/src/components/admin/cards-manager.tsx": {
-    "mtime": 1786908556.3202546,
-    "ast_hash": "c04862e9d8814ec2c6903871dbbfb6e1",
+    "mtime": 1786911531.257141,
+    "ast_hash": "416a6412980f0009b99189aec417ecb1",
     "semantic_hash": ""
   },
   "Deployment/app/src/components/admin/storage-panel.tsx": {
@@ -30,8 +30,8 @@
     "semantic_hash": "3a99ef0a82d3d5ce7b85675865ac9f95"
   },
   "Deployment/app/src/components/landing/cards-section.tsx": {
-    "mtime": 1786908654.5012183,
-    "ast_hash": "93a7b3859b99f15c50a485a41ac99ae2",
+    "mtime": 1786923556.8184657,
+    "ast_hash": "4498a34f33f1c5298b633a9e7f6eb2f1",
     "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/contact-form.tsx": {
@@ -45,8 +45,8 @@
     "semantic_hash": ""
   },
   "Deployment/app/src/lib/sheet-schema.ts": {
-    "mtime": 1786908458.699741,
-    "ast_hash": "faaa5abe31d8c630b92a8e5b54bfbf1e",
+    "mtime": 1786911489.3242764,
+    "ast_hash": "fb79d0d638658063d7f84be7888044df",
     "semantic_hash": ""
   },
   "Deployment/app/src/lib/store.ts": {
@@ -145,8 +145,8 @@
     "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/cards/route.ts": {
-    "mtime": 1786908525.0799694,
-    "ast_hash": "bd1758ec194c14a7b8269577386d75ae",
+    "mtime": 1786911499.3137505,
+    "ast_hash": "6c19d9f3f763bc7afee2b981f3c25758",
     "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/home-text/route.ts": {
@@ -165,8 +165,8 @@
     "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/projects/route.ts": {
-    "mtime": 1786908518.4811616,
-    "ast_hash": "1176af22ed5183fb4c4f703c3ea60cdf",
+    "mtime": 1786911496.6895914,
+    "ast_hash": "21a613e7a358cf0fdbdfaf3d5592bdc0",
     "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/projects/upload/route.ts": {
@@ -250,8 +250,8 @@
     "semantic_hash": ""
   },
   "Deployment/app/src/components/admin/projects-manager.tsx": {
-    "mtime": 1786908586.4786844,
-    "ast_hash": "4dd222e4611df465f8808068a7636678",
+    "mtime": 1786911507.9251387,
+    "ast_hash": "1e7b483c68fc79a9cd12b97aa14f1b6f",
     "semantic_hash": ""
   },
   "Deployment/app/src/components/admin/smtp-settings-panel.tsx": {
@@ -400,13 +400,13 @@
     "semantic_hash": ""
   },
   "Development/CLAUDE.md": {
-    "mtime": 1786908975.7447734,
-    "ast_hash": "34901c856e9b09d7c58f1e1fa76186a6",
+    "mtime": 1786923709.8408263,
+    "ast_hash": "dd6be851be1f27044d413076b249c513",
     "semantic_hash": ""
   },
   "Development/Implementation/Roadmap.md": {
-    "mtime": 1786908963.8171115,
-    "ast_hash": "859ba4c41cdbdffd28266374e8bc605f",
+    "mtime": 1786923694.8975196,
+    "ast_hash": "8a0f370091f2fc10b5c09a3575795e24",
     "semantic_hash": ""
   },
   "Instructions/Epic/AppStory.md": {

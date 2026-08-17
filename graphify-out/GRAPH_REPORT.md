@@ -1,16 +1,16 @@
 # Graph Report - Mike Alemie Website  (2026-08-16)
 
 ## Corpus Check
-- 84 files · ~666,048 words
+- 84 files · ~666,493 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 545 nodes · 875 edges · 38 communities (35 shown, 3 thin omitted)
+- 548 nodes · 878 edges · 38 communities (35 shown, 3 thin omitted)
 - Extraction: 100% EXTRACTED · 0% INFERRED · 0% AMBIGUOUS
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `eba833d8`
+- Built from commit: `bba37feb`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -53,7 +53,7 @@
 4. `useTheme()` - 17 edges
 5. `compilerOptions` - 16 edges
 6. `buildStatus()` - 14 edges
-7. `Completed` - 11 edges
+7. `Completed` - 12 edges
 8. `saveIndexedUpload()` - 10 edges
 9. `getSheetId()` - 9 edges
 10. `Deploying Mike Alemie Website — Internet Host Provider` - 9 edges
@@ -80,8 +80,8 @@ Cohesion: 0.06
 Nodes (42): AboutContent, DEFAULT_CONTENT, Flashcard, GET(), POST(), CardItem, CardsConfig, DEFAULT_CARDS (+34 more)
 
 ### Community 1 - "about/page.tsx"
-Cohesion: 0.40
-Nodes (4): SMTPConfig, SMTPSettingsPanel(), Toggle(), ToggleProps
+Cohesion: 0.28
+Nodes (6): SMTPConfig, SMTPSettingsPanel(), Toggle(), ToggleProps, THEME_OPTIONS, ThemeName
 
 ### Community 2 - "ash-text-section.tsx"
 Cohesion: 0.15
@@ -129,11 +129,11 @@ Nodes (12): metadata, ORGANIZATION_JSON_LD, PERSON_JSON_LD, WEBSITE_JSON_LD, get
 
 ### Community 14 - "CLAUDE.md"
 Cohesion: 0.07
-Nodes (25): Architecture & Design Principles, Asset & Sprint Organization, Before Making Changes, Current Implementation, Development Approach, Development Workflow, ED04 landmarks (landing page + admin), ED05 landmarks (persistence + admin security) (+17 more)
+Nodes (26): Architecture & Design Principles, Asset & Sprint Organization, Before Making Changes, Current Implementation, Development Approach, Development Workflow, ED04 landmarks (landing page + admin), ED05 landmarks (persistence + admin security) (+18 more)
 
 ### Community 15 - "useTheme"
 Cohesion: 0.18
-Nodes (9): FlashCard(), HeroSection(), NeonSphere(), SpherePalette, THEME_PALETTES, PLACEHOLDER_PROJECTS, ProjectItem, SlidingCards() (+1 more)
+Nodes (13): FlashCard(), drawSparkle(), DRIFT_DIRECTIONS, HeroSection(), NEON_STAR_COLORS, NeonStar, rand(), TopStarBand() (+5 more)
 
 ### Community 16 - "about-manager.tsx"
 Cohesion: 0.33
@@ -148,8 +148,8 @@ Cohesion: 0.18
 Nodes (11): Attachment, ContactPayload, EMPTY_SMTP, POST(), SMTPConfig, ContactForm(), fileToBase64(), FormState (+3 more)
 
 ### Community 19 - "Completed"
-Cohesion: 0.09
-Nodes (22): Completed, In Progress, In Progress (carried into ED06), Known follow-ups from ED02 (carried forward), Known follow-ups from ED04, Known follow-ups from ED05, Known follow-ups from ED06, Known follow-ups from ED07 (+14 more)
+Cohesion: 0.08
+Nodes (24): Completed, In Progress, In Progress (carried into ED06), Known follow-ups from ED02 (carried forward), Known follow-ups from ED04, Known follow-ups from ED05, Known follow-ups from ED06, Known follow-ups from ED07 (+16 more)
 
 ### Community 20 - "projects-manager.tsx"
 Cohesion: 0.50
@@ -157,11 +157,11 @@ Nodes (4): EMPTY_PROJECTS, generateId(), ProjectItem, ProjectsManager()
 
 ### Community 22 - "app/page.tsx"
 Cohesion: 0.06
-Nodes (32): AboutContent, DEFAULT_CONTENT, metadata, AboutBody(), AboutBodyProps, AboutHeadline(), AboutHeadlineProps, FlashcardItem (+24 more)
+Nodes (29): AboutContent, DEFAULT_CONTENT, metadata, AboutBody(), AboutBodyProps, AboutHeadline(), AboutHeadlineProps, FlashcardItem (+21 more)
 
 ### Community 30 - "hero-sphere.tsx"
-Cohesion: 0.19
-Nodes (10): drawSparkle(), DRIFT_DIRECTIONS, NEON_STAR_COLORS, NeonStar, rand(), TopStarBand(), FlashTexts(), FONTS (+2 more)
+Cohesion: 0.33
+Nodes (4): FlashTexts(), FONTS, Label, PHRASES
 
 ### Community 31 - "Token-Efficiency.md"
 Cohesion: 0.15
@@ -180,11 +180,11 @@ Cohesion: 0.40
 Nodes (3): DocStatus, StoragePanel(), StorageStatus
 
 ### Community 38 - "theme-context.tsx"
-Cohesion: 0.50
-Nodes (3): ThemeContext, ThemeContextValue, ThemeProvider()
+Cohesion: 0.22
+Nodes (6): PLACEHOLDER_PROJECTS, ProjectItem, SlidingCards(), ThemeContext, ThemeContextValue, ThemeProvider()
 
 ## Knowledge Gaps
-- **231 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `node` (+226 more)
+- **234 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `node` (+229 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
@@ -196,7 +196,7 @@ _Questions this graph is uniquely positioned to answer:_
 - **Why does `Breadcrumbs()` connect `app/page.tsx` to `admin-dashboard.tsx`?**
   _High betweenness centrality (0.031) - this node is a cross-community bridge._
 - **What connects `nextConfig`, `name`, `version` to the rest of the system?**
-  _231 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _234 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `writeDoc` be split into smaller, more focused modules?**
   _Cohesion score 0.06207482993197279 - nodes in this community are weakly interconnected._
 - **Should `requireAdmin` be split into smaller, more focused modules?**

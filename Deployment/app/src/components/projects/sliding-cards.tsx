@@ -55,7 +55,7 @@ function ProjectCard({ project, index, total }: { project: ProjectItem; index: n
             between it and a project's own heading in the DOM, which is a
             heading-order skip Lighthouse flags directly. */}
         <h2 className="sr-only">Project {index + 1}</h2>
-        <p className="text-[13px] leading-relaxed opacity-80">{project.details}</p>
+        <p className="text-[16px] leading-relaxed opacity-80">{project.details}</p>
       </div>
 
       {/* Development Cost — 10% of card height */}

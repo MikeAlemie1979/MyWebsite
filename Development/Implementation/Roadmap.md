@@ -34,6 +34,11 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 - **Correction to the ED05 punch list**: the "left/right image gradient-to-black" item was already shipped in a later session than ED05 — `ash-text-section.tsx`'s `ash-left.png`/`ash-right.png` already carry a bottom mask-gradient (`linear-gradient(to bottom, #000 0%, #000 55%, transparent 92%)`), confirmed in code during this save point. Removed from the pending list below.
 - **Not done, carried forward**: the homepage performance problem itself (Three.js sphere + canvas ash-text blocking the main thread ~6s) is unaddressed — now a tracked, reproducible finding (Perf 50/100 on "/") rather than an unknown; fixing it means code-splitting/deferring/lazy-loading hero rendering, a bigger change than this pass covered.
 
+### Save Point "ED10" — admin unmount data-loss fix, uniform card font size
+- **Fixed the real "Cards content lost when navigating" bug**: `admin-dashboard.tsx` conditionally rendered each admin section (`{activeSection === "cards" && <CardsManager />}`), so switching to another admin tab UNMOUNTED `CardsManager` entirely, discarding any unsaved edits in its local React state; switching back remounted it and re-fetched from the server, which looked exactly like data loss even though nothing was ever lost server-side. Fixed by keeping all 7 admin section components always mounted, toggling visibility with a `hidden` CSS class instead of conditional mounting. Verified live in a browser: typed unsaved draft text into a Cards field, switched to Projects, switched back to Cards, draft text was still there (previously would have reverted to the last-saved server value).
+- Font size fix — Home Portfolio card content (`cards-section.tsx`) and Projects page card details (`sliding-cards.tsx`) both changed from 14px/13px to a uniform 16px, per direct user request. Verified via server-rendered HTML on both pages.
+- (Same session, already covered by ED09, not repeated here) `imageUrl` persistence bug, auto-assigned Cards IDs, uniform Home Portfolio image sizing.
+
 ### Save Point "ED09" — imageUrl data-loss fix, Cards auto-ID admin rework, Home Portfolio image box sizing
 - **Data-loss bug found and fixed**: the ED08 relational schema migration silently dropped `imageUrl` from Cards/Projects everywhere at once — `src/lib/sheet-schema.ts`'s tab specs, both admin managers' (`cards-manager.tsx`, `projects-manager.tsx`) save payloads, and both API routes' (`cards/route.ts`, `projects/route.ts`) interfaces/validation. Effect: uploaded card images/project logos displayed correctly for the rest of that admin session (in-memory), then were silently discarded on save — never actually written to the sheet. Fixed by adding `imageUrl` (nullableString) back to both tab specs and restoring it end-to-end through both routes and both managers' POST payloads.
 - Verified with a strict cold-restart test, not just a page reload: uploaded real images to Drive, saved via the real admin API, killed and restarted the entire dev server process (wiping all in-memory cache), then read cold — content and image URLs came back correctly from the live Google Sheet/Drive, proving persistence genuinely round-trips end-to-end.
@@ -144,7 +149,10 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 
 ---
 
-**Last Updated**: August 16, 2026 — Save Point "ED09" (imageUrl data-loss fix, Cards auto-ID admin rework, Home Portfolio image box sizing)
+**Last Updated**: August 16, 2026 — Save Point "ED10" (admin unmount data-loss fix, uniform card font size)
+
+### Known follow-ups from ED10
+- None open — unmount data-loss bug fixed and verified live; font size change verified via server-rendered HTML.
 
 ### Known follow-ups from ED09
 - Live Render deployment "resetting" report is unconfirmed as a Google env var gap vs. already-resolved — check the live `/admin` → System → Storage panel or Render's Environment tab for missing `GOOGLE_SERVICE_ACCOUNT_JSON`/`GOOGLE_SHEET_ID`/`GOOGLE_DRIVE_FOLDER_ID`/`GOOGLE_OAUTH_CLIENT_ID`/`GOOGLE_OAUTH_CLIENT_SECRET` if the issue recurs.

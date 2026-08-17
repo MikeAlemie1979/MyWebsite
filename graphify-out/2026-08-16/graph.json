@@ -681,8 +681,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_app_about_page",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "about/page.tsx"
     },
     {
@@ -692,8 +692,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "deployment_app_src_app_about_page_aboutcontent",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutcontent"
     },
     {
@@ -703,8 +703,8 @@
       "source_location": "L24",
       "_origin": "ast",
       "id": "deployment_app_src_app_about_page_default_content",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "default_content"
     },
     {
@@ -714,8 +714,8 @@
       "source_location": "L40",
       "_origin": "ast",
       "id": "deployment_app_src_app_about_page_aboutpage",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutpage()"
     },
     {
@@ -909,7 +909,7 @@
       "label": "CardsConfig",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_cards_route_cardsconfig",
       "community": 0,
@@ -920,7 +920,7 @@
       "label": "DEFAULT_CARDS",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_cards_route_default_cards",
       "community": 0,
@@ -931,7 +931,7 @@
       "label": "GET()",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_cards_route_get",
       "community": 0,
@@ -942,7 +942,7 @@
       "label": "POST()",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_cards_route_post",
       "community": 0,
@@ -1217,7 +1217,7 @@
       "label": "ProjectsConfig",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_projects_route_projectsconfig",
       "community": 0,
@@ -1228,7 +1228,7 @@
       "label": "DEFAULT_PROJECTS",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L17",
+      "source_location": "L18",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_projects_route_default_projects",
       "community": 0,
@@ -1239,7 +1239,7 @@
       "label": "GET()",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_projects_route_get",
       "community": 0,
@@ -1250,7 +1250,7 @@
       "label": "POST()",
       "file_type": "code",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L31",
+      "source_location": "L32",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_projects_route_post",
       "community": 0,
@@ -1594,8 +1594,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_storage_status_route",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "storage-status/route.ts"
     },
     {
@@ -1605,8 +1605,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_storage_status_route_buildstatus",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "buildstatus()"
     },
     {
@@ -1616,8 +1616,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_storage_status_route_get",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "get()"
     },
     {
@@ -1627,8 +1627,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_storage_status_route_post",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "post()"
     },
     {
@@ -1979,8 +1979,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_body",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "about-body.tsx"
     },
     {
@@ -1990,8 +1990,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_body_aboutbodyprops",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutbodyprops"
     },
     {
@@ -2001,8 +2001,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_body_aboutbody",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutbody()"
     },
     {
@@ -2012,8 +2012,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_headline",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "about-headline.tsx"
     },
     {
@@ -2023,8 +2023,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_headline_aboutheadlineprops",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutheadlineprops"
     },
     {
@@ -2034,8 +2034,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_about_headline_aboutheadline",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "aboutheadline()"
     },
     {
@@ -2045,8 +2045,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_flashcards",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "flashcards.tsx"
     },
     {
@@ -2056,8 +2056,8 @@
       "source_location": "L8",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_flashcards_flashcarditem",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "flashcarditem"
     },
     {
@@ -2067,8 +2067,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_flashcards_flashcard",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 15,
+      "community_name": "useTheme",
       "norm_label": "flashcard()"
     },
     {
@@ -2078,8 +2078,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "deployment_app_src_components_about_flashcards_flashcards",
-      "community": 1,
-      "community_name": "about/page.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "flashcards()"
     },
     {
@@ -2314,10 +2314,21 @@
       "norm_label": "nextcardid()"
     },
     {
-      "label": "CardsManager()",
+      "label": "nextImgNumber()",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
       "source_location": "L21",
+      "_origin": "ast",
+      "id": "deployment_app_src_components_admin_cards_manager_nextimgnumber",
+      "community": 35,
+      "community_name": "cards-manager.tsx",
+      "norm_label": "nextimgnumber()"
+    },
+    {
+      "label": "CardsManager()",
+      "file_type": "code",
+      "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
+      "source_location": "L26",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_cards_manager_cardsmanager",
       "community": 35,
@@ -2463,8 +2474,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_smtp_settings_panel",
-      "community": 8,
-      "community_name": "admin-dashboard.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "smtp-settings-panel.tsx"
     },
     {
@@ -2474,8 +2485,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_smtp_settings_panel_smtpconfig",
-      "community": 8,
-      "community_name": "admin-dashboard.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "smtpconfig"
     },
     {
@@ -2485,8 +2496,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_smtp_settings_panel_smtpsettingspanel",
-      "community": 8,
-      "community_name": "admin-dashboard.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "smtpsettingspanel()"
     },
     {
@@ -2672,8 +2683,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_common_loading_overlay",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "loading-overlay.tsx"
     },
     {
@@ -2683,8 +2694,8 @@
       "source_location": "L12",
       "_origin": "ast",
       "id": "deployment_app_src_components_common_loading_overlay_loadingoverlay",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "loadingoverlay()"
     },
     {
@@ -2760,8 +2771,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_common_toggle",
-      "community": 18,
-      "community_name": "contact-form.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "toggle.tsx"
     },
     {
@@ -2771,8 +2782,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "deployment_app_src_components_common_toggle_toggleprops",
-      "community": 18,
-      "community_name": "contact-form.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "toggleprops"
     },
     {
@@ -2782,8 +2793,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "deployment_app_src_components_common_toggle_toggle",
-      "community": 18,
-      "community_name": "contact-form.tsx",
+      "community": 1,
+      "community_name": "about/page.tsx",
       "norm_label": "toggle()"
     },
     {
@@ -2903,8 +2914,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "cards-section.tsx"
     },
     {
@@ -2914,8 +2925,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_carditem",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "carditem"
     },
     {
@@ -2925,8 +2936,8 @@
       "source_location": "L15",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_portfoliocard",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "portfoliocard"
     },
     {
@@ -2936,8 +2947,8 @@
       "source_location": "L23",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_placeholder_groups",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "placeholder_groups"
     },
     {
@@ -2947,8 +2958,8 @@
       "source_location": "L34",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_groupcards",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "groupcards()"
     },
     {
@@ -2958,19 +2969,19 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_horizontalcard",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "horizontalcard()"
     },
     {
       "label": "CardsSection()",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cards-section.tsx",
-      "source_location": "L121",
+      "source_location": "L123",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cards_section_cardssection",
-      "community": 33,
-      "community_name": "cards-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "cardssection()"
     },
     {
@@ -3046,8 +3057,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "content-section.tsx"
     },
     {
@@ -3057,8 +3068,8 @@
       "source_location": "L6",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_wave_colors",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "wave_colors"
     },
     {
@@ -3068,8 +3079,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_heading_words",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "heading_words"
     },
     {
@@ -3079,8 +3090,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_rand",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "rand()"
     },
     {
@@ -3090,8 +3101,8 @@
       "source_location": "L13",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_wordtiming",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "wordtiming"
     },
     {
@@ -3101,8 +3112,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_default_timings",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "default_timings"
     },
     {
@@ -3112,8 +3123,8 @@
       "source_location": "L20",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_content_section_contentsection",
-      "community": 34,
-      "community_name": "content-section.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "contentsection()"
     },
     {
@@ -3200,8 +3211,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_footer",
-      "community": 37,
-      "community_name": "footer.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "footer.tsx"
     },
     {
@@ -3211,8 +3222,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_footer_img_style",
-      "community": 37,
-      "community_name": "footer.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "img_style"
     },
     {
@@ -3222,8 +3233,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_footer_instagramicon",
-      "community": 37,
-      "community_name": "footer.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "instagramicon()"
     },
     {
@@ -3233,8 +3244,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_footer_facebookicon",
-      "community": 37,
-      "community_name": "footer.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "facebookicon()"
     },
     {
@@ -3244,8 +3255,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_footer_footer",
-      "community": 37,
-      "community_name": "footer.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "footer()"
     },
     {
@@ -3387,8 +3398,8 @@
       "source_location": "L255",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_hero_sphere_herosection",
-      "community": 30,
-      "community_name": "hero-sphere.tsx",
+      "community": 15,
+      "community_name": "useTheme",
       "norm_label": "herosection()"
     },
     {
@@ -3673,8 +3684,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "deployment_app_src_context_theme_context_themename",
-      "community": 38,
-      "community_name": "theme-context.tsx",
+      "community": 22,
+      "community_name": "app/page.tsx",
       "norm_label": "themename"
     },
     {
@@ -3882,8 +3893,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "google-auth.ts"
     },
     {
@@ -3893,8 +3904,8 @@
       "source_location": "L18",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_scopes",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "scopes"
     },
     {
@@ -3904,8 +3915,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_googleconfigerror",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "googleconfigerror"
     },
     {
@@ -3915,8 +3926,8 @@
       "source_location": "L32",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_serviceaccountkey",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "serviceaccountkey"
     },
     {
@@ -3926,8 +3937,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_parsekey",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "parsekey()"
     },
     {
@@ -3937,8 +3948,8 @@
       "source_location": "L60",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_getgoogleclient",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "getgoogleclient()"
     },
     {
@@ -3948,8 +3959,8 @@
       "source_location": "L81",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_getserviceaccountemail",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "getserviceaccountemail()"
     },
     {
@@ -3959,8 +3970,8 @@
       "source_location": "L91",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_isgoogleconfigured",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "isgoogleconfigured()"
     },
     {
@@ -3970,8 +3981,8 @@
       "source_location": "L96",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_hasserviceaccount",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "hasserviceaccount()"
     },
     {
@@ -3992,8 +4003,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "google-config.ts"
     },
     {
@@ -4003,8 +4014,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_override_file",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "override_file"
     },
     {
@@ -4014,8 +4025,8 @@
       "source_location": "L29",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_googlelinks",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "googlelinks"
     },
     {
@@ -4025,8 +4036,8 @@
       "source_location": "L41",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_extractid",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "extractid()"
     },
     {
@@ -4036,8 +4047,8 @@
       "source_location": "L55",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_readoverride",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "readoverride()"
     },
     {
@@ -4047,8 +4058,8 @@
       "source_location": "L64",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_getsheetid",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "getsheetid()"
     },
     {
@@ -4058,8 +4069,8 @@
       "source_location": "L68",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_getfolderid",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "getfolderid()"
     },
     {
@@ -4069,8 +4080,8 @@
       "source_location": "L73",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_isoverridden",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "isoverridden()"
     },
     {
@@ -4080,8 +4091,8 @@
       "source_location": "L78",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_savelinks",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "savelinks()"
     },
     {
@@ -4091,8 +4102,8 @@
       "source_location": "L88",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_clearlinks",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "clearlinks()"
     },
     {
@@ -4102,8 +4113,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_config_warniflocalbackend",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "warniflocalbackend()"
     },
     {
@@ -4212,8 +4223,8 @@
       "source_location": "L112",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_oauth_getoauthstatus",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "getoauthstatus()"
     },
     {
@@ -4223,8 +4234,8 @@
       "source_location": "L117",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_oauth_disconnectoauth",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "disconnectoauth()"
     },
     {
@@ -4506,7 +4517,7 @@
       "label": "coerce()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L235",
+      "source_location": "L237",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_coerce",
       "community": 7,
@@ -4517,7 +4528,7 @@
       "label": "toCell()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L253",
+      "source_location": "L255",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_tocell",
       "community": 7,
@@ -4528,7 +4539,7 @@
       "label": "getPath()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L259",
+      "source_location": "L261",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_getpath",
       "community": 7,
@@ -4539,7 +4550,7 @@
       "label": "setPath()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L269",
+      "source_location": "L271",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_setpath",
       "community": 7,
@@ -4550,7 +4561,7 @@
       "label": "allTabs()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L280",
+      "source_location": "L282",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_alltabs",
       "community": 7,
@@ -4597,8 +4608,8 @@
       "source_location": "L58",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_activebackend",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "activebackend()"
     },
     {
@@ -4630,8 +4641,8 @@
       "source_location": "L79",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_invalidate",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "invalidate()"
     },
     {
@@ -4795,8 +4806,8 @@
       "source_location": "L320",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_docexists",
-      "community": 9,
-      "community_name": "storage-status/route.ts",
+      "community": 7,
+      "community_name": "store.ts",
       "norm_label": "docexists()"
     },
     {
@@ -5625,10 +5636,21 @@
       "norm_label": "quick reference"
     },
     {
-      "label": "ED08 landmarks (relational Cards/Projects schema, indexed image naming)",
+      "label": "ED09 landmarks (imageUrl data-loss fix, Cards auto-ID)",
       "file_type": "document",
       "source_file": "Development/CLAUDE.md",
       "source_location": "L215",
+      "_origin": "ast",
+      "id": "development_claude_ed09_landmarks_imageurl_data_loss_fix_cards_auto_id",
+      "community": 14,
+      "community_name": "CLAUDE.md",
+      "norm_label": "ed09 landmarks (imageurl data-loss fix, cards auto-id)"
+    },
+    {
+      "label": "ED08 landmarks (relational Cards/Projects schema, indexed image naming)",
+      "file_type": "document",
+      "source_file": "Development/CLAUDE.md",
+      "source_location": "L222",
       "_origin": "ast",
       "id": "development_claude_ed08_landmarks_relational_cards_projects_schema_indexed_image_naming",
       "community": 14,
@@ -5639,7 +5661,7 @@
       "label": "ED07 landmarks (uploads, contact form, Google Drive OAuth)",
       "file_type": "document",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L222",
+      "source_location": "L229",
       "_origin": "ast",
       "id": "development_claude_ed07_landmarks_uploads_contact_form_google_drive_oauth",
       "community": 14,
@@ -5650,7 +5672,7 @@
       "label": "ED06 landmarks (SEO/GEO/AEO + performance)",
       "file_type": "document",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L230",
+      "source_location": "L237",
       "_origin": "ast",
       "id": "development_claude_ed06_landmarks_seo_geo_aeo_performance",
       "community": 14,
@@ -5661,7 +5683,7 @@
       "label": "ED05 landmarks (persistence + admin security)",
       "file_type": "document",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L239",
+      "source_location": "L246",
       "_origin": "ast",
       "id": "development_claude_ed05_landmarks_persistence_admin_security",
       "community": 14,
@@ -5672,7 +5694,7 @@
       "label": "ED04 landmarks (landing page + admin)",
       "file_type": "document",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L248",
+      "source_location": "L255",
       "_origin": "ast",
       "id": "development_claude_ed04_landmarks_landing_page_admin",
       "community": 14,
@@ -5724,10 +5746,21 @@
       "norm_label": "save point \"ed06\" \u2014 per-page seo metadata, geo/aeo json-ld, first performance/accessibility pass"
     },
     {
-      "label": "Save Point \"ED08\" \u2014 relational Cards/Projects schema, indexed image naming, load overlay, portfolio/project layout, hero fade sync",
+      "label": "Save Point \"ED09\" \u2014 imageUrl data-loss fix, Cards auto-ID admin rework, Home Portfolio image box sizing",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
       "source_location": "L37",
+      "_origin": "ast",
+      "id": "development_implementation_roadmap_save_point_ed09_imageurl_data_loss_fix_cards_auto_id_admin_rework_home_portfolio_image_box_sizing",
+      "community": 19,
+      "community_name": "Completed",
+      "norm_label": "save point \"ed09\" \u2014 imageurl data-loss fix, cards auto-id admin rework, home portfolio image box sizing"
+    },
+    {
+      "label": "Save Point \"ED08\" \u2014 relational Cards/Projects schema, indexed image naming, load overlay, portfolio/project layout, hero fade sync",
+      "file_type": "document",
+      "source_file": "Development/Implementation/Roadmap.md",
+      "source_location": "L44",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed08_relational_cards_projects_schema_indexed_image_naming_load_overlay_portfolio_project_layout_hero_fade_sync",
       "community": 19,
@@ -5738,7 +5771,7 @@
       "label": "Save Point \"ED07\" \u2014 card upload fix, no-restart upload serving, contact form SMTP dispatch, Google Drive OAuth",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L47",
+      "source_location": "L54",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed07_card_upload_fix_no_restart_upload_serving_contact_form_smtp_dispatch_google_drive_oauth",
       "community": 19,
@@ -5749,7 +5782,7 @@
       "label": "Save Point \"ED05\" \u2014 Google Sheets/Drive backend + admin API auth gate",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L62",
+      "source_location": "L69",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed05_google_sheets_drive_backend_admin_api_auth_gate",
       "community": 19,
@@ -5760,7 +5793,7 @@
       "label": "Save Point \"ED04-final\" \u2014 sphere dual-mapping fix + admin 3-factor login + deployment prep",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L74",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed04_final_sphere_dual_mapping_fix_admin_3_factor_login_deployment_prep",
       "community": 19,
@@ -5771,7 +5804,7 @@
       "label": "Save Point \"ED04\" \u2014 sphere pole fix + scroll-driven cube reveal + cards choreography + footer/visitor counter + admin auth-bypass fix + SQL schema",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L79",
+      "source_location": "L86",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed04_sphere_pole_fix_scroll_driven_cube_reveal_cards_choreography_footer_visitor_counter_admin_auth_bypass_fix_sql_schema",
       "community": 19,
@@ -5782,7 +5815,7 @@
       "label": "Save Point \"ED03\" \u2014 sphere texture-map + ash/cube reveal + theming + SEO pass",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L89",
+      "source_location": "L96",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed03_sphere_texture_map_ash_cube_reveal_theming_seo_pass",
       "community": 19,
@@ -5793,7 +5826,7 @@
       "label": "Save Point \"Ed01\" \u2014 landing polish pass",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L103",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed01_landing_polish_pass",
       "community": 19,
@@ -5804,7 +5837,7 @@
       "label": "Save Point \"ED02\" \u2014 interaction + motion overhaul",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L110",
+      "source_location": "L117",
       "_origin": "ast",
       "id": "development_implementation_roadmap_save_point_ed02_interaction_motion_overhaul",
       "community": 19,
@@ -5815,7 +5848,7 @@
       "label": "In Progress",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L122",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "development_implementation_roadmap_in_progress",
       "community": 19,
@@ -5826,7 +5859,7 @@
       "label": "In Progress (carried into ED06)",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L127",
+      "source_location": "L134",
       "_origin": "ast",
       "id": "development_implementation_roadmap_in_progress_carried_into_ed06",
       "community": 19,
@@ -5837,7 +5870,7 @@
       "label": "Not Started",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L133",
+      "source_location": "L140",
       "_origin": "ast",
       "id": "development_implementation_roadmap_not_started",
       "community": 19,
@@ -5845,10 +5878,21 @@
       "norm_label": "not started"
     },
     {
+      "label": "Known follow-ups from ED09",
+      "file_type": "document",
+      "source_file": "Development/Implementation/Roadmap.md",
+      "source_location": "L149",
+      "_origin": "ast",
+      "id": "development_implementation_roadmap_known_follow_ups_from_ed09",
+      "community": 19,
+      "community_name": "Completed",
+      "norm_label": "known follow-ups from ed09"
+    },
+    {
       "label": "Known follow-ups from ED08",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L142",
+      "source_location": "L152",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed08",
       "community": 19,
@@ -5859,7 +5903,7 @@
       "label": "Known follow-ups from ED07",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L146",
+      "source_location": "L156",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed07",
       "community": 19,
@@ -5870,7 +5914,7 @@
       "label": "Known follow-ups from ED06",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L149",
+      "source_location": "L159",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed06",
       "community": 19,
@@ -5881,7 +5925,7 @@
       "label": "Known follow-ups from ED05",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L153",
+      "source_location": "L163",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed05",
       "community": 19,
@@ -5892,7 +5936,7 @@
       "label": "Known follow-ups from ED04",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L157",
+      "source_location": "L167",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed04",
       "community": 19,
@@ -5903,7 +5947,7 @@
       "label": "Known follow-ups from ED02 (carried forward)",
       "file_type": "document",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L163",
+      "source_location": "L173",
       "_origin": "ast",
       "id": "development_implementation_roadmap_known_follow_ups_from_ed02_carried_forward",
       "community": 19,
@@ -7170,7 +7214,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L12",
+      "source_location": "L13",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route",
@@ -7181,7 +7225,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L16",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route",
@@ -7192,7 +7236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route",
@@ -7203,7 +7247,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route",
@@ -7276,7 +7320,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route_get",
@@ -7288,7 +7332,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route_post",
@@ -7300,7 +7344,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/cards/route.ts",
-      "source_location": "L55",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_cards_route_post",
@@ -8002,7 +8046,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L17",
+      "source_location": "L18",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route",
@@ -8013,7 +8057,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L23",
+      "source_location": "L24",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route",
@@ -8024,7 +8068,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L31",
+      "source_location": "L32",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route",
@@ -8046,7 +8090,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L13",
+      "source_location": "L14",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route",
@@ -8119,7 +8163,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L25",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route_get",
@@ -8131,7 +8175,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L32",
+      "source_location": "L33",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route_post",
@@ -8143,7 +8187,7 @@
       "confidence": "EXTRACTED",
       "confidence_score": 1.0,
       "source_file": "Deployment/app/src/app/api/admin/projects/route.ts",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_app_api_admin_projects_route_post",
@@ -10827,7 +10871,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
-      "source_location": "L21",
+      "source_location": "L26",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_admin_cards_manager",
@@ -10857,11 +10901,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
+      "source_location": "L21",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_components_admin_cards_manager",
+      "target": "deployment_app_src_components_admin_cards_manager_nextimgnumber",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
-      "source_location": "L60",
+      "source_location": "L63",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_admin_cards_manager_cardsmanager",
@@ -10873,11 +10928,23 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
-      "source_location": "L57",
+      "source_location": "L60",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_admin_cards_manager_cardsmanager",
       "target": "deployment_app_src_components_admin_cards_manager_nextcardid",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/components/admin/cards-manager.tsx",
+      "source_location": "L73",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_components_admin_cards_manager_cardsmanager",
+      "target": "deployment_app_src_components_admin_cards_manager_nextimgnumber",
       "confidence_score": 1.0
     },
     {
@@ -11670,7 +11737,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cards-section.tsx",
-      "source_location": "L121",
+      "source_location": "L123",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cards_section",
@@ -11726,7 +11793,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cards-section.tsx",
-      "source_location": "L143",
+      "source_location": "L145",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cards_section_cardssection",
@@ -14169,7 +14236,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L280",
+      "source_location": "L282",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_sheet_schema",
@@ -14180,7 +14247,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L235",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_sheet_schema",
@@ -14235,7 +14302,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L259",
+      "source_location": "L261",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_sheet_schema",
@@ -14257,7 +14324,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L269",
+      "source_location": "L271",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_sheet_schema",
@@ -14301,7 +14368,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/sheet-schema.ts",
-      "source_location": "L253",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_sheet_schema",
@@ -15693,7 +15760,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L248",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_claude_quick_reference",
@@ -15704,7 +15771,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L239",
+      "source_location": "L246",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_claude_quick_reference",
@@ -15715,7 +15782,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L230",
+      "source_location": "L237",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_claude_quick_reference",
@@ -15726,7 +15793,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L222",
+      "source_location": "L229",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_claude_quick_reference",
@@ -15737,11 +15804,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/CLAUDE.md",
-      "source_location": "L215",
+      "source_location": "L222",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_claude_quick_reference",
       "target": "development_claude_ed08_landmarks_relational_cards_projects_schema_indexed_image_naming",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Development/CLAUDE.md",
+      "source_location": "L215",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "development_claude_quick_reference",
+      "target": "development_claude_ed09_landmarks_imageurl_data_loss_fix_cards_auto_id",
       "confidence_score": 1.0
     },
     {
@@ -15770,7 +15848,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L122",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_roadmap",
@@ -15781,7 +15859,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L127",
+      "source_location": "L134",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_roadmap",
@@ -15792,7 +15870,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L133",
+      "source_location": "L140",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_roadmap",
@@ -15803,7 +15881,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L103",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15814,7 +15892,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L110",
+      "source_location": "L117",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15825,7 +15903,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L89",
+      "source_location": "L96",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15836,7 +15914,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L74",
+      "source_location": "L81",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15847,7 +15925,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L79",
+      "source_location": "L86",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15858,7 +15936,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L62",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15880,7 +15958,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L47",
+      "source_location": "L54",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15891,7 +15969,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L37",
+      "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_completed",
@@ -15902,7 +15980,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L163",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "development_implementation_roadmap_completed",
+      "target": "development_implementation_roadmap_save_point_ed09_imageurl_data_loss_fix_cards_auto_id_admin_rework_home_portfolio_image_box_sizing",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Development/Implementation/Roadmap.md",
+      "source_location": "L173",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
@@ -15913,7 +16002,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L157",
+      "source_location": "L167",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
@@ -15924,7 +16013,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L153",
+      "source_location": "L163",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
@@ -15935,7 +16024,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L149",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
@@ -15946,7 +16035,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L146",
+      "source_location": "L156",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
@@ -15957,14 +16046,25 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Development/Implementation/Roadmap.md",
-      "source_location": "L142",
+      "source_location": "L152",
       "weight": 1.0,
       "_origin": "ast",
       "source": "development_implementation_roadmap_not_started",
       "target": "development_implementation_roadmap_known_follow_ups_from_ed08",
       "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Development/Implementation/Roadmap.md",
+      "source_location": "L149",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "development_implementation_roadmap_not_started",
+      "target": "development_implementation_roadmap_known_follow_ups_from_ed09",
+      "confidence_score": 1.0
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "30e3e83e6ec1685be841a8c99ccd09abc8c3230a"
+  "built_at_commit": "eba833d85636b23947c445e4267930ccf5349781"
 }
