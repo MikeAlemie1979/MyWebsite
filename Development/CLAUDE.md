@@ -210,7 +210,12 @@ About page content finalization; social media posting panel needs live Instagram
 
 ---
 
-**Last Updated**: August 16, 2026 — Save Point "ED10" (admin unmount data-loss fix, uniform card font size)
+**Last Updated**: August 16, 2026 — Save Point "ED11" (cube-reveal cap, cards redesign, scroll pacing rebuild, admin review pass)
+
+### ED11 landmarks (cube-reveal cap, cards redesign, scroll pacing rebuild)
+- `cube-reveal.tsx`'s reveal box height is `min(calc(100vw / aspect - trim), 320px)` — `MAX_VISIBLE_HEIGHT_PX = 320` caps visible height on wide viewports while the inner grid still keeps the image's full uncropped aspect ratio; only the top-clip amount under the mask gradient changes, never distortion. Don't remove the cap thinking it's redundant with the trim — it's what actually satisfies "shorter", the trim alone doesn't at full page width.
+- `cards-section.tsx` cards are 100vw split 30% text / 70% image (was fixed pixel widths) — content is header + bullets, not flat paragraphs: first row per CardId group (lowest `cardImgNumber`) is `<h2>` (24px), rest are `<li>` (18px). `cards-manager.tsx` labels match ("Header" / "Bullet Point N"). Keep admin labels and rendered structure in sync if either changes.
+- `cards-section.tsx` scroll is phase-based per card (`cardRefs`/`cardOffsets` via `offsetLeft`), not one linear interpolation — each card gets ~100vh (60% pause, 40% travel), plus a `HOLD_CARD_UNITS = 2` hold after the last card before release. The old hardcoded `CARD_COUNT = 7` is gone; wrapper height derives from `cards.length`. Don't reintroduce a fixed card-count constant.
 
 ### ED10 landmarks (admin unmount data-loss fix, uniform card font size)
 - **All admin dashboard sections must stay mounted** — `admin-dashboard.tsx` toggles the active section's visibility with a `hidden` CSS class, not conditional rendering (`{activeSection === "x" && <X/>}`). Conditional rendering unmounts the inactive manager component, which throws away any unsaved local React state; the earlier "Cards content lost when navigating" report was this, not a persistence bug — remounting on tab-back re-fetches from the server and looks exactly like data loss. Don't reintroduce conditional mounting for any of the 7 admin sections.

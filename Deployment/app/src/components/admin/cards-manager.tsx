@@ -176,7 +176,7 @@ export function CardsManager() {
                     onClick={() => handleAddContentLine(cardId)}
                     className="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded transition-colors"
                   >
-                    + Add Content Line
+                    + Add Bullet Point
                   </button>
                   <button
                     type="button"
@@ -188,7 +188,7 @@ export function CardsManager() {
                 </div>
               </div>
 
-              {rows.map((card) => (
+              {rows.map((card, rowIndex) => (
                 <div key={card.id} className="flex gap-4 border-t border-white/10 pt-4 first:border-0 first:pt-0">
                   <div className="flex-shrink-0 w-28">
                     <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
@@ -233,7 +233,7 @@ export function CardsManager() {
 
                   <div className="flex-1 space-y-2">
                     <label className="block text-sm text-gray-300">
-                      CardContent — image {card.cardImgNumber}
+                      {rowIndex === 0 ? "Header" : `Bullet Point ${rowIndex}`}
                     </label>
                     <textarea
                       value={card.cardContent}

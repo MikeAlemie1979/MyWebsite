@@ -131,6 +131,12 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 - Navigation — `breadcrumbs.tsx` added to all three pages; every page has an H1 (visually hidden on landing and about)
 - Page top margin reduced 35px → 30px
 
+### Save Point "ED11" — cube-reveal cap, cards redesign (width/header-bullets/font), scroll pacing rebuild, admin review pass
+- Mehrdad portrait (`cube-reveal.tsx`) — user clarified "height 50px" meant visually shorter, not a literal sliver. Added `MAX_VISIBLE_HEIGHT_PX = 320` via `min(calc(100vw / aspect - trim), 320px)` on the bottom-anchored reveal box; inner grid still keeps the image's full uncropped aspect ratio, so this only increases how much of the top gets clipped under the existing mask gradient — no distortion.
+- Home Portfolio cards redesigned (`cards-section.tsx`): cards now full page width (100vw) split exactly 30% text panel / 70% image panel (was fixed pixel widths). Content restructured from flat paragraphs to header + bullet list — first row in a CardId group (lowest `cardImgNumber`) renders as a bold `<h2>` header (24px), subsequent rows render as `<li>` bullets (18px, up from 16px per follow-up request). Admin UI (`cards-manager.tsx`) matched: first row labeled "Header", rest "Bullet Point N", "+ Add Content Line" renamed "+ Add Bullet Point".
+- Scroll pacing rebuilt (`cards-section.tsx`) — previously one continuous linear scroll from intro to last card, no per-card beat, no pause before releasing into the next section. Rebuilt as vh-budget phases: each card gets its own ~100vh window (60% pause + 40% travel-to-next-card), using per-card DOM offsets (`cardRefs`/`cardOffsets`, measured via `offsetLeft` since cards are viewport-width) as waypoints instead of single linear interpolation. After the last card, the rail holds for `HOLD_CARD_UNITS = 2` more card-widths before the section releases. Wrapper height now computed from `cards.length` instead of a hardcoded `CARD_COUNT = 7` (removed).
+- Final Admin page review — all 7 sections (Home Text, Cards, About, Projects, Email/SMTP, Social Media, Storage) verified loading/saving correctly via live browser testing; a transient Google Sheets API 429 (from repeated dev-server test cycles) cleared on its own, not a code issue.
+
 ## In Progress
 
 - About Page — content/build status pending final review
@@ -149,7 +155,10 @@ Progress tracker for Mike Alemie Website. One line per page/feature. Updated as 
 
 ---
 
-**Last Updated**: August 16, 2026 — Save Point "ED10" (admin unmount data-loss fix, uniform card font size)
+**Last Updated**: August 16, 2026 — Save Point "ED11" (cube-reveal cap, cards redesign, scroll pacing rebuild, admin review pass)
+
+### Known follow-ups from ED11
+- None open — cube-reveal cap, cards redesign (width/header-bullets/font), and scroll pacing rebuild all verified; all 7 admin sections verified loading/saving live.
 
 ### Known follow-ups from ED10
 - None open — unmount data-loss bug fixed and verified live; font size change verified via server-rendered HTML.
