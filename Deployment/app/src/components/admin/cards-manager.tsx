@@ -29,7 +29,19 @@ export function CardsManager() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
   const [uploadingId, setUploadingId] = useState<string | null>(null);
+  // Collapsed by cardId — starts empty (every card expanded) so nothing
+  // already-filled-in disappears on first load.
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set());
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+
+  const toggleCollapsed = (cardId: number) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(cardId)) next.delete(cardId);
+      else next.add(cardId);
+      return next;
+    });
+  };
 
   useEffect(() => {
     fetchCards();
@@ -166,10 +178,26 @@ export function CardsManager() {
             .filter((c) => c.cardId === cardId)
             .sort((a, b) => a.cardImgNumber - b.cardImgNumber);
 
+          const isCollapsed = collapsed.has(cardId);
+          const header = rows[0];
+
           return (
             <div key={cardId} className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-gray-300">Card {cardId}</span>
+                <button
+                  type="button"
+                  onClick={() => toggleCollapsed(cardId)}
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors"
+                  aria-expanded={!isCollapsed}
+                >
+                  <span className={`transition-transform ${isCollapsed ? "" : "rotate-90"}`}>▶</span>
+                  Card {cardId}
+                  {isCollapsed && header?.cardContent && (
+                    <span className="text-xs font-normal text-gray-500 truncate max-w-[240px]">
+                      — {header.cardContent}
+                    </span>
+                  )}
+                </button>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -188,75 +216,83 @@ export function CardsManager() {
                 </div>
               </div>
 
-              {rows.map((card, rowIndex) => (
-                <div key={card.id} className="flex gap-4 border-t border-white/10 pt-4 first:border-0 first:pt-0">
-                  <div className="flex-shrink-0 w-28">
-                    <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
-                      {card.imageUrl ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={card.imageUrl}
-                          alt={`Card ${card.cardId} image ${card.cardImgNumber}`}
-                          className="w-full h-full object-cover"
+              {!isCollapsed &&
+                rows.map((card, rowIndex) => {
+                  const isHeader = rowIndex === 0;
+                  return (
+                    <div key={card.id} className="flex gap-4 border-t border-white/10 pt-4 first:border-0 first:pt-0">
+                      {/* Only the header row carries the card's one image —
+                          bullet points are text-only. */}
+                      {isHeader && (
+                        <div className="flex-shrink-0 w-28">
+                          <div className="w-28 h-28 rounded-lg overflow-hidden bg-white/10 border border-white/20 flex items-center justify-center">
+                            {card.imageUrl ? (
+                              // eslint-disable-next-line @next/next/no-img-element
+                              <img
+                                src={card.imageUrl}
+                                alt={`Card ${card.cardId} image`}
+                                className="w-full h-full object-cover"
+                              />
+                            ) : (
+                              <span className="text-xs text-gray-500 text-center px-2">No image</span>
+                            )}
+                          </div>
+                          <input
+                            type="file"
+                            accept="image/jpeg,image/jpg,image/png,image/webp"
+                            className="hidden"
+                            ref={(el) => {
+                              fileInputRefs.current[card.id] = el;
+                            }}
+                            onChange={(e) => handleFileSelect(card.id, e.target.files?.[0])}
+                          />
+                          <button
+                            type="button"
+                            onClick={() => fileInputRefs.current[card.id]?.click()}
+                            disabled={uploadingId === card.id}
+                            className="w-full mt-2 text-xs bg-white/10 hover:bg-white/20 text-white py-1.5 rounded transition-colors disabled:opacity-50"
+                          >
+                            {uploadingId === card.id ? "Uploading..." : "Upload"}
+                          </button>
+                          {card.imageUrl && (
+                            <button
+                              type="button"
+                              onClick={() => handleRemoveImage(card.id)}
+                              className="w-full mt-1 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 py-1.5 rounded transition-colors"
+                            >
+                              Remove Image
+                            </button>
+                          )}
+                        </div>
+                      )}
+
+                      <div className="flex-1 space-y-2">
+                        <label className="block text-sm text-gray-300">
+                          {isHeader ? "Header" : `Bullet Point ${rowIndex}`}
+                        </label>
+                        <textarea
+                          value={card.cardContent}
+                          onChange={(e) => handleContentChange(card.id, e.target.value)}
+                          placeholder={isHeader ? "Card header" : "Bullet point"}
+                          rows={isHeader ? 3 : 2}
+                          className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
                         />
-                      ) : (
-                        <span className="text-xs text-gray-500 text-center px-2">No image</span>
+                      </div>
+
+                      {!isHeader && (
+                        <div className="flex-shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteLine(card.id)}
+                            className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
+                          >
+                            Delete Line
+                          </button>
+                        </div>
                       )}
                     </div>
-                    <input
-                      type="file"
-                      accept="image/jpeg,image/jpg,image/png,image/webp"
-                      className="hidden"
-                      ref={(el) => {
-                        fileInputRefs.current[card.id] = el;
-                      }}
-                      onChange={(e) => handleFileSelect(card.id, e.target.files?.[0])}
-                    />
-                    <button
-                      type="button"
-                      onClick={() => fileInputRefs.current[card.id]?.click()}
-                      disabled={uploadingId === card.id}
-                      className="w-full mt-2 text-xs bg-white/10 hover:bg-white/20 text-white py-1.5 rounded transition-colors disabled:opacity-50"
-                    >
-                      {uploadingId === card.id ? "Uploading..." : "Upload"}
-                    </button>
-                    {card.imageUrl && (
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveImage(card.id)}
-                        className="w-full mt-1 text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 py-1.5 rounded transition-colors"
-                      >
-                        Remove Image
-                      </button>
-                    )}
-                  </div>
-
-                  <div className="flex-1 space-y-2">
-                    <label className="block text-sm text-gray-300">
-                      {rowIndex === 0 ? "Header" : `Bullet Point ${rowIndex}`}
-                    </label>
-                    <textarea
-                      value={card.cardContent}
-                      onChange={(e) => handleContentChange(card.id, e.target.value)}
-                      placeholder="Card content"
-                      rows={3}
-                      className="w-full bg-white/5 border border-white/20 rounded px-3 py-2 text-white placeholder-gray-500 resize-none"
-                    />
-                  </div>
-
-                  {rows.length > 1 && (
-                    <div className="flex-shrink-0">
-                      <button
-                        type="button"
-                        onClick={() => handleDeleteLine(card.id)}
-                        className="text-xs bg-red-500/10 hover:bg-red-500/20 text-red-300 border border-red-500/20 px-3 py-1.5 rounded transition-colors"
-                      >
-                        Delete Line
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ))}
+                  );
+                })}
             </div>
           );
         })}

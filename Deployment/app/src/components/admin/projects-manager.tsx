@@ -38,6 +38,18 @@ export function ProjectsManager() {
   const [message, setMessage] = useState("");
   const [uploadingId, setUploadingId] = useState<string | null>(null);
   const fileInputRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  // Collapsed by projectId — starts empty (every project expanded) so
+  // nothing already-filled-in disappears on first load.
+  const [collapsed, setCollapsed] = useState<Set<number>>(new Set());
+
+  const toggleCollapsed = (projectId: number) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(projectId)) next.delete(projectId);
+      else next.add(projectId);
+      return next;
+    });
+  };
 
   useEffect(() => {
     fetchProjects();
@@ -222,10 +234,25 @@ export function ProjectsManager() {
           const header = lines[0];
           if (!header) return null;
 
+          const isCollapsed = collapsed.has(projectId);
+
           return (
             <div key={projectId} className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-sm font-semibold text-gray-300">Project {projectId}</span>
+                <button
+                  type="button"
+                  onClick={() => toggleCollapsed(projectId)}
+                  className="flex items-center gap-2 text-sm font-semibold text-gray-300 hover:text-white transition-colors"
+                  aria-expanded={!isCollapsed}
+                >
+                  <span className={`transition-transform ${isCollapsed ? "" : "rotate-90"}`}>▶</span>
+                  Project {projectId}
+                  {isCollapsed && header.content && (
+                    <span className="text-xs font-normal text-gray-500 truncate max-w-[240px]">
+                      — {header.content}
+                    </span>
+                  )}
+                </button>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
@@ -244,6 +271,8 @@ export function ProjectsManager() {
                 </div>
               </div>
 
+              {!isCollapsed && (
+              <>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-sm text-gray-300 mb-2">CardID (linked Home card)</label>
@@ -342,6 +371,8 @@ export function ProjectsManager() {
                   ))}
                 </div>
               </div>
+              </>
+              )}
             </div>
           );
         })}

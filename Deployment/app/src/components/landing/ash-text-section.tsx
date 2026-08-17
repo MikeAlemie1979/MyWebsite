@@ -209,6 +209,11 @@ export function AshTextSection() {
     const build = () => {
       w = canvas.width = window.innerWidth;
       h = canvas.height = window.innerHeight;
+      // The pane/viewport can report 0x0 for a frame before layout settles
+      // (seen in embedded preview panes) — ctx.getImageData(0,0,0,h) throws
+      // IndexSizeError on a zero width. Skip building this round; the resize
+      // handler below rebuilds once real dimensions are available.
+      if (w === 0 || h === 0) return;
       sets = sentences.map((s) => buildParticles(ctx, s, w, h, fontFamily));
     };
     build();
@@ -219,13 +224,18 @@ export function AshTextSection() {
       resizeTimer = window.setTimeout(build, 200);
     };
     window.addEventListener("resize", onResize);
+    // Covers the same zero-size-at-mount case without waiting for an actual
+    // window resize event, which a pane that starts at 0x0 may never fire.
+    if (w === 0 || h === 0) {
+      requestAnimationFrame(build);
+    }
 
     // Reduced motion: draw every sentence solid, no scroll choreography.
     if (reduced) {
       ctx.clearRect(0, 0, w, h);
       const last = sets[0];
       ctx.fillStyle = "#b5b5b5";
-      last.forEach((p) => ctx.fillRect(p.tx, p.ty, p.size, p.size));
+      last?.forEach((p) => ctx.fillRect(p.tx, p.ty, p.size, p.size));
       if (cubeWrapRef.current) cubeWrapRef.current.style.opacity = "1";
       cubeRef.current?.setProgress(1);
       return () => {
