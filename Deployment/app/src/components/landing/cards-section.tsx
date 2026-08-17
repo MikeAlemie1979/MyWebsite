@@ -160,22 +160,35 @@ export function CardsSection() {
       if (!cancelled) setShowOverlay(true);
     }, 2000);
 
-    fetch("/api/admin/cards")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+    // Retries once before giving up. The server already falls back to a
+    // durable mirror rather than placeholders (see lib/store.ts), so a failure
+    // here is almost always a transient network blip — and silently leaving
+    // the hardcoded placeholders on screen looks exactly like the admin's
+    // saved cards having been deleted, which is the worst way to fail.
+    const load = async (attempt = 0): Promise<void> => {
+      try {
+        const res = await fetch("/api/admin/cards", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
         if (cancelled) return;
         if (data && Array.isArray(data.cards) && data.cards.length > 0) {
           const grouped = groupCards(data.cards as CardItem[]);
           if (grouped.length > 0) setCards(grouped);
         }
-      })
-      .catch(() => {
-        // fall back to placeholder cards on error
-      })
-      .finally(() => {
-        clearTimeout(overlayTimer);
-        if (!cancelled) setShowOverlay(false);
-      });
+      } catch (error) {
+        if (cancelled) return;
+        if (attempt < 1) {
+          await new Promise((r) => setTimeout(r, 1200));
+          if (!cancelled) return load(attempt + 1);
+        }
+        console.error("[cards-section] failed to load cards:", error);
+      }
+    };
+
+    load().finally(() => {
+      clearTimeout(overlayTimer);
+      if (!cancelled) setShowOverlay(false);
+    });
 
     return () => {
       cancelled = true;

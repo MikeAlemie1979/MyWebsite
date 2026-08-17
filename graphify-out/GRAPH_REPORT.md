@@ -1,16 +1,16 @@
 # Graph Report - Mike Alemie Website  (2026-08-17)
 
 ## Corpus Check
-- 84 files · ~668,782 words
+- 84 files · ~668,694 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 570 nodes · 938 edges · 45 communities (42 shown, 3 thin omitted)
+- 572 nodes · 945 edges · 46 communities (43 shown, 3 thin omitted)
 - Extraction: 96% EXTRACTED · 4% INFERRED · 1% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `8e0fdaca`
+- Built from commit: `f8529db1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -55,11 +55,12 @@
 - home-text-manager.tsx
 - projects-manager.tsx
 - cards-manager.tsx
+- social-config/route.ts
 
 ## God Nodes (most connected - your core abstractions)
 1. `requireAdmin()` - 32 edges
-2. `writeDoc()` - 26 edges
-3. `readDoc()` - 19 edges
+2. `writeDoc()` - 27 edges
+3. `readDoc()` - 21 edges
 4. `useTheme()` - 17 edges
 5. `compilerOptions` - 16 edges
 6. `buildStatus()` - 14 edges
@@ -88,15 +89,15 @@
 - **Google Sheets/Drive Persistence Backend** — development_claude_md_document_store, development_claude_md_sheet_schema, development_claude_md_google_oauth_lib, deployment_deploy_readme_google_sheets_storage, deployment_deploy_readme_google_drive_oauth, deployment_render_yaml_google_env_vars [INFERRED 0.85]
 - **Roadmap Save Point Sequence** — development_implementation_roadmap_save_point_ed01, development_implementation_roadmap_save_point_ed02, development_implementation_roadmap_save_point_ed03, development_implementation_roadmap_save_point_ed04, development_implementation_roadmap_save_point_ed04_final, development_implementation_roadmap_save_point_ed05, development_implementation_roadmap_save_point_ed06, development_implementation_roadmap_save_point_ed07, development_implementation_roadmap_save_point_ed08, development_implementation_roadmap_save_point_ed09, development_implementation_roadmap_save_point_ed10, development_implementation_roadmap_save_point_ed11 [EXTRACTED 1.00]
 
-## Communities (45 total, 3 thin omitted)
+## Communities (46 total, 3 thin omitted)
 
 ### Community 0 - "Google Sheets Content API"
-Cohesion: 0.07
-Nodes (52): buildStatus(), GET(), POST(), getGoogleClient(), getServiceAccountEmail(), GoogleConfigError, googleFetch(), hasServiceAccount() (+44 more)
+Cohesion: 0.15
+Nodes (27): buildStatus(), GET(), POST(), getGoogleClient(), getServiceAccountEmail(), GoogleConfigError, hasServiceAccount(), isGoogleConfigured() (+19 more)
 
 ### Community 1 - "Admin Content Managers"
 Cohesion: 0.05
-Nodes (53): AboutContent, DEFAULT_CONTENT, Flashcard, GET(), POST(), CardItem, CardsConfig, DEFAULT_CARDS (+45 more)
+Nodes (61): AboutContent, DEFAULT_CONTENT, Flashcard, GET(), POST(), CardItem, CardsConfig, DEFAULT_CARDS (+53 more)
 
 ### Community 2 - "Admin Dashboard UI"
 Cohesion: 0.16
@@ -151,8 +152,8 @@ Cohesion: 0.19
 Nodes (10): drawSparkle(), DRIFT_DIRECTIONS, NEON_STAR_COLORS, NeonStar, rand(), TopStarBand(), FlashTexts(), FONTS (+2 more)
 
 ### Community 15 - "Social Media Posting API"
-Cohesion: 0.18
-Nodes (5): AdminDashboard(), LeafItem, NAV_GROUPS, NavGroup, Section
+Cohesion: 0.13
+Nodes (8): AdminDashboard(), LeafItem, NAV_GROUPS, NavGroup, Section, DocStatus, StoragePanel(), StorageStatus
 
 ### Community 16 - "Governance & Landmark Index"
 Cohesion: 0.18
@@ -211,8 +212,8 @@ Cohesion: 0.40
 Nodes (6): ash-text-section.tsx GSAP Scroll-Pin Animation, cards-section.tsx, cube-reveal.tsx CubeReveal Component, Landing Home Page, neon-sphere.tsx GLSL Shader Sphere, Landing Home Page (Story)
 
 ### Community 30 - "storage-panel.tsx"
-Cohesion: 0.40
-Nodes (3): DocStatus, StoragePanel(), StorageStatus
+Cohesion: 0.24
+Nodes (11): appendToLog(), GET(), Platform, POST(), postToFacebook(), postToInstagram(), TODO: replace with real Instagram Graph API call (POST /{ig-user-id}/media then, TODO: replace with real Facebook Graph API call (POST /{page-id}/feed or /photos (+3 more)
 
 ### Community 31 - "Hero Portrait Images Set"
 Cohesion: 0.50
@@ -237,6 +238,10 @@ Nodes (6): CardOption, generateId(), nextContentIndex(), nextProjectId(), Projec
 ### Community 44 - "cards-manager.tsx"
 Cohesion: 0.53
 Nodes (5): CardItem, CardsManager(), generateId(), nextCardId(), nextImgNumber()
+
+### Community 45 - "social-config/route.ts"
+Cohesion: 0.31
+Nodes (8): DEFAULT_CONFIG, FacebookConfig, GET(), InstagramConfig, maskConfig(), maskToken(), POST(), SocialConfig
 
 ## Ambiguous Edges - Review These
 - `Token Efficiency Skill` → `Development/CLAUDE.md`  [AMBIGUOUS]
@@ -272,5 +277,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Pristinenoire LLC.png - brand logo on dark purple background` and `QR Code.png - generic black and white QR code`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `readDoc()` connect `Admin Content Managers` to `Google Sheets Content API`, `Google OAuth Flow`, `Contact Form + SMTP`, `Admin Auth Rate Limiting`?**
-  _High betweenness centrality (0.044) - this node is a cross-community bridge._
+- **Why does `readDoc()` connect `Admin Content Managers` to `Google Sheets Content API`, `Admin Auth Rate Limiting`, `Google OAuth Flow`, `Contact Form + SMTP`, `social-config/route.ts`, `storage-panel.tsx`?**
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._

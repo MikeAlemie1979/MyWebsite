@@ -73,6 +73,15 @@ while, or after the next deploy): the Google env vars almost certainly were
 never set **in Render's dashboard**, even if they're correctly sitting in a
 local `.env.local` on your own machine — Render cannot see that file.
 
+> **Do not judge this by looking at the site.** `src/lib/store.ts` keeps a
+> durable local mirror of every document (`.env.<key>.json`) and serves it
+> whenever Sheets can't be read, so the live pages can look completely
+> correct — real cards, real images — while Sheets is misconfigured or
+> unreachable. The mirror lives on Render's **ephemeral** filesystem, so
+> everything it was covering for disappears at the next deploy. The Storage
+> panel and the boot log below are the only reliable signals; content
+> looking right is not one.
+
 1. Check the **Render service's own log output** at boot for a line starting
    `[storage] Running on local files, not Google Sheets` — this is printed
    automatically whenever the five variables in §4a/§4a-i aren't fully set,
@@ -258,7 +267,12 @@ redeploy; under the local-file fallback it does not.
 - Every `.env.*.json` file, including `.env.google-links.json` (these are
   environment-specific runtime state — see §4a; deploying a developer's copy
   would leak dev credentials and could point the live site at a test
-  spreadsheet/folder)
+  spreadsheet/folder). Two of them hold **real secrets**:
+  `.env.google-oauth.json` (a Google Drive refresh token) and `.env.smtp.json`
+  (the SMTP password). `.gitignore` matches these with a `.env.*.json`
+  wildcard rather than a hand-written list — keep it that way: `store.ts`
+  creates one of these files per document automatically, so any new document
+  type would otherwise silently arrive unignored.
 - `uploads/` (environment-specific uploaded media, local-backend only)
 - `.claude/`, `.impeccable/` (editor/tooling metadata)
 
@@ -273,6 +287,16 @@ redeploy; under the local-file fallback it does not.
 - Every admin POST and upload route returns `401 Unauthorized` with no
   session cookie — confirms the `requireAdmin()` gate holds under a
   production build, not just in dev
+- `/admin` with no session redirects (`307`) to `/admin/login`, and
+  `/api/admin/storage-status` returns `401` rather than disclosing the
+  spreadsheet id, Drive folder id, or service-account address
+- **Content durability was verified by fault injection, not just a happy
+  path**: a card saved with a real uploaded image plus bullet points was read
+  back correctly after the Sheets id was deliberately invalidated *and* the
+  server restarted to wipe its in-memory cache — the durable mirror served
+  real content where the previous build would have silently shown the
+  built-in placeholders (see §2b for why that makes the Storage panel, not
+  the rendered page, the signal to trust)
 - `/api/media/local/[...path]` and `/api/media/[fileId]` (the local-fallback
   and Drive-backed image routes) are public with no session required, as
   intended, and correctly 400/404 on a garbage id rather than serving

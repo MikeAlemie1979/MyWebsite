@@ -1419,8 +1419,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "social-config/route.ts"
     },
     {
@@ -1430,8 +1430,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_instagramconfig",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "instagramconfig"
     },
     {
@@ -1441,8 +1441,8 @@
       "source_location": "L11",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_facebookconfig",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "facebookconfig"
     },
     {
@@ -1452,8 +1452,8 @@
       "source_location": "L17",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_socialconfig",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "socialconfig"
     },
     {
@@ -1463,8 +1463,8 @@
       "source_location": "L22",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_default_config",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "default_config"
     },
     {
@@ -1474,8 +1474,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_masktoken",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "masktoken()"
     },
     {
@@ -1485,8 +1485,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_maskconfig",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "maskconfig()"
     },
     {
@@ -1496,8 +1496,8 @@
       "source_location": "L46",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_get",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "get()"
     },
     {
@@ -1507,8 +1507,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_config_route_post",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 45,
+      "community_name": "social-config/route.ts",
       "norm_label": "post()"
     },
     {
@@ -1518,8 +1518,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "social-post/route.ts"
     },
     {
@@ -1529,8 +1529,8 @@
       "source_location": "L7",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_platform",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "platform"
     },
     {
@@ -1540,8 +1540,8 @@
       "source_location": "L9",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_socialpostrequest",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "socialpostrequest"
     },
     {
@@ -1551,8 +1551,8 @@
       "source_location": "L16",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_socialpostresult",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "socialpostresult"
     },
     {
@@ -1562,8 +1562,8 @@
       "source_location": "L26",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_readlog",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "readlog()"
     },
     {
@@ -1573,8 +1573,8 @@
       "source_location": "L31",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_appendtolog",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "appendtolog()"
     },
     {
@@ -1584,8 +1584,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_posttoinstagram",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "posttoinstagram()"
     },
     {
@@ -1595,8 +1595,8 @@
       "source_location": "L53",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_posttofacebook",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "posttofacebook()"
     },
     {
@@ -1606,8 +1606,8 @@
       "source_location": "L70",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_post",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "post()"
     },
     {
@@ -1617,8 +1617,8 @@
       "source_location": "L106",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_get",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "get()"
     },
     {
@@ -1628,8 +1628,8 @@
       "source_location": "L37",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_rationale_37",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "todo: replace with real instagram graph api call (post /{ig-user-id}/media then"
     },
     {
@@ -1639,8 +1639,8 @@
       "source_location": "L54",
       "_origin": "ast",
       "id": "deployment_app_src_app_api_admin_social_post_route_rationale_54",
-      "community": 1,
-      "community_name": "Admin Content Managers",
+      "community": 30,
+      "community_name": "storage-panel.tsx",
       "norm_label": "todo: replace with real facebook graph api call (post /{page-id}/feed or /photos"
     },
     {
@@ -2673,8 +2673,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_storage_panel",
-      "community": 30,
-      "community_name": "storage-panel.tsx",
+      "community": 15,
+      "community_name": "Social Media Posting API",
       "norm_label": "storage-panel.tsx"
     },
     {
@@ -2684,8 +2684,8 @@
       "source_location": "L5",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_storage_panel_docstatus",
-      "community": 30,
-      "community_name": "storage-panel.tsx",
+      "community": 15,
+      "community_name": "Social Media Posting API",
       "norm_label": "docstatus"
     },
     {
@@ -2695,8 +2695,8 @@
       "source_location": "L10",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_storage_panel_storagestatus",
-      "community": 30,
-      "community_name": "storage-panel.tsx",
+      "community": 15,
+      "community_name": "Social Media Posting API",
       "norm_label": "storagestatus"
     },
     {
@@ -2706,8 +2706,8 @@
       "source_location": "L27",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_storage_panel_row",
-      "community": 30,
-      "community_name": "storage-panel.tsx",
+      "community": 15,
+      "community_name": "Social Media Posting API",
       "norm_label": "row()"
     },
     {
@@ -2717,8 +2717,8 @@
       "source_location": "L36",
       "_origin": "ast",
       "id": "deployment_app_src_components_admin_storage_panel_storagepanel",
-      "community": 30,
-      "community_name": "storage-panel.tsx",
+      "community": 15,
+      "community_name": "Social Media Posting API",
       "norm_label": "storagepanel()"
     },
     {
@@ -3231,7 +3231,7 @@
       "label": "CubeSpec",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L29",
+      "source_location": "L28",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_cubespec",
       "community": 9,
@@ -3242,7 +3242,7 @@
       "label": "CubeRevealHandle",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L38",
+      "source_location": "L37",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_cuberevealhandle",
       "community": 9,
@@ -3253,7 +3253,7 @@
       "label": "rand()",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L43",
+      "source_location": "L42",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_rand",
       "community": 9,
@@ -3264,7 +3264,7 @@
       "label": "clamp01()",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L47",
+      "source_location": "L46",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_clamp01",
       "community": 9,
@@ -3275,7 +3275,7 @@
       "label": "easeOut()",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L51",
+      "source_location": "L50",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_easeout",
       "community": 9,
@@ -3286,7 +3286,7 @@
       "label": "CubeReveal",
       "file_type": "code",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L65",
+      "source_location": "L64",
       "_origin": "ast",
       "id": "deployment_app_src_components_landing_cube_reveal_cubereveal",
       "community": 9,
@@ -4103,8 +4103,8 @@
       "source_location": "L107",
       "_origin": "ast",
       "id": "deployment_app_src_lib_google_auth_googlefetch",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "googlefetch()"
     },
     {
@@ -4532,8 +4532,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "sheet-schema.ts"
     },
     {
@@ -4543,8 +4543,8 @@
       "source_location": "L28",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_fieldtype",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "fieldtype"
     },
     {
@@ -4554,8 +4554,8 @@
       "source_location": "L30",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_column",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "column"
     },
     {
@@ -4565,8 +4565,8 @@
       "source_location": "L38",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_tablespec",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "tablespec"
     },
     {
@@ -4576,8 +4576,8 @@
       "source_location": "L51",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_keyvaluespec",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "keyvaluespec"
     },
     {
@@ -4587,8 +4587,8 @@
       "source_location": "L57",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_tabspec",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "tabspec"
     },
     {
@@ -4598,8 +4598,8 @@
       "source_location": "L59",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_col",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "col()"
     },
     {
@@ -4609,8 +4609,8 @@
       "source_location": "L65",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_f",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "f()"
     },
     {
@@ -4620,8 +4620,8 @@
       "source_location": "L67",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_sheet_schema",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "sheet_schema"
     },
     {
@@ -4631,8 +4631,8 @@
       "source_location": "L242",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_coerce",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "coerce()"
     },
     {
@@ -4642,8 +4642,8 @@
       "source_location": "L260",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_tocell",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "tocell()"
     },
     {
@@ -4653,8 +4653,8 @@
       "source_location": "L266",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_getpath",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "getpath()"
     },
     {
@@ -4664,8 +4664,8 @@
       "source_location": "L276",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_setpath",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "setpath()"
     },
     {
@@ -4675,8 +4675,8 @@
       "source_location": "L287",
       "_origin": "ast",
       "id": "deployment_app_src_lib_sheet_schema_alltabs",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "alltabs()"
     },
     {
@@ -4686,8 +4686,8 @@
       "source_location": "L1",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "store.ts"
     },
     {
@@ -4697,8 +4697,8 @@
       "source_location": "L33",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_dockey",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "dockey"
     },
     {
@@ -4730,8 +4730,8 @@
       "source_location": "L72",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_cacheentry",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "cacheentry"
     },
     {
@@ -4741,8 +4741,8 @@
       "source_location": "L77",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_cache",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "cache"
     },
     {
@@ -4763,8 +4763,8 @@
       "source_location": "L86",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_filepath",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "filepath()"
     },
     {
@@ -4774,8 +4774,8 @@
       "source_location": "L90",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_fsread",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "fsread()"
     },
     {
@@ -4785,103 +4785,125 @@
       "source_location": "L100",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_fswrite",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "fswrite()"
+    },
+    {
+      "label": "mirrorWrite()",
+      "file_type": "code",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L123",
+      "_origin": "ast",
+      "id": "deployment_app_src_lib_store_mirrorwrite",
+      "community": 1,
+      "community_name": "Admin Content Managers",
+      "norm_label": "mirrorwrite()"
+    },
+    {
+      "label": "mirrorRead()",
+      "file_type": "code",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "deployment_app_src_lib_store_mirrorread",
+      "community": 1,
+      "community_name": "Admin Content Managers",
+      "norm_label": "mirrorread()"
     },
     {
       "label": "sheetId()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L108",
+      "source_location": "L141",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_sheetid",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "sheetid()"
     },
     {
       "label": "listTabs()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L114",
+      "source_location": "L147",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_listtabs",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "listtabs()"
     },
     {
       "label": "ensureTabs()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L121",
+      "source_location": "L154",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_ensuretabs",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "ensuretabs()"
     },
     {
       "label": "readGrid()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L136",
+      "source_location": "L169",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_readgrid",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "readgrid()"
     },
     {
       "label": "rowsForTab()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L151",
+      "source_location": "L184",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_rowsfortab",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "rowsfortab()"
     },
     {
       "label": "parseTab()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L173",
+      "source_location": "L206",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_parsetab",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "parsetab()"
     },
     {
       "label": "sheetsRead()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L211",
+      "source_location": "L244",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_sheetsread",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "sheetsread()"
     },
     {
       "label": "sheetsWrite()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L230",
+      "source_location": "L263",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_sheetswrite",
-      "community": 0,
-      "community_name": "Google Sheets Content API",
+      "community": 1,
+      "community_name": "Admin Content Managers",
       "norm_label": "sheetswrite()"
     },
     {
       "label": "capForStorage()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L272",
+      "source_location": "L305",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_capforstorage",
       "community": 1,
@@ -4892,7 +4914,7 @@
       "label": "readDoc()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L281",
+      "source_location": "L314",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_readdoc",
       "community": 1,
@@ -4903,7 +4925,7 @@
       "label": "writeDoc()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L307",
+      "source_location": "L354",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_writedoc",
       "community": 1,
@@ -4914,7 +4936,7 @@
       "label": "docExists()",
       "file_type": "code",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L320",
+      "source_location": "L371",
       "_origin": "ast",
       "id": "deployment_app_src_lib_store_docexists",
       "community": 0,
@@ -5251,8 +5273,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "token efficiency skill",
-      "id": "claude_skills_token_efficiency_token_efficiency_skill",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "claude_skills_token_efficiency_token_efficiency_skill"
     },
     {
       "label": "Output Control Mode",
@@ -5265,8 +5287,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "output control mode",
-      "id": "claude_skills_token_efficiency_token_efficiency_output_control_mode",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "claude_skills_token_efficiency_token_efficiency_output_control_mode"
     },
     {
       "label": "Agent Efficiency Rules",
@@ -5279,8 +5301,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "agent efficiency rules",
-      "id": "claude_skills_token_efficiency_token_efficiency_agent_efficiency_rules",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "claude_skills_token_efficiency_token_efficiency_agent_efficiency_rules"
     },
     {
       "label": "DEPLOY-README",
@@ -5293,8 +5315,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "deploy-readme",
-      "id": "deployment_deploy_readme",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_deploy_readme"
     },
     {
       "label": "Deployment/app",
@@ -5307,8 +5329,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "deployment/app",
-      "id": "deployment_deploy_readme_deployment_app",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_deploy_readme_deployment_app"
     },
     {
       "label": "Google Sheets Runtime Content Storage",
@@ -5321,8 +5343,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "google sheets runtime content storage",
-      "id": "deployment_deploy_readme_google_sheets_storage",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "deployment_deploy_readme_google_sheets_storage"
     },
     {
       "label": "Google Drive OAuth Upload Credential",
@@ -5335,8 +5357,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "google drive oauth upload credential",
-      "id": "deployment_deploy_readme_google_drive_oauth",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "deployment_deploy_readme_google_drive_oauth"
     },
     {
       "label": "Default Admin Credentials",
@@ -5349,8 +5371,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "default admin credentials",
-      "id": "deployment_deploy_readme_default_admin_credentials",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "deployment_deploy_readme_default_admin_credentials"
     },
     {
       "label": "uploads/ Runtime Directory",
@@ -5363,8 +5385,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "uploads/ runtime directory",
-      "id": "deployment_deploy_readme_uploads_directory",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_deploy_readme_uploads_directory"
     },
     {
       "label": "Environment Variables",
@@ -5377,8 +5399,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "environment variables",
-      "id": "deployment_deploy_readme_env_variables",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_deploy_readme_env_variables"
     },
     {
       "label": "MAWebsiteDB.sql (historical)",
@@ -5391,8 +5413,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "mawebsitedb.sql (historical)",
-      "id": "deployment_deploy_readme_mawebsitedb_sql",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_deploy_readme_mawebsitedb_sql"
     },
     {
       "label": "render.yaml",
@@ -5405,8 +5427,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "render.yaml",
-      "id": "deployment_render_yaml",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_render_yaml"
     },
     {
       "label": "mike-alemie-website Render Service",
@@ -5419,8 +5441,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "mike-alemie-website render service",
-      "id": "deployment_render_yaml_mike_alemie_website_service",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "deployment_render_yaml_mike_alemie_website_service"
     },
     {
       "label": "Google Sheets/Drive Env Vars (sync:false)",
@@ -5433,8 +5455,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "google sheets/drive env vars (sync:false)",
-      "id": "deployment_render_yaml_google_env_vars",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "deployment_render_yaml_google_env_vars"
     },
     {
       "label": "Development/CLAUDE.md",
@@ -5447,8 +5469,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "development/claude.md",
-      "id": "development_claude_md",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md"
     },
     {
       "label": "Mike Alemie Website Project",
@@ -5461,8 +5483,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "mike alemie website project",
-      "id": "development_claude_md_mike_alemie_website_project",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "development_claude_md_mike_alemie_website_project"
     },
     {
       "label": "Layered Architecture",
@@ -5475,8 +5497,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "layered architecture",
-      "id": "development_claude_md_layered_architecture",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "development_claude_md_layered_architecture"
     },
     {
       "label": "Modular Agile Iterative (MAI)",
@@ -5489,8 +5511,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "modular agile iterative (mai)",
-      "id": "development_claude_md_mai_development_approach",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "development_claude_md_mai_development_approach"
     },
     {
       "label": "Governance Rules",
@@ -5503,8 +5525,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "governance rules",
-      "id": "development_claude_md_governance_rules",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "development_claude_md_governance_rules"
     },
     {
       "label": "Landing Home Page",
@@ -5517,8 +5539,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "landing home page",
-      "id": "development_claude_md_landing_home_page",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "development_claude_md_landing_home_page"
     },
     {
       "label": "Theme System",
@@ -5531,8 +5553,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "theme system",
-      "id": "development_claude_md_theme_system",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md_theme_system"
     },
     {
       "label": "Admin Dashboard",
@@ -5545,8 +5567,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "admin dashboard",
-      "id": "development_claude_md_admin_dashboard",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md_admin_dashboard"
     },
     {
       "label": "Admin Login/Auth (3-factor)",
@@ -5559,8 +5581,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "admin login/auth (3-factor)",
-      "id": "development_claude_md_admin_login_auth",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "development_claude_md_admin_login_auth"
     },
     {
       "label": "neon-sphere.tsx GLSL Shader Sphere",
@@ -5573,8 +5595,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "neon-sphere.tsx glsl shader sphere",
-      "id": "development_claude_md_neon_sphere",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "development_claude_md_neon_sphere"
     },
     {
       "label": "cube-reveal.tsx CubeReveal Component",
@@ -5587,8 +5609,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "cube-reveal.tsx cubereveal component",
-      "id": "development_claude_md_cube_reveal",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "development_claude_md_cube_reveal"
     },
     {
       "label": "cards-section.tsx",
@@ -5601,8 +5623,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "cards-section.tsx",
-      "id": "development_claude_md_cards_section",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "development_claude_md_cards_section"
     },
     {
       "label": "ash-text-section.tsx GSAP Scroll-Pin Animation",
@@ -5615,8 +5637,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "ash-text-section.tsx gsap scroll-pin animation",
-      "id": "development_claude_md_ash_text_section",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "development_claude_md_ash_text_section"
     },
     {
       "label": "Document Store (src/lib/store.ts)",
@@ -5629,8 +5651,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "document store (src/lib/store.ts)",
-      "id": "development_claude_md_document_store",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "development_claude_md_document_store"
     },
     {
       "label": "sheet-schema.ts",
@@ -5643,8 +5665,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "sheet-schema.ts",
-      "id": "development_claude_md_sheet_schema",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "development_claude_md_sheet_schema"
     },
     {
       "label": "/api/media/local/[...path] Route",
@@ -5657,8 +5679,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "/api/media/local/[...path] route",
-      "id": "development_claude_md_media_local_route",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "development_claude_md_media_local_route"
     },
     {
       "label": "src/lib/google-oauth.ts",
@@ -5671,8 +5693,8 @@
       "contributor": null,
       "community": 24,
       "norm_label": "src/lib/google-oauth.ts",
-      "id": "development_claude_md_google_oauth_lib",
-      "community_name": "Google Drive/Sheets Persistence"
+      "community_name": "Google Drive/Sheets Persistence",
+      "id": "development_claude_md_google_oauth_lib"
     },
     {
       "label": "requireAdmin() Auth Gate",
@@ -5685,8 +5707,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "requireadmin() auth gate",
-      "id": "development_claude_md_require_admin",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md_require_admin"
     },
     {
       "label": "ED11 Landmarks",
@@ -5699,8 +5721,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "ed11 landmarks",
-      "id": "development_claude_md_ed11_landmarks",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_claude_md_ed11_landmarks"
     },
     {
       "label": "ED08 Landmarks (relational schema)",
@@ -5713,8 +5735,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "ed08 landmarks (relational schema)",
-      "id": "development_claude_md_ed08_landmarks",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_claude_md_ed08_landmarks"
     },
     {
       "label": "ED07 Landmarks (uploads, contact form, OAuth)",
@@ -5727,8 +5749,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "ed07 landmarks (uploads, contact form, oauth)",
-      "id": "development_claude_md_ed07_landmarks",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md_ed07_landmarks"
     },
     {
       "label": "ED06 Landmarks (SEO/GEO/AEO)",
@@ -5741,8 +5763,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "ed06 landmarks (seo/geo/aeo)",
-      "id": "development_claude_md_ed06_landmarks",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_claude_md_ed06_landmarks"
     },
     {
       "label": "ED05 Landmarks (persistence + admin security)",
@@ -5755,8 +5777,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "ed05 landmarks (persistence + admin security)",
-      "id": "development_claude_md_ed05_landmarks",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "development_claude_md_ed05_landmarks"
     },
     {
       "label": "ED04 Landmarks (auth-bypass fix)",
@@ -5769,8 +5791,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "ed04 landmarks (auth-bypass fix)",
-      "id": "development_claude_md_ed04_landmarks",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_claude_md_ed04_landmarks"
     },
     {
       "label": "Roadmap.md",
@@ -5783,8 +5805,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "roadmap.md",
-      "id": "development_implementation_roadmap",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap"
     },
     {
       "label": "Save Point ED11",
@@ -5797,8 +5819,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed11",
-      "id": "development_implementation_roadmap_save_point_ed11",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed11"
     },
     {
       "label": "Save Point ED10",
@@ -5811,8 +5833,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed10",
-      "id": "development_implementation_roadmap_save_point_ed10",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed10"
     },
     {
       "label": "Save Point ED09",
@@ -5825,8 +5847,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed09",
-      "id": "development_implementation_roadmap_save_point_ed09",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed09"
     },
     {
       "label": "Save Point ED08",
@@ -5839,8 +5861,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed08",
-      "id": "development_implementation_roadmap_save_point_ed08",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed08"
     },
     {
       "label": "Save Point ED07",
@@ -5853,8 +5875,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "save point ed07",
-      "id": "development_implementation_roadmap_save_point_ed07",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_implementation_roadmap_save_point_ed07"
     },
     {
       "label": "Save Point ED06",
@@ -5867,8 +5889,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed06",
-      "id": "development_implementation_roadmap_save_point_ed06",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed06"
     },
     {
       "label": "Save Point ED05",
@@ -5881,8 +5903,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "save point ed05",
-      "id": "development_implementation_roadmap_save_point_ed05",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "development_implementation_roadmap_save_point_ed05"
     },
     {
       "label": "Save Point ED04-final",
@@ -5895,8 +5917,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed04-final",
-      "id": "development_implementation_roadmap_save_point_ed04_final",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed04_final"
     },
     {
       "label": "Save Point ED04",
@@ -5909,8 +5931,8 @@
       "contributor": null,
       "community": 16,
       "norm_label": "save point ed04",
-      "id": "development_implementation_roadmap_save_point_ed04",
-      "community_name": "Governance & Landmark Index"
+      "community_name": "Governance & Landmark Index",
+      "id": "development_implementation_roadmap_save_point_ed04"
     },
     {
       "label": "Save Point ED03",
@@ -5923,8 +5945,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed03",
-      "id": "development_implementation_roadmap_save_point_ed03",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed03"
     },
     {
       "label": "Save Point ED02",
@@ -5937,8 +5959,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed02",
-      "id": "development_implementation_roadmap_save_point_ed02",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed02"
     },
     {
       "label": "Save Point Ed01",
@@ -5951,8 +5973,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "save point ed01",
-      "id": "development_implementation_roadmap_save_point_ed01",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_save_point_ed01"
     },
     {
       "label": "Homepage Performance Issue (Lighthouse 50/100)",
@@ -5965,8 +5987,8 @@
       "contributor": null,
       "community": 12,
       "norm_label": "homepage performance issue (lighthouse 50/100)",
-      "id": "development_implementation_roadmap_homepage_performance_issue",
-      "community_name": "Roadmap Landmark Notes"
+      "community_name": "Roadmap Landmark Notes",
+      "id": "development_implementation_roadmap_homepage_performance_issue"
     },
     {
       "label": "MAWebsiteDB.sql Migration Target",
@@ -5979,8 +6001,8 @@
       "contributor": null,
       "community": 21,
       "norm_label": "mawebsitedb.sql migration target",
-      "id": "development_implementation_roadmap_mawebsitedb_sql",
-      "community_name": "Deployment Env & Render Config"
+      "community_name": "Deployment Env & Render Config",
+      "id": "development_implementation_roadmap_mawebsitedb_sql"
     },
     {
       "label": "AppStory.md",
@@ -5993,8 +6015,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "appstory.md",
-      "id": "instructions_epic_appstory",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_epic_appstory"
     },
     {
       "label": "Landing Home Page (Story)",
@@ -6007,8 +6029,8 @@
       "contributor": null,
       "community": 29,
       "norm_label": "landing home page (story)",
-      "id": "instructions_epic_appstory_landing_home_page",
-      "community_name": "Landing Page Components"
+      "community_name": "Landing Page Components",
+      "id": "instructions_epic_appstory_landing_home_page"
     },
     {
       "label": "Projects and Prices Page (Story)",
@@ -6021,8 +6043,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "projects and prices page (story)",
-      "id": "instructions_epic_appstory_projects_and_prices_page",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_epic_appstory_projects_and_prices_page"
     },
     {
       "label": "About Page (Story)",
@@ -6035,8 +6057,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "about page (story)",
-      "id": "instructions_epic_appstory_about_page",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_epic_appstory_about_page"
     },
     {
       "label": "Admin Page (Story)",
@@ -6049,8 +6071,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "admin page (story)",
-      "id": "instructions_epic_appstory_admin_page",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_epic_appstory_admin_page"
     },
     {
       "label": "Pristinenoire LLC",
@@ -6063,8 +6085,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "pristinenoire llc",
-      "id": "instructions_epic_appstory_pristinenoire_llc",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_epic_appstory_pristinenoire_llc"
     },
     {
       "label": "SysArch.md",
@@ -6077,8 +6099,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "sysarch.md",
-      "id": "instructions_gen_architecture_sysarch",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch"
     },
     {
       "label": "MAI SDLC Model",
@@ -6091,8 +6113,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "mai sdlc model",
-      "id": "instructions_gen_architecture_sysarch_mai_sdlc",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_mai_sdlc"
     },
     {
       "label": "SysArch Governance Rules",
@@ -6105,8 +6127,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "sysarch governance rules",
-      "id": "instructions_gen_architecture_sysarch_governance_rules",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_governance_rules"
     },
     {
       "label": "Default Application Layers",
@@ -6119,8 +6141,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "default application layers",
-      "id": "instructions_gen_architecture_sysarch_default_application_layers",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_default_application_layers"
     },
     {
       "label": "AI Development Approach (Mode 1/Mode 2)",
@@ -6133,8 +6155,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "ai development approach (mode 1/mode 2)",
-      "id": "instructions_gen_architecture_sysarch_ai_development_approach",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_ai_development_approach"
     },
     {
       "label": "Claude Code Role (Mode 2)",
@@ -6147,8 +6169,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "claude code role (mode 2)",
-      "id": "instructions_gen_architecture_sysarch_claude_code_role",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_claude_code_role"
     },
     {
       "label": "OpenAI Codex Role (Mode 2)",
@@ -6161,8 +6183,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "openai codex role (mode 2)",
-      "id": "instructions_gen_architecture_sysarch_openai_codex_role",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_openai_codex_role"
     },
     {
       "label": "Tools Collection Selection",
@@ -6175,8 +6197,8 @@
       "contributor": null,
       "community": 19,
       "norm_label": "tools collection selection",
-      "id": "instructions_gen_architecture_sysarch_tools_collection",
-      "community_name": "SysArch Governance Model"
+      "community_name": "SysArch Governance Model",
+      "id": "instructions_gen_architecture_sysarch_tools_collection"
     },
     {
       "label": "UIUX.md",
@@ -6189,8 +6211,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "uiux.md",
-      "id": "instructions_gen_ui_uiux",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux"
     },
     {
       "label": "CSS Style Hierarchy",
@@ -6203,8 +6225,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "css style hierarchy",
-      "id": "instructions_gen_ui_uiux_css_style_hierarchy",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_css_style_hierarchy"
     },
     {
       "label": "General Typography Rules",
@@ -6217,8 +6239,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "general typography rules",
-      "id": "instructions_gen_ui_uiux_general_typography",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_general_typography"
     },
     {
       "label": "Design Model Options (Cinematic, Brutalist, etc.)",
@@ -6231,8 +6253,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "design model options (cinematic, brutalist, etc.)",
-      "id": "instructions_gen_ui_uiux_design_model_options",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_design_model_options"
     },
     {
       "label": "Cinematic Design Style",
@@ -6245,8 +6267,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "cinematic design style",
-      "id": "instructions_gen_ui_uiux_cinematic_design_style",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_cinematic_design_style"
     },
     {
       "label": "Required ChatBot Spec",
@@ -6259,8 +6281,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "required chatbot spec",
-      "id": "instructions_gen_ui_uiux_chatbot_requirements",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_chatbot_requirements"
     },
     {
       "label": "UIUX Demo Login Credentials",
@@ -6273,8 +6295,8 @@
       "contributor": null,
       "community": 22,
       "norm_label": "uiux demo login credentials",
-      "id": "instructions_gen_ui_uiux_admin_login_credentials",
-      "community_name": "Site Story Pages & Credentials"
+      "community_name": "Site Story Pages & Credentials",
+      "id": "instructions_gen_ui_uiux_admin_login_credentials"
     },
     {
       "label": "Sample Fonts List",
@@ -6287,8 +6309,8 @@
       "contributor": null,
       "community": 25,
       "norm_label": "sample fonts list",
-      "id": "instructions_gen_ui_uiux_sample_fonts",
-      "community_name": "Design Style Requirements"
+      "community_name": "Design Style Requirements",
+      "id": "instructions_gen_ui_uiux_sample_fonts"
     },
     {
       "label": "Cyborg profile (left variant, ash tone)",
@@ -6301,8 +6323,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "cyborg profile (left variant, ash tone)",
-      "id": "deployment_app_public_images_ash_left_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_ash_left_image"
     },
     {
       "label": "Cyborg profile (right variant, ash tone)",
@@ -6315,8 +6337,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "cyborg profile (right variant, ash tone)",
-      "id": "deployment_app_public_images_ash_right_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_ash_right_image"
     },
     {
       "label": "Home page hero figure (halftone android)",
@@ -6329,8 +6351,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "home page hero figure (halftone android)",
-      "id": "deployment_app_public_images_home_figure_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_home_figure_image"
     },
     {
       "label": "Mehrdad portrait with HUD overlay",
@@ -6343,8 +6365,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "mehrdad portrait with hud overlay",
-      "id": "deployment_app_public_images_mehrdad_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_mehrdad_image"
     },
     {
       "label": "PristineNoire LLC logo (stacked layout)",
@@ -6357,8 +6379,8 @@
       "contributor": null,
       "community": 32,
       "norm_label": "pristinenoire llc logo (stacked layout)",
-      "id": "deployment_app_public_images_pristinenoire_llc_image",
-      "community_name": "PristineNoire Logo Assets"
+      "community_name": "PristineNoire Logo Assets",
+      "id": "deployment_app_public_images_pristinenoire_llc_image"
     },
     {
       "label": "PristineNoire logo (wide layout)",
@@ -6371,8 +6393,8 @@
       "contributor": null,
       "community": 32,
       "norm_label": "pristinenoire logo (wide layout)",
-      "id": "deployment_app_public_images_pristinenoire_logo_image",
-      "community_name": "PristineNoire Logo Assets"
+      "community_name": "PristineNoire Logo Assets",
+      "id": "deployment_app_public_images_pristinenoire_logo_image"
     },
     {
       "label": "QR code image",
@@ -6385,8 +6407,8 @@
       "contributor": null,
       "community": 32,
       "norm_label": "qr code image",
-      "id": "deployment_app_public_images_qr_code_image",
-      "community_name": "PristineNoire Logo Assets"
+      "community_name": "PristineNoire Logo Assets",
+      "id": "deployment_app_public_images_qr_code_image"
     },
     {
       "label": "White/orange robot head (left variant)",
@@ -6399,8 +6421,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "white/orange robot head (left variant)",
-      "id": "deployment_app_public_images_robo_left_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_robo_left_image"
     },
     {
       "label": "White/orange robot head (right variant)",
@@ -6413,8 +6435,8 @@
       "contributor": null,
       "community": 27,
       "norm_label": "white/orange robot head (right variant)",
-      "id": "deployment_app_public_images_robo_right_image",
-      "community_name": "Robot/Cyborg Hero Images"
+      "community_name": "Robot/Cyborg Hero Images",
+      "id": "deployment_app_public_images_robo_right_image"
     },
     {
       "label": "Site screenshot reference: sphere hero section",
@@ -6427,8 +6449,8 @@
       "contributor": null,
       "community": 33,
       "norm_label": "site screenshot reference: sphere hero section",
-      "id": "deployment_app_public_images_sphere_ref_image",
-      "community_name": "Sphere Reference Images"
+      "community_name": "Sphere Reference Images",
+      "id": "deployment_app_public_images_sphere_ref_image"
     },
     {
       "label": "Blue/orange energy sphere (warm variant, jpg)",
@@ -6441,8 +6463,8 @@
       "contributor": null,
       "community": 33,
       "norm_label": "blue/orange energy sphere (warm variant, jpg)",
-      "id": "deployment_app_public_images_sphere_warm_image",
-      "community_name": "Sphere Reference Images"
+      "community_name": "Sphere Reference Images",
+      "id": "deployment_app_public_images_sphere_warm_image"
     },
     {
       "label": "Blue/orange energy sphere (png)",
@@ -6455,8 +6477,8 @@
       "contributor": null,
       "community": 33,
       "norm_label": "blue/orange energy sphere (png)",
-      "id": "deployment_app_public_images_sphere_image",
-      "community_name": "Sphere Reference Images"
+      "community_name": "Sphere Reference Images",
+      "id": "deployment_app_public_images_sphere_image"
     },
     {
       "label": "Home.jpeg - cyborg female profile hero image",
@@ -6469,8 +6491,8 @@
       "contributor": null,
       "community": 31,
       "norm_label": "home.jpeg - cyborg female profile hero image",
-      "id": "sprints_website_home_image",
-      "community_name": "Hero Portrait Images Set"
+      "community_name": "Hero Portrait Images Set",
+      "id": "sprints_website_home_image"
     },
     {
       "label": "Left.jpeg - half-human half-robot male head profile (left variant)",
@@ -6483,8 +6505,8 @@
       "contributor": null,
       "community": 31,
       "norm_label": "left.jpeg - half-human half-robot male head profile (left variant)",
-      "id": "sprints_website_left_image",
-      "community_name": "Hero Portrait Images Set"
+      "community_name": "Hero Portrait Images Set",
+      "id": "sprints_website_left_image"
     },
     {
       "label": "Mehrdad.png - portrait with sci-fi HUD targeting overlay",
@@ -6497,8 +6519,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "mehrdad.png - portrait with sci-fi hud targeting overlay",
-      "id": "sprints_website_mehrdad_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_mehrdad_image"
     },
     {
       "label": "Pristinenoire Ecosystem.png - org chart of PristineNoire LLC subsidiaries",
@@ -6511,8 +6533,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "pristinenoire ecosystem.png - org chart of pristinenoire llc subsidiaries",
-      "id": "sprints_website_pristinenoire_ecosystem_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_pristinenoire_ecosystem_image"
     },
     {
       "label": "Pristinenoire LLC.png - brand logo on dark purple background",
@@ -6525,8 +6547,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "pristinenoire llc.png - brand logo on dark purple background",
-      "id": "sprints_website_pristinenoire_llc_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_pristinenoire_llc_image"
     },
     {
       "label": "Pristinenoire_LLC.png_TRSP.jpeg - transparent-background version of PristineNoire logo",
@@ -6539,8 +6561,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "pristinenoire_llc.png_trsp.jpeg - transparent-background version of pristinenoire logo",
-      "id": "sprints_website_pristinenoire_llc_png_trsp_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_pristinenoire_llc_png_trsp_image"
     },
     {
       "label": "Prj01.png - SQLSentinel app sign-in page screenshot",
@@ -6553,8 +6575,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "prj01.png - sqlsentinel app sign-in page screenshot",
-      "id": "sprints_website_prj01_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_prj01_image"
     },
     {
       "label": "QR Code.png - generic black and white QR code",
@@ -6567,8 +6589,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "qr code.png - generic black and white qr code",
-      "id": "sprints_website_qr_code_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_qr_code_image"
     },
     {
       "label": "Right.jpeg - half-human half-robot male head profile (right variant)",
@@ -6581,8 +6603,8 @@
       "contributor": null,
       "community": 31,
       "norm_label": "right.jpeg - half-human half-robot male head profile (right variant)",
-      "id": "sprints_website_right_image",
-      "community_name": "Hero Portrait Images Set"
+      "community_name": "Hero Portrait Images Set",
+      "id": "sprints_website_right_image"
     },
     {
       "label": "Robot right02 (1).png - stock android head profile render",
@@ -6595,8 +6617,8 @@
       "contributor": null,
       "community": 31,
       "norm_label": "robot right02 (1).png - stock android head profile render",
-      "id": "sprints_website_robot_right02__1__image",
-      "community_name": "Hero Portrait Images Set"
+      "community_name": "Hero Portrait Images Set",
+      "id": "sprints_website_robot_right02__1__image"
     },
     {
       "label": "Sphere.png - glowing blue and orange energy sphere/planet",
@@ -6609,8 +6631,8 @@
       "contributor": null,
       "community": 31,
       "norm_label": "sphere.png - glowing blue and orange energy sphere/planet",
-      "id": "sprints_website_sphere_image",
-      "community_name": "Hero Portrait Images Set"
+      "community_name": "Hero Portrait Images Set",
+      "id": "sprints_website_sphere_image"
     },
     {
       "label": "download.png - portrait of Mike Alemie with sci-fi HUD overlay and name caption",
@@ -6623,8 +6645,8 @@
       "contributor": null,
       "community": 26,
       "norm_label": "download.png - portrait of mike alemie with sci-fi hud overlay and name caption",
-      "id": "sprints_website_download_image",
-      "community_name": "Brand & Portrait Images"
+      "community_name": "Brand & Portrait Images",
+      "id": "sprints_website_download_image"
     }
   ],
   "links": [
@@ -12490,7 +12512,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cards-section.tsx",
-      "source_location": "L168",
+      "source_location": "L175",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cards_section_cardssection",
@@ -12682,7 +12704,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L47",
+      "source_location": "L46",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -12693,7 +12715,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L65",
+      "source_location": "L64",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -12704,7 +12726,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L38",
+      "source_location": "L37",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -12715,7 +12737,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L29",
+      "source_location": "L28",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -12726,7 +12748,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L51",
+      "source_location": "L50",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -12737,7 +12759,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/landing/cube-reveal.tsx",
-      "source_location": "L43",
+      "source_location": "L42",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_landing_cube_reveal",
@@ -13445,7 +13467,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/components/projects/sliding-cards.tsx",
-      "source_location": "L136",
+      "source_location": "L141",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_components_projects_sliding_cards_slidingcards",
@@ -14030,7 +14052,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L126",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_ensuretabs",
@@ -14042,7 +14064,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L115",
+      "source_location": "L148",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_listtabs",
@@ -14054,7 +14076,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L138",
+      "source_location": "L171",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_readgrid",
@@ -14066,7 +14088,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L240",
+      "source_location": "L273",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetswrite",
@@ -14296,7 +14318,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L109",
+      "source_location": "L142",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetid",
@@ -15171,7 +15193,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L183",
+      "source_location": "L216",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_parsetab",
@@ -15195,7 +15217,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L155",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_rowsfortab",
@@ -15219,7 +15241,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L155",
+      "source_location": "L188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_rowsfortab",
@@ -15243,7 +15265,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L183",
+      "source_location": "L216",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_parsetab",
@@ -15287,7 +15309,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L272",
+      "source_location": "L305",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15309,7 +15331,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L320",
+      "source_location": "L371",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15331,7 +15353,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L121",
+      "source_location": "L154",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15386,7 +15408,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L114",
+      "source_location": "L147",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15397,7 +15419,29 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L173",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store",
+      "target": "deployment_app_src_lib_store_mirrorread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L123",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store",
+      "target": "deployment_app_src_lib_store_mirrorwrite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L206",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15408,7 +15452,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L281",
+      "source_location": "L314",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15419,7 +15463,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L136",
+      "source_location": "L169",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15430,7 +15474,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L151",
+      "source_location": "L184",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15441,7 +15485,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L108",
+      "source_location": "L141",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15452,7 +15496,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L211",
+      "source_location": "L244",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15463,7 +15507,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L230",
+      "source_location": "L263",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15474,7 +15518,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L307",
+      "source_location": "L354",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store",
@@ -15486,7 +15530,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L321",
+      "source_location": "L372",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_docexists",
@@ -15498,7 +15542,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L286",
+      "source_location": "L318",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_readdoc",
@@ -15510,7 +15554,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L309",
+      "source_location": "L356",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_writedoc",
@@ -15522,7 +15566,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L324",
+      "source_location": "L375",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_docexists",
@@ -15558,7 +15602,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L299",
+      "source_location": "L134",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store_mirrorread",
+      "target": "deployment_app_src_lib_store_fsread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L346",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_readdoc",
@@ -15570,7 +15626,19 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L312",
+      "source_location": "L125",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store_mirrorwrite",
+      "target": "deployment_app_src_lib_store_fswrite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L363",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_writedoc",
@@ -15582,7 +15650,43 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L126",
+      "source_location": "L335",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store_readdoc",
+      "target": "deployment_app_src_lib_store_mirrorwrite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L361",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store_writedoc",
+      "target": "deployment_app_src_lib_store_mirrorwrite",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L327",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "deployment_app_src_lib_store_readdoc",
+      "target": "deployment_app_src_lib_store_mirrorread",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "Deployment/app/src/lib/store.ts",
+      "source_location": "L159",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_ensuretabs",
@@ -15594,7 +15698,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L115",
+      "source_location": "L148",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_listtabs",
@@ -15606,7 +15710,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L139",
+      "source_location": "L172",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_readgrid",
@@ -15618,7 +15722,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L241",
+      "source_location": "L274",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetswrite",
@@ -15630,7 +15734,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L122",
+      "source_location": "L155",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_ensuretabs",
@@ -15642,7 +15746,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L232",
+      "source_location": "L265",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetswrite",
@@ -15654,7 +15758,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L213",
+      "source_location": "L246",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetsread",
@@ -15666,7 +15770,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L235",
+      "source_location": "L268",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetswrite",
@@ -15678,7 +15782,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L222",
+      "source_location": "L255",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_sheetsread",
@@ -15690,7 +15794,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L310",
+      "source_location": "L360",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_writedoc",
@@ -15702,7 +15806,7 @@
       "context": "call",
       "confidence": "EXTRACTED",
       "source_file": "Deployment/app/src/lib/store.ts",
-      "source_location": "L308",
+      "source_location": "L355",
       "weight": 1.0,
       "_origin": "ast",
       "source": "deployment_app_src_lib_store_writedoc",
@@ -17319,5 +17423,5 @@
       "source_file": "Development/Implementation/Roadmap.md"
     }
   ],
-  "built_at_commit": "8e0fdaca432f1af891c25eb9064596ab45a0cf75"
+  "built_at_commit": "f8529db1fb089647991fa8f714d5c3a2cff84530"
 }

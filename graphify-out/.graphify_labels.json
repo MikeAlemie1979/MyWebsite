@@ -43,5 +43,6 @@
   "41": "tailwind.config.js",
   "42": "home-text-manager.tsx",
   "43": "projects-manager.tsx",
-  "44": "cards-manager.tsx"
+  "44": "cards-manager.tsx",
+  "45": "social-config/route.ts"
 }

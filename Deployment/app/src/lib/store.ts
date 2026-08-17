@@ -101,6 +101,39 @@ function fsWrite<T>(key: DocKey, value: T): void {
   fs.writeFileSync(filePath(key), JSON.stringify(value, null, 2), "utf-8");
 }
 
+/* -------------------------------------------------------------- mirror */
+
+/**
+ * Durable last-known-good local copy of every document.
+ *
+ * Sheets is the source of truth, but a read can fail transiently — most
+ * often a 429, since Sheets allows only ~60 reads/minute/user and each page
+ * load fans out to several config GETs. Before this mirror existed, a failed
+ * read with no live cache entry threw, the API route answered 500, and the
+ * public page fell back to its hardcoded placeholders — so a visitor saw
+ * "Placeholder content" where real saved cards belonged, which is
+ * indistinguishable from the admin's content having been deleted.
+ *
+ * Every successful read and every write refreshes this mirror, so a failed
+ * read can always answer with real content. It deliberately reuses the
+ * fs-backend filenames: the mirror *is* a local copy of the document, so if
+ * Google is ever unconfigured the fs backend picks these up rather than
+ * resetting the site to defaults.
+ */
+function mirrorWrite<T>(key: DocKey, value: T): void {
+  try {
+    fsWrite(key, value);
+  } catch (error) {
+    // A read-only or full filesystem must never break serving content.
+    console.error(`[store] mirror write failed for "${key}":`, error);
+  }
+}
+
+/** Reads the mirror. Returns null when nothing has been mirrored yet. */
+function mirrorRead<T>(key: DocKey): T | null {
+  return fsRead<T>(key);
+}
+
 /* ----------------------------------------------------------- sheets impl */
 
 const SHEETS_API = "https://sheets.googleapis.com/v4/spreadsheets";
@@ -282,32 +315,50 @@ export async function readDoc<T>(key: DocKey, fallback: T): Promise<T> {
   const hit = cache.get(key);
   if (hit && hit.expires > Date.now()) return hit.value as T;
 
-  let value: T | null = null;
   if (activeBackend() === "sheets") {
+    let value: T | null = null;
     try {
       value = await sheetsRead<T>(key);
     } catch (error) {
-      // Serving stale-but-real content beats serving defaults when Sheets is
-      // briefly unreachable — an expired cache entry is still the last known
-      // good value, and overwriting live site content with placeholders on a
-      // transient network blip would be far more visible than 60s of staleness.
       console.error(`[store] sheets read failed for "${key}":`, error);
-      if (hit) return hit.value as T;
+      // Real content always beats placeholders. Fall back in decreasing
+      // freshness: an expired cache entry, then the on-disk mirror. Only a
+      // document that has genuinely never been saved anywhere can fail here.
+      const stale = (hit?.value as T | undefined) ?? mirrorRead<T>(key);
+      if (stale !== null && stale !== undefined) return stale;
       throw error;
     }
-  } else {
-    value = fsRead<T>(key);
+
+    if (value !== null) {
+      // Real saved content: cache it and refresh the durable mirror.
+      cache.set(key, { value, expires: Date.now() + CACHE_TTL_MS });
+      mirrorWrite(key, value);
+      return value;
+    }
+
+    // Sheets answered, but this document has never been written to it. Serve
+    // the mirror if we have one, else the built-in defaults — and do NOT
+    // cache defaults: pinning a placeholder for the whole TTL is what made a
+    // single bad moment look like the admin's content had been wiped.
+    return mirrorRead<T>(key) ?? fallback;
   }
 
-  const resolved = value ?? fallback;
-  cache.set(key, { value: resolved, expires: Date.now() + CACHE_TTL_MS });
-  return resolved;
+  const local = fsRead<T>(key);
+  if (local !== null) {
+    cache.set(key, { value: local, expires: Date.now() + CACHE_TTL_MS });
+    return local;
+  }
+  return fallback;
 }
 
 export async function writeDoc<T>(key: DocKey, value: T): Promise<void> {
   const capped = capForStorage(key, value);
   if (activeBackend() === "sheets") {
+    // Sheets first: if it rejects, the save genuinely failed, so neither the
+    // mirror nor the cache should claim otherwise — the route returns 500 and
+    // the admin sees the error instead of a false success.
     await sheetsWrite(key, capped);
+    mirrorWrite(key, capped);
   } else {
     fsWrite(key, capped);
   }

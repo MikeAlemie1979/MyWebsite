@@ -9,15 +9,14 @@ import React, {
 import { useTheme } from "@/context/theme-context";
 
 const IMAGE_SRC = "/images/mehrdad.png";
-// Matches the source image's actual pixel ratio (1840x913) so cells never
+// Matches the source image's actual pixel ratio (1525x579) so cells never
 // distort the sliced background.
-const IMAGE_ASPECT = 1840 / 913;
+const IMAGE_ASPECT = 1525 / 579;
 
-// The reveal's actual display size — both the outer box AND the grid inside
-// it share this exact height (and a width derived from IMAGE_ASPECT), so the
-// whole portrait scales down uniformly instead of the outer box clipping a
-// still-full-size grid (which cropped the top off rather than shrinking it).
-const DISPLAY_HEIGHT_PX = 320;
+// Trimmed off the bottom-anchored box's height. The grid inside keeps the
+// full uncropped height, so the portrait is never squeezed — the surplus runs
+// off the top, where the parent's mask gradient dissolves it.
+const HEIGHT_TRIM_PX = 108;
 
 const GRID_COLS = 12;
 const GRID_ROWS = 6;
@@ -129,13 +128,18 @@ export const CubeReveal = forwardRef<CubeRevealHandle>(function CubeReveal(_prop
 
   return (
     <div
-      className="relative overflow-hidden"
-      style={{ height: DISPLAY_HEIGHT_PX, width: DISPLAY_HEIGHT_PX * IMAGE_ASPECT }}
+      className="relative w-full overflow-hidden"
+      // Full page width; height follows from the image's own aspect ratio
+      // minus the trim. At full width that makes it taller than the
+      // viewport, so the surplus runs off the top — the parent's mask
+      // dissolves that into the section background.
+      style={{ height: `calc(100vw / ${IMAGE_ASPECT} - ${HEIGHT_TRIM_PX}px)` }}
       aria-hidden
     >
       <div
-        className="absolute inset-0 grid"
+        className="absolute inset-x-0 bottom-0 grid"
         style={{
+          height: `calc(100vw / ${IMAGE_ASPECT})`,
           gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)`,
           gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
         }}

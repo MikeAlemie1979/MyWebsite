@@ -30,9 +30,9 @@
     "semantic_hash": "3a99ef0a82d3d5ce7b85675865ac9f95"
   },
   "Deployment/app/src/components/landing/cards-section.tsx": {
-    "mtime": 1786928403.0650623,
-    "ast_hash": "1d5943d7e18d0b3ff6a541e3744851ec",
-    "semantic_hash": "1d5943d7e18d0b3ff6a541e3744851ec"
+    "mtime": 1786961370.3756485,
+    "ast_hash": "e013b3a44deb5a078c48c86811928384",
+    "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/contact-form.tsx": {
     "mtime": 1786842856.4223628,
@@ -50,9 +50,9 @@
     "semantic_hash": ""
   },
   "Deployment/app/src/lib/store.ts": {
-    "mtime": 1786846396.853113,
-    "ast_hash": "c188a96dc0c15d8d2d3758f63a06f0a8",
-    "semantic_hash": "c188a96dc0c15d8d2d3758f63a06f0a8"
+    "mtime": 1786961357.272329,
+    "ast_hash": "3a5e15b9dcb4bf1a32e754b1f03b367a",
+    "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/google-oauth/callback/route.ts": {
     "mtime": 1786846454.634621,
@@ -290,8 +290,8 @@
     "semantic_hash": "4b6f6c6dd24cdb82d1c6f3856cf7e728"
   },
   "Deployment/app/src/components/landing/ash-text-section.tsx": {
-    "mtime": 1786949477.865951,
-    "ast_hash": "db09a761b90f047cba1358fa62d89e52",
+    "mtime": 1786960410.296163,
+    "ast_hash": "4cd2c8b7d88ca1080dc5a2278462cafe",
     "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/content-section.tsx": {
@@ -300,8 +300,8 @@
     "semantic_hash": "62b423968bbc3a8d5c72cc4742fc1aae"
   },
   "Deployment/app/src/components/landing/cube-reveal.tsx": {
-    "mtime": 1786939213.744177,
-    "ast_hash": "b567060261d0e377415567f04d94fe18",
+    "mtime": 1786960386.4138806,
+    "ast_hash": "8dccd89c312958a6607503b6dd02eec6",
     "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/footer.tsx": {
@@ -340,8 +340,8 @@
     "semantic_hash": "df361c3a0a6a2110bb8e09d321c7e741"
   },
   "Deployment/app/src/components/projects/sliding-cards.tsx": {
-    "mtime": 1786943049.7628994,
-    "ast_hash": "3379b9b73d15babc573406ef4927ed35",
+    "mtime": 1786961380.2219868,
+    "ast_hash": "5f01de2e6ca52c8bca2c43f67a34a012",
     "semantic_hash": ""
   },
   "Deployment/app/src/context/theme-context.tsx": {
@@ -400,13 +400,13 @@
     "semantic_hash": "466b1bb17f0d87fc36c9c4ccf4f88deb"
   },
   "Development/CLAUDE.md": {
-    "mtime": 1786928718.5584812,
-    "ast_hash": "481a590a037716bc7d460a3608a71b12",
-    "semantic_hash": "481a590a037716bc7d460a3608a71b12"
+    "mtime": 1786954106.0062296,
+    "ast_hash": "cda5b3c269b0be301323b61cb846371c",
+    "semantic_hash": ""
   },
   "Development/Implementation/Roadmap.md": {
-    "mtime": 1786950849.9336238,
-    "ast_hash": "49d94dcb98913c987aa25b36ed392a40",
+    "mtime": 1786961767.0376205,
+    "ast_hash": "bc18b3067a4428cb6b82f78e7349839e",
     "semantic_hash": ""
   },
   "Instructions/Epic/AppStory.md": {
@@ -440,9 +440,9 @@
     "semantic_hash": "7b6aac61575815e2b2b17a8acd616967"
   },
   "Deployment/app/public/images/mehrdad.png": {
-    "mtime": 1786358175.541874,
-    "ast_hash": "c61e9959322bec6d6736bda733e8b630",
-    "semantic_hash": "c61e9959322bec6d6736bda733e8b630"
+    "mtime": 1786960380.617067,
+    "ast_hash": "94135ac4aa857eba93a2183c3e1643b5",
+    "semantic_hash": ""
   },
   "Deployment/app/public/images/pristinenoire-llc.png": {
     "mtime": 1786214447.1630533,
@@ -495,9 +495,9 @@
     "semantic_hash": "7b96c8070547776f209c2c70847fcbbf"
   },
   "Sprints/Website/Mehrdad.png": {
-    "mtime": 1786356173.1936097,
-    "ast_hash": "c61e9959322bec6d6736bda733e8b630",
-    "semantic_hash": "c61e9959322bec6d6736bda733e8b630"
+    "mtime": 1786952956.5665178,
+    "ast_hash": "94135ac4aa857eba93a2183c3e1643b5",
+    "semantic_hash": ""
   },
   "Sprints/Website/Pristinenoire Ecosystem.png": {
     "mtime": 1785631033.443324,

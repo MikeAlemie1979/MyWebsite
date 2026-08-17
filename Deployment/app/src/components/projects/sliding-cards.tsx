@@ -55,8 +55,8 @@ function groupProjects(rows: ProjectRow[]): ProjectCardData[] {
 function ProjectCard({ project, index, total }: { project: ProjectCardData; index: number; total: number }) {
   return (
     <motion.div
-      className="motion-el relative flex-shrink-0 rounded-2xl border border-white/10 bg-white/[0.03] backdrop-blur-sm h-full flex flex-col overflow-hidden group cursor-pointer"
-      style={{ width: "min(80vw, 420px)" }}
+      className="motion-el relative flex-shrink-0 rounded-2xl border border-white/10 backdrop-blur-sm h-full flex flex-col overflow-hidden group cursor-pointer"
+      style={{ width: "min(80vw, 420px)", backgroundColor: "#000C66" }}
       whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 1.0 }}
       transition={{ scale: { duration: 0.35, ease: [0.4, 0, 0.2, 1] } }}
@@ -128,18 +128,30 @@ export function SlidingCards() {
   useEffect(() => {
     let cancelled = false;
 
-    fetch("/api/admin/projects")
-      .then((res) => (res.ok ? res.json() : null))
-      .then((data) => {
+    // Retries once — same reasoning as cards-section.tsx: leaving the
+    // hardcoded placeholders up on a transient failure looks identical to the
+    // admin's saved projects having been deleted.
+    const load = async (attempt = 0): Promise<void> => {
+      try {
+        const res = await fetch("/api/admin/projects", { cache: "no-store" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
         if (cancelled) return;
         if (data && Array.isArray(data.projects) && data.projects.length > 0) {
           const grouped = groupProjects(data.projects as ProjectRow[]);
           if (grouped.length > 0) setProjects(grouped);
         }
-      })
-      .catch(() => {
-        // fall back to placeholder projects on error
-      });
+      } catch (error) {
+        if (cancelled) return;
+        if (attempt < 1) {
+          await new Promise((r) => setTimeout(r, 1200));
+          if (!cancelled) return load(attempt + 1);
+        }
+        console.error("[sliding-cards] failed to load projects:", error);
+      }
+    };
+
+    load();
 
     return () => {
       cancelled = true;

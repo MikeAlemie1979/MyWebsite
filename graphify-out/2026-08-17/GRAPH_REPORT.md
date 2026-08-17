@@ -1,13 +1,18 @@
-# Graph Report - .  (2026-08-16)
+# Graph Report - Mike Alemie Website  (2026-08-17)
 
 ## Corpus Check
-- 101 files · ~667,480 words
+- 84 files · ~668,485 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 566 nodes · 876 edges · 42 communities (38 shown, 4 thin omitted)
-- Extraction: 95% EXTRACTED · 4% INFERRED · 1% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.87)
+- 570 nodes · 938 edges · 45 communities (42 shown, 3 thin omitted)
+- Extraction: 96% EXTRACTED · 4% INFERRED · 1% AMBIGUOUS · INFERRED: 36 edges (avg confidence: 0.87)
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `f8529db1`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Google Sheets Content API
@@ -40,25 +45,28 @@
 - Robot/Cyborg Hero Images
 - Visitor Counter Store
 - Landing Page Components
-- Community 30
+- storage-panel.tsx
 - Hero Portrait Images Set
 - PristineNoire Logo Assets
 - Sphere Reference Images
-- Community 34
-- Community 35
-- Community 36
+- about/layout.tsx
+- next.config.js
+- next-env.d.ts
+- home-text-manager.tsx
+- projects-manager.tsx
+- cards-manager.tsx
 
 ## God Nodes (most connected - your core abstractions)
 1. `requireAdmin()` - 32 edges
-2. `useTheme()` - 17 edges
-3. `compilerOptions` - 16 edges
-4. `buildStatus()` - 14 edges
-5. `getSheetId()` - 9 edges
-6. `saveIndexedUpload()` - 9 edges
-7. `isOAuthClientConfigured()` - 8 edges
-8. `writeDoc()` - 8 edges
+2. `writeDoc()` - 26 edges
+3. `readDoc()` - 19 edges
+4. `useTheme()` - 17 edges
+5. `compilerOptions` - 16 edges
+6. `buildStatus()` - 14 edges
+7. `saveIndexedUpload()` - 10 edges
+8. `getSheetId()` - 9 edges
 9. `POST()` - 8 edges
-10. `POST()` - 7 edges
+10. `isOAuthClientConfigured()` - 8 edges
 
 ## Surprising Connections (you probably didn't know these)
 - `Cinematic Design Style` --references--> `Landing Home Page`  [INFERRED]
@@ -80,19 +88,19 @@
 - **Google Sheets/Drive Persistence Backend** — development_claude_md_document_store, development_claude_md_sheet_schema, development_claude_md_google_oauth_lib, deployment_deploy_readme_google_sheets_storage, deployment_deploy_readme_google_drive_oauth, deployment_render_yaml_google_env_vars [INFERRED 0.85]
 - **Roadmap Save Point Sequence** — development_implementation_roadmap_save_point_ed01, development_implementation_roadmap_save_point_ed02, development_implementation_roadmap_save_point_ed03, development_implementation_roadmap_save_point_ed04, development_implementation_roadmap_save_point_ed04_final, development_implementation_roadmap_save_point_ed05, development_implementation_roadmap_save_point_ed06, development_implementation_roadmap_save_point_ed07, development_implementation_roadmap_save_point_ed08, development_implementation_roadmap_save_point_ed09, development_implementation_roadmap_save_point_ed10, development_implementation_roadmap_save_point_ed11 [EXTRACTED 1.00]
 
-## Communities (42 total, 4 thin omitted)
+## Communities (45 total, 3 thin omitted)
 
 ### Community 0 - "Google Sheets Content API"
 Cohesion: 0.07
-Nodes (55): buildStatus(), GET(), POST(), getGoogleClient(), getServiceAccountEmail(), GoogleConfigError, googleFetch(), hasServiceAccount() (+47 more)
+Nodes (52): buildStatus(), GET(), POST(), getGoogleClient(), getServiceAccountEmail(), GoogleConfigError, googleFetch(), hasServiceAccount() (+44 more)
 
 ### Community 1 - "Admin Content Managers"
 Cohesion: 0.05
-Nodes (46): AboutContent, DEFAULT_CONTENT, Flashcard, POST(), POST(), CardItem, CardsConfig, DEFAULT_CARDS (+38 more)
+Nodes (53): AboutContent, DEFAULT_CONTENT, Flashcard, GET(), POST(), CardItem, CardsConfig, DEFAULT_CARDS (+45 more)
 
 ### Community 2 - "Admin Dashboard UI"
-Cohesion: 0.05
-Nodes (37): AboutContent, AboutManager(), DEFAULT_CONTENT, Flashcard, FONT_FAMILIES, makeId(), AdminDashboard(), LeafItem (+29 more)
+Cohesion: 0.16
+Nodes (11): SMTPConfig, SMTPSettingsPanel(), DEFAULT_CONFIG, FacebookConfig, InstagramConfig, Platform, PostResult, SocialConfig (+3 more)
 
 ### Community 3 - "Frontend Build Dependencies"
 Cohesion: 0.07
@@ -111,20 +119,20 @@ Cohesion: 0.09
 Nodes (23): dependencies, framer-motion, google-auth-library, gsap, motion, motion-v, next, nodemailer (+15 more)
 
 ### Community 7 - "SEO Metadata + Cursor FX"
-Cohesion: 0.18
-Nodes (12): metadata, ORGANIZATION_JSON_LD, PERSON_JSON_LD, WEBSITE_JSON_LD, getPointerZone(), PointerZone, Dot, TargetCursor() (+4 more)
+Cohesion: 0.16
+Nodes (13): metadata, ORGANIZATION_JSON_LD, PERSON_JSON_LD, WEBSITE_JSON_LD, getPointerZone(), PointerZone, Dot, TargetCursor() (+5 more)
 
 ### Community 8 - "Theme + Sphere Visuals"
-Cohesion: 0.17
-Nodes (12): FlashCard(), Flashcards(), NeonSphere(), SpherePalette, THEME_PALETTES, THEME_OPTIONS, ThemeControl(), ThemeContext (+4 more)
+Cohesion: 0.18
+Nodes (11): FlashCard(), Flashcards(), NeonSphere(), SpherePalette, THEME_PALETTES, THEME_OPTIONS, ThemeControl(), ThemeContext (+3 more)
 
 ### Community 9 - "Ash Text Particle Animation"
 Cohesion: 0.15
 Nodes (13): ASH_COLORS, AshTextSection(), buildBlendTable(), buildParticles(), DEFAULT_SENTENCES, HomeTextConfig, parseHex(), Particle (+5 more)
 
 ### Community 10 - "Google OAuth Flow"
-Cohesion: 0.30
-Nodes (12): GET(), GET(), buildConsentUrl(), clientId(), clientSecret(), completeOAuthExchange(), EMPTY, getDriveAccessToken() (+4 more)
+Cohesion: 0.13
+Nodes (28): POST(), POST(), GET(), GET(), POST(), GET(), GET(), requireAdmin() (+20 more)
 
 ### Community 11 - "Contact Form + SMTP"
 Cohesion: 0.18
@@ -135,16 +143,16 @@ Cohesion: 0.19
 Nodes (13): ED06 Landmarks (SEO/GEO/AEO), ED08 Landmarks (relational schema), ED11 Landmarks, Homepage Performance Issue (Lighthouse 50/100), Save Point Ed01, Save Point ED02, Save Point ED03, Save Point ED04-final (+5 more)
 
 ### Community 13 - "Navigation + Projects Nav"
-Cohesion: 0.18
-Nodes (8): metadata, BRAND_LETTERS, FLUORESCENT_COLORS, NAV_LINKS, Navigation(), PLACEHOLDER_PROJECTS, ProjectItem, SlidingCards()
+Cohesion: 0.33
+Nodes (5): groupProjects(), PLACEHOLDER_PROJECTS, ProjectCardData, ProjectRow, SlidingCards()
 
 ### Community 14 - "Neon Star Scroll FX"
 Cohesion: 0.19
 Nodes (10): drawSparkle(), DRIFT_DIRECTIONS, NEON_STAR_COLORS, NeonStar, rand(), TopStarBand(), FlashTexts(), FONTS (+2 more)
 
 ### Community 15 - "Social Media Posting API"
-Cohesion: 0.24
-Nodes (11): appendToLog(), GET(), Platform, POST(), postToFacebook(), postToInstagram(), TODO: replace with real Instagram Graph API call (POST /{ig-user-id}/media then, TODO: replace with real Facebook Graph API call (POST /{page-id}/feed or /photos (+3 more)
+Cohesion: 0.18
+Nodes (5): AdminDashboard(), LeafItem, NAV_GROUPS, NavGroup, Section
 
 ### Community 16 - "Governance & Landmark Index"
 Cohesion: 0.18
@@ -155,8 +163,8 @@ Cohesion: 0.24
 Nodes (7): AboutContent, DEFAULT_CONTENT, AboutBody(), AboutBodyProps, AboutHeadline(), AboutHeadlineProps, FlashcardItem
 
 ### Community 18 - "Footer + Hero Layout"
-Cohesion: 0.22
-Nodes (5): Breadcrumbs(), Crumb, Footer(), IMG_STYLE, HeroSection()
+Cohesion: 0.15
+Nodes (10): metadata, Breadcrumbs(), Crumb, Footer(), IMG_STYLE, HeroSection(), BRAND_LETTERS, FLUORESCENT_COLORS (+2 more)
 
 ### Community 19 - "SysArch Governance Model"
 Cohesion: 0.18
@@ -195,12 +203,16 @@ Cohesion: 0.33
 Nodes (6): Cyborg profile (left variant, ash tone), Cyborg profile (right variant, ash tone), Home page hero figure (halftone android), Mehrdad portrait with HUD overlay, White/orange robot head (left variant), White/orange robot head (right variant)
 
 ### Community 28 - "Visitor Counter Store"
-Cohesion: 0.47
-Nodes (5): EMPTY, GET(), POST(), readStore(), VisitorCountStore
+Cohesion: 0.33
+Nodes (6): AboutContent, AboutManager(), DEFAULT_CONTENT, Flashcard, FONT_FAMILIES, makeId()
 
 ### Community 29 - "Landing Page Components"
 Cohesion: 0.40
 Nodes (6): ash-text-section.tsx GSAP Scroll-Pin Animation, cards-section.tsx, cube-reveal.tsx CubeReveal Component, Landing Home Page, neon-sphere.tsx GLSL Shader Sphere, Landing Home Page (Story)
+
+### Community 30 - "storage-panel.tsx"
+Cohesion: 0.40
+Nodes (3): DocStatus, StoragePanel(), StorageStatus
 
 ### Community 31 - "Hero Portrait Images Set"
 Cohesion: 0.50
@@ -213,6 +225,18 @@ Nodes (3): PristineNoire LLC logo (stacked layout), PristineNoire logo (wide lay
 ### Community 33 - "Sphere Reference Images"
 Cohesion: 1.00
 Nodes (3): Blue/orange energy sphere (png), Site screenshot reference: sphere hero section, Blue/orange energy sphere (warm variant, jpg)
+
+### Community 42 - "home-text-manager.tsx"
+Cohesion: 0.33
+Nodes (6): DEFAULT_CONFIG, FONT_OPTIONS, generateId(), HomeTextConfig, HomeTextManager(), HomeTextSentence
+
+### Community 43 - "projects-manager.tsx"
+Cohesion: 0.43
+Nodes (6): CardOption, generateId(), nextContentIndex(), nextProjectId(), ProjectRow, ProjectsManager()
+
+### Community 44 - "cards-manager.tsx"
+Cohesion: 0.53
+Nodes (5): CardItem, CardsManager(), generateId(), nextCardId(), nextImgNumber()
 
 ## Ambiguous Edges - Review These
 - `Token Efficiency Skill` → `Development/CLAUDE.md`  [AMBIGUOUS]
@@ -229,9 +253,9 @@ Nodes (3): Blue/orange energy sphere (png), Site screenshot reference: sphere he
   Sprints/Website/QR Code.png · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **203 isolated node(s):** `Attachment`, `ContactPayload`, `SMTPConfig`, `EMPTY_SMTP`, `DocStatus` (+198 more)
+- **203 isolated node(s):** `nextConfig`, `name`, `version`, `private`, `node` (+198 more)
   These have ≤1 connection - possible missing edges or undocumented components.
-- **4 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **3 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
@@ -248,5 +272,5 @@ _Questions this graph is uniquely positioned to answer:_
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
 - **What is the exact relationship between `Pristinenoire LLC.png - brand logo on dark purple background` and `QR Code.png - generic black and white QR code`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `requireAdmin()` connect `Admin Content Managers` to `Google Sheets Content API`, `Google OAuth Flow`, `Admin Auth Rate Limiting`, `Social Media Posting API`?**
-  _High betweenness centrality (0.073) - this node is a cross-community bridge._
+- **Why does `readDoc()` connect `Admin Content Managers` to `Google Sheets Content API`, `Google OAuth Flow`, `Contact Form + SMTP`, `Admin Auth Rate Limiting`?**
+  _High betweenness centrality (0.044) - this node is a cross-community bridge._

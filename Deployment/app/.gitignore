@@ -21,6 +21,14 @@ tsconfig.tsbuildinfo
 # Keep these out of version control so a deploy never overwrites live site
 # content (cards, projects, home text, SMTP creds, visitor count, etc.) with
 # whatever happened to be on a developer's machine.
+#
+# The wildcard is deliberate and must stay. src/lib/store.ts mirrors EVERY
+# document key to `.env.<key>.json` as its durable last-known-good copy, so
+# adding a new DocKey silently creates a new file here. Some of those hold
+# real secrets (google-oauth holds a Drive refresh token, smtp holds a
+# password) — enumerating filenames by hand already missed google-oauth once,
+# which is exactly the kind of leak a pattern prevents.
+.env.*.json
 .env.home-text.json
 .env.cards.json
 .env.projects.json
@@ -29,6 +37,7 @@ tsconfig.tsbuildinfo
 .env.social-config.json
 .env.social-post-log.json
 .env.visitor-count.json
+.env.google-oauth.json
 
 # Uploaded media - environment-specific, not source
 # Local-backend uploaded media — served dynamically via

@@ -358,23 +358,38 @@ export function AshTextSection() {
       aria-label="Manifesto"
     >
       <div className="sticky top-0 h-screen w-full">
-        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
+        {/* z-20 keeps the ash particles painting OVER the portrait below, so
+            the portrait reads as a backdrop rather than covering the text. */}
+        <canvas ref={canvasRef} className="absolute inset-0 h-full w-full z-20" aria-hidden />
 
         {/* Mehrdad.png reveal — mounted here (not as a separate section
             below) so it fades in while this section is still pinned. Opacity
             is set imperatively by the RAF loop above, not React state, to
             stay frame-smooth.
 
-            Anchored to the bottom-left of the pinned viewport. CubeReveal now
-            sizes itself to a small, fully-visible fixed box (no longer a
-            full-width image cropped down to a shorter strip), so there's no
-            overflow left to dissolve — the top-fade mask that used to hide
-            that overflow was removed, since keeping it here would fade real,
-            visible portrait content instead. */}
+            Spans the full page width and is anchored to the bottom of the
+            pinned viewport, so it meets the next section's edge flush with no
+            dark strip between them. Height comes from CubeReveal's own
+            aspect-ratio box, so the portrait keeps its true proportions and
+            is never squeezed narrow or stretched wide.
+
+            Any surplus height runs off the top — where a mask dissolves it
+            into the section background rather than letting it end on a hard
+            cut. The bottom edge is the one that has to stay flush, so the
+            overflow is pushed to the top deliberately.
+
+            z-0 (below the canvas's z-20) puts the portrait at the back, so
+            the ash text always renders in front of it. */}
         <div
           ref={cubeWrapRef}
-          className="pointer-events-none absolute left-0 bottom-0 z-10"
-          style={{ opacity: 0 }}
+          className="pointer-events-none absolute left-0 bottom-0 w-screen z-0"
+          style={{
+            opacity: 0,
+            WebkitMaskImage:
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, #000 22%, #000 100%)",
+            maskImage:
+              "linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.35) 8%, #000 22%, #000 100%)",
+          }}
         >
           <CubeReveal ref={cubeRef} />
         </div>

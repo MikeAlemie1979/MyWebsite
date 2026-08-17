@@ -20,9 +20,9 @@
     "semantic_hash": "1c097e56bb48df60c655af49a00ff041"
   },
   "Deployment/app/src/components/admin/cards-manager.tsx": {
-    "mtime": 1786927215.056673,
-    "ast_hash": "991e1b8f60e2a317287376ebd09a084e",
-    "semantic_hash": "991e1b8f60e2a317287376ebd09a084e"
+    "mtime": 1786949745.0163822,
+    "ast_hash": "a5be5d9fb31e8f16d17f95f8c6f1c469",
+    "semantic_hash": ""
   },
   "Deployment/app/src/components/admin/storage-panel.tsx": {
     "mtime": 1786846626.6059425,
@@ -45,9 +45,9 @@
     "semantic_hash": "39cf48d39f994828db3657806dfbf6c0"
   },
   "Deployment/app/src/lib/sheet-schema.ts": {
-    "mtime": 1786911489.3242764,
-    "ast_hash": "fb79d0d638658063d7f84be7888044df",
-    "semantic_hash": "fb79d0d638658063d7f84be7888044df"
+    "mtime": 1786942971.4075754,
+    "ast_hash": "52939c43677cfa3a23f4fa92a9ff5d67",
+    "semantic_hash": ""
   },
   "Deployment/app/src/lib/store.ts": {
     "mtime": 1786846396.853113,
@@ -80,9 +80,9 @@
     "semantic_hash": "b059aa5ebfe93e55112ce2a99080ec5f"
   },
   ".claude/settings.local.json": {
-    "mtime": 1785825152.5775528,
-    "ast_hash": "9fe454369fe5946adac10356bcfa4581",
-    "semantic_hash": "9fe454369fe5946adac10356bcfa4581"
+    "mtime": 1786945773.163882,
+    "ast_hash": "e7e9737c0ae8e86e63d248ee6426bb1a",
+    "semantic_hash": ""
   },
   ".impeccable/config.json": {
     "mtime": 1786822919.232887,
@@ -165,14 +165,14 @@
     "semantic_hash": "f9a52744e96e9f336eadf7056d9ff590"
   },
   "Deployment/app/src/app/api/admin/projects/route.ts": {
-    "mtime": 1786911496.6895914,
-    "ast_hash": "21a613e7a358cf0fdbdfaf3d5592bdc0",
-    "semantic_hash": "21a613e7a358cf0fdbdfaf3d5592bdc0"
+    "mtime": 1786942979.96374,
+    "ast_hash": "b87d1f5f84ce29c43dc79e64456de86b",
+    "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/projects/upload/route.ts": {
-    "mtime": 1786908508.3454714,
-    "ast_hash": "c386c057e06b4647a3119b83a7957527",
-    "semantic_hash": "c386c057e06b4647a3119b83a7957527"
+    "mtime": 1786942992.7014437,
+    "ast_hash": "884a0448659ff778da767b5b62a85a72",
+    "semantic_hash": ""
   },
   "Deployment/app/src/app/api/admin/smtp-config/route.ts": {
     "mtime": 1786430183.4060178,
@@ -250,9 +250,9 @@
     "semantic_hash": "2745a6b2cc2fc89e0f0aafd6ff8a7a78"
   },
   "Deployment/app/src/components/admin/projects-manager.tsx": {
-    "mtime": 1786911507.9251387,
-    "ast_hash": "1e7b483c68fc79a9cd12b97aa14f1b6f",
-    "semantic_hash": "1e7b483c68fc79a9cd12b97aa14f1b6f"
+    "mtime": 1786949826.4558609,
+    "ast_hash": "2a0cd20a6a5475ef8c0abf77fbf79c39",
+    "semantic_hash": ""
   },
   "Deployment/app/src/components/admin/smtp-settings-panel.tsx": {
     "mtime": 1785815490.1128478,
@@ -290,9 +290,9 @@
     "semantic_hash": "4b6f6c6dd24cdb82d1c6f3856cf7e728"
   },
   "Deployment/app/src/components/landing/ash-text-section.tsx": {
-    "mtime": 1786779982.5939238,
-    "ast_hash": "d3ce3c21cc6a9525c3b51c66afd444f1",
-    "semantic_hash": "d3ce3c21cc6a9525c3b51c66afd444f1"
+    "mtime": 1786953138.846366,
+    "ast_hash": "a71839dcd65cce390750eb63d902c8e5",
+    "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/content-section.tsx": {
     "mtime": 1786313639.2432046,
@@ -300,9 +300,9 @@
     "semantic_hash": "62b423968bbc3a8d5c72cc4742fc1aae"
   },
   "Deployment/app/src/components/landing/cube-reveal.tsx": {
-    "mtime": 1786928269.1322465,
-    "ast_hash": "61bd5f8cc61e5f1f82848d8d25796993",
-    "semantic_hash": "61bd5f8cc61e5f1f82848d8d25796993"
+    "mtime": 1786953120.3412666,
+    "ast_hash": "e53ad5cd61203302033cfb16bdb5c06d",
+    "semantic_hash": ""
   },
   "Deployment/app/src/components/landing/footer.tsx": {
     "mtime": 1786407276.8967745,
@@ -340,9 +340,9 @@
     "semantic_hash": "df361c3a0a6a2110bb8e09d321c7e741"
   },
   "Deployment/app/src/components/projects/sliding-cards.tsx": {
-    "mtime": 1786925185.4372914,
-    "ast_hash": "07c42f3f2b2c9b5c320d1744bfff7c5a",
-    "semantic_hash": "07c42f3f2b2c9b5c320d1744bfff7c5a"
+    "mtime": 1786952850.9504483,
+    "ast_hash": "d27ce0d5cba67a643cba1d96f9b19731",
+    "semantic_hash": ""
   },
   "Deployment/app/src/context/theme-context.tsx": {
     "mtime": 1785812678.8783083,
@@ -400,14 +400,14 @@
     "semantic_hash": "466b1bb17f0d87fc36c9c4ccf4f88deb"
   },
   "Development/CLAUDE.md": {
-    "mtime": 1786928718.5584812,
-    "ast_hash": "481a590a037716bc7d460a3608a71b12",
-    "semantic_hash": "481a590a037716bc7d460a3608a71b12"
+    "mtime": 1786954106.0062296,
+    "ast_hash": "cda5b3c269b0be301323b61cb846371c",
+    "semantic_hash": ""
   },
   "Development/Implementation/Roadmap.md": {
-    "mtime": 1786928710.2478662,
-    "ast_hash": "56dc97a7394641f6f79154c7eba79f01",
-    "semantic_hash": "56dc97a7394641f6f79154c7eba79f01"
+    "mtime": 1786954098.3982341,
+    "ast_hash": "f642e7e55fa5c8b00c2cb01e32255b48",
+    "semantic_hash": ""
   },
   "Instructions/Epic/AppStory.md": {
     "mtime": 1785805931.4945526,
@@ -495,9 +495,9 @@
     "semantic_hash": "7b96c8070547776f209c2c70847fcbbf"
   },
   "Sprints/Website/Mehrdad.png": {
-    "mtime": 1786356173.1936097,
-    "ast_hash": "c61e9959322bec6d6736bda733e8b630",
-    "semantic_hash": "c61e9959322bec6d6736bda733e8b630"
+    "mtime": 1786952956.5665178,
+    "ast_hash": "94135ac4aa857eba93a2183c3e1643b5",
+    "semantic_hash": ""
   },
   "Sprints/Website/Pristinenoire Ecosystem.png": {
     "mtime": 1785631033.443324,
